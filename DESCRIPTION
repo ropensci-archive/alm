@@ -1,8 +1,8 @@
 Package: alm
 Version: 0.1
 Date: 2013-04-25
-Description: R wrapper to the almetrics API platform developed by PLoS 
-Title: R wrapper to the almetrics API platform developed by PLoS 
+Description: R wrapper to the almetrics API platform developed by PLoS
+Title: R wrapper to the almetrics API platform developed by PLoS
 License: CC0
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "myrmecocystus@gmail.com"),
@@ -38,21 +38,6 @@ Collate:
     'almtitle.R'
     'almtotcites.R'
     'almupdated.R'
-    'crossref.R'
-    'formatarticleurl.R'
-    'help.R'
-    'journalnamekey.R'
-    'plosabstract.R'
-    'plosauthor.R'
-    'plosfields.R'
-    'plosfigtabcaps.R'
-    'plossubject.R'
-    'plostitle.R'
-    'plosviews.R'
-    'plosword.R'
-    'plot_throughtime.R'
-    'searchplos.R'
-    'crossref_r.R'
     'zzz.R'
     'alm.R'
     'almplot.R'
