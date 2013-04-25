@@ -1,0 +1,6 @@
+alm 0.1
+===============
+
+NEW FEATURES 
+
+* new package to just wrap the PLoS ALM API, which will add other endpoints soon.

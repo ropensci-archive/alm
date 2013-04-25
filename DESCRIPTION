@@ -1,0 +1,60 @@
+Package: alm
+Version: 0.1
+Date: 2013-04-25
+Description: R wrapper to the almetrics API platform developed by PLoS 
+Title: R wrapper to the almetrics API platform developed by PLoS 
+License: CC0
+Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
+    email = "myrmecocystus@gmail.com"),
+    person("Carl", "Boettiger", role = "aut",
+    email = "cboettig@gmail.com"),
+    person("Karthik", "Ram", role = "aut",
+    email = "karthik.ram@gmail.com"))
+URL: https://github.com/ropensci/alm
+BugReports: http://www.github.com/ropensci/alm/issues
+LazyLoad: yes
+LazyData: yes
+Depends:
+    ggplot2
+Imports:
+    ggplot2,
+    RCurl,
+    RJSONIO,
+    XML,
+    plyr,
+    stringr,
+    reshape,
+    googleVis,
+    httr,
+    grid,
+    gridExtra
+Suggests:
+    testthat
+Collate:
+    'almdatepub.R'
+    'almdateupdated.R'
+    'almpubmedcentid.R'
+    'almpubmedid.R'
+    'almtitle.R'
+    'almtotcites.R'
+    'almupdated.R'
+    'crossref.R'
+    'formatarticleurl.R'
+    'help.R'
+    'journalnamekey.R'
+    'plosabstract.R'
+    'plosauthor.R'
+    'plosfields.R'
+    'plosfigtabcaps.R'
+    'plossubject.R'
+    'plostitle.R'
+    'plosviews.R'
+    'plosword.R'
+    'plot_throughtime.R'
+    'searchplos.R'
+    'crossref_r.R'
+    'zzz.R'
+    'alm.R'
+    'almplot.R'
+    'almevents.R'
+    'startup.R'
