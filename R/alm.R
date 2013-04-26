@@ -187,13 +187,10 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 					if(total_details){
 					  temp <- data.frame(t(unlist(totals, use.names=TRUE)))
 					  names(temp) <- str_replace_all(names(temp), "\\.", "_")
-					  return( 
-					    cbind(data.frame(title=data_$title, publication_date=data_$publication_date), 
-					          temp)
-					  )
+					  totals2 <- cbind(data.frame(title=data_$title, publication_date=data_$publication_date), temp)
 					} else
 					{
-					  return(ldply(totals, function(x) as.data.frame(x)))
+					  totals2 <- totalsdf
 					}
 					
 					hist <- lapply(data_2, function(x) x$histories)
@@ -206,11 +203,11 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 					names(histdfs) <- servs
 					historydf <- ldply(histdfs)
 					if(y == "history"){ historydf } else
-						if(y == "detail"){ list(totals = totalsdf, history = historydf) } else
+						if(y == "detail"){ list(totals = totals2, history = historydf) } else
 							stop("info must be one of history, event or detail")
 				}
 			}
-			if(length(id[[1]])>1){ lapply(tt, getdata, y=info) } else { getdata(tt[[1]], y=info) }
+			if(length(id[[1]])>1){ lapply(tt, getdata, y=info) } else { getdata(data_=tt[[1]], y=info) }
 		}
 	}
 	
