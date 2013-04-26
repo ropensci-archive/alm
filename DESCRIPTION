@@ -24,7 +24,6 @@ Imports:
     plyr,
     stringr,
     reshape,
-    googleVis,
     httr,
     grid,
     gridExtra
