@@ -162,35 +162,47 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 				if(y == "totals"){
           data_2 <- data_$sources
 					servs <- sapply(data_2, function(x) x$name)
-					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
-					names(totals) <- servs
+# 					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
+          totals <- lapply(data_2, function(x) x$metrics)
+          
+          totals2 <- llply(totals, function(x){
+            x[sapply(x, is.null)] <- NA
+            x
+          })
+					
+          names(totals2) <- servs
           
           if(total_details){
-            temp <- data.frame(t(unlist(totals, use.names=TRUE)))
+            temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
             names(temp) <- str_replace_all(names(temp), "\\.", "_")
             return( 
               cbind(data.frame(title=data_$title, publication_date=data_$publication_date), 
-                    temp)
+                    temp, date_modified=data_$update_date)
             )
           } else
           {
-            return(ldply(totals, function(x) as.data.frame(x)))
+            return(ldply(totals2, function(x) as.data.frame(x)))
           }
 				} else
 				{
 				  data_2 <- data_$sources
 					servs <- sapply(data_2, function(x) x$name)
-					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
-					names(totals) <- servs
-					totalsdf <- ldply(totals, function(x) as.data.frame(x))
+# 					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
+				  totals <- lapply(data_2, function(x) x$metrics)
+				  totals2 <- llply(totals, function(x){
+				    x[sapply(x, is.null)] <- NA
+				    x
+				  })
+					names(totals2) <- servs
+					totalsdf <- ldply(totals2, function(x) as.data.frame(x))
           
 					if(total_details){
-					  temp <- data.frame(t(unlist(totals, use.names=TRUE)))
+					  temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
 					  names(temp) <- str_replace_all(names(temp), "\\.", "_")
-					  totals2 <- cbind(data.frame(title=data_$title, publication_date=data_$publication_date), temp)
+					  totals3 <- cbind(data.frame(title=data_$title, publication_date=data_$publication_date), temp, date_modified=data_$update_date)
 					} else
 					{
-					  totals2 <- totalsdf
+					  totals3 <- totalsdf
 					}
 					
 					hist <- lapply(data_2, function(x) x$histories)
@@ -203,7 +215,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 					names(histdfs) <- servs
 					historydf <- ldply(histdfs)
 					if(y == "history"){ historydf } else
-						if(y == "detail"){ list(totals = totals2, history = historydf) } else
+						if(y == "detail"){ list(totals = totals3, history = historydf) } else
 							stop("info must be one of history, event or detail")
 				}
 			}

@@ -1,8 +1,8 @@
-\name{almtotcites}
-\alias{almtotcites}
+\name{almtotals}
+\alias{almtotals}
 \title{Alt-metrics total citations from all sources.}
 \usage{
-  almtotcites(doi, key = NULL, curl = getCurlHandle())
+  almtotals(doi, key = NULL, curl = getCurlHandle())
 }
 \arguments{
   \item{doi}{digital object identifier for an article in
@@ -16,15 +16,16 @@
   unnecessary footprint)}
 }
 \value{
-  total no. data points recorded for this article from all
-  sources
+  data.frame of total no. views (counter + pmc), shares
+  (facebook + twitter), bookmarks (mendeley + citeulike),
+  and citations (crossref)
 }
 \description{
   Alt-metrics total citations from all sources.
 }
 \examples{
 \dontrun{
-almtotcites(doi = '10.1371/journal.pbio.0000012')
+almtotals(doi = '10.1371/journal.pbio.0000012')
 }
 }
 

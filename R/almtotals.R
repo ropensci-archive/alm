@@ -5,12 +5,13 @@
 #' @param key your PLoS API key, either enter, or loads from .Rprofile
 #' @param curl If using in a loop, call getCurlHandle() first and pass 
 #'  the returned value in here (avoids unnecessary footprint)
-#' @return total no. data points recorded for this article from all sources
+#' @return data.frame of total no. views (counter + pmc), shares (facebook + twitter), 
+#' 		bookmarks (mendeley + citeulike), and citations (crossref)
 #' @examples \dontrun{
-#' almtotcites(doi = '10.1371/journal.pbio.0000012')
+#' almtotals(doi = '10.1371/journal.pbio.0000012')
 #' }
 #' @export
-almtotcites <- function(doi, key = NULL, curl = getCurlHandle() ) 
+almtotals <- function(doi, key = NULL, curl = getCurlHandle() ) 
 { 
 	url = 'http://alm.plos.org/api/v3/articles'
 	
@@ -19,5 +20,5 @@ almtotcites <- function(doi, key = NULL, curl = getCurlHandle() )
 	doi2 <- gsub("/", "%2F", doi)
 	url2 <- paste(url, "/info%3A", doi2, '?api_key=', key, '&info=detail', sep='')
 	tt <- fromJSON(url2)
-	sum(as.numeric(compact(do.call(c, lapply(tt[[1]][[9]], function(x) x$metrics$total)))))
+	data.frame(tt[[1]][c("views","shares","bookmarks","citations")])
 }
