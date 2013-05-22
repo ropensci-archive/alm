@@ -89,9 +89,7 @@
 #' alm(doi='10.1371/journal.pone.0035869', total_details=TRUE)
 #' }
 #' @export
-alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http://alm.plos.org/api/v3/articles',
-								info = "totals", months = NULL, days = NULL, year = NULL, 
-								source = NULL, key = NULL, curl = getCurlHandle(), total_details = FALSE)
+alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http://alm.plos.org/api/v3/articles', info = "totals", months = NULL, days = NULL, year = NULL, source = NULL, key = NULL, curl = getCurlHandle(), total_details = FALSE, write2couch = FALSE)
 {	
 	if(!info %in% c("summary","totals","history","detail")) {
 		stop("info must be one of summary, totals, history, or detail")
@@ -116,6 +114,11 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
 				args2 <- c(args, ids = id[[1]])
 				out <- getForm(url, .params = args2, curl = curl)
+				if(write2couch){
+				  sofa::sofa_writedoc(dbname=getOption("alm_couchdb"), doc=out, 
+				                         rodb=TRUE, baseurl=url, 
+				                         queryargs=RJSONIO::toJSON(args2, collapse=""))
+				} else { NULL }
 				tt <- fromJSON(out)
 # 				if(info=="summary"){ttt<-tt} else{ttt <- tt[[1]]$sources}
 			} else
@@ -133,13 +136,28 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 							}
 							args2 <- c(args, ids = id2)
 							out <- getForm(url, .params = args2, curl = curl)
-							tt <- fromJSON(out)
+							
+							if(write2couch){
+							  out2 <- out
+							  str_sub(out2, 1, 1) <- ""
+							  str_sub(out2, nchar(out2), nchar(out2)) <- ""
+							  out2 <- str_split(out2, ']},')[[1]]
+							  out2 <- c(lapply(out2[-length(out2)], function(x) paste0(x, ']}')), out2[[length(out2)]])
+							  sofa_writelist <- function(x){  
+							    sofa::sofa_writedoc(dbname=getOption("alm_couchdb"), doc=x, 
+							                        rodb=TRUE, baseurl=url, 
+							                        queryargs=RJSONIO::toJSON(args2, collapse=""))
+							  }
+							  l_ply(out2, sofa_writelist)
+                
+							} else { NULL }
 # 							if(info=="summary"){tt} else { 
 # 								lapply(tt, function(x) x$article$sources) 
 # 							}
+							return( fromJSON(out) )
 						}
 						temp <- lapply(idsplit, repeatit)
-						ttt <- do.call(c, temp)
+						tt <- do.call(c, temp)
 					} else {
 						if(names(id) == "doi") {
 							id2 <- paste(sapply(id, function(x) gsub("/", "%2F", x)), collapse=",")
@@ -149,10 +167,25 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 						}
 						args2 <- c(args, ids = id2)
 						out <- getForm(url, .params = args2, curl = curl)
-						tt <- fromJSON(out)
+						
+						if(write2couch){
+              out2 <- out
+						  str_sub(out2, 1, 1) <- ""
+						  str_sub(out2, nchar(out2), nchar(out2)) <- ""
+						  out2 <- str_split(out2, ']},')[[1]]
+              out2 <- c(lapply(out2[-length(out2)], function(x) paste0(x, ']}')), out2[[length(out2)]])
+						  sofa_writelist <- function(x){  
+						    sofa::sofa_writedoc(dbname=getOption("alm_couchdb"), doc=x, 
+						                        rodb=TRUE, baseurl=url, 
+						                        queryargs=RJSONIO::toJSON(args2, collapse=""))
+						  }
+              l_ply(out2, sofa_writelist)
+						} else { NULL }
+						
 # 						if(info=="summary"){ttt<-tt} else { 
 # 							ttt <- lapply(tt, function(x) x$sources) 
 # 						}
+						tt <- fromJSON(out)
 					}
 				}
 			}

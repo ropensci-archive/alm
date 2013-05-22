@@ -6,7 +6,8 @@
     url = "http://alm.plos.org/api/v3/articles",
     info = "totals", months = NULL, days = NULL,
     year = NULL, source = NULL, key = NULL,
-    curl = getCurlHandle(), total_details = FALSE)
+    curl = getCurlHandle(), total_details = FALSE,
+    write2couch = FALSE)
 }
 \arguments{
   \item{doi}{Digital object identifier for an article in
