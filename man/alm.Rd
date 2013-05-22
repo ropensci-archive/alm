@@ -6,7 +6,8 @@
     url = "http://alm.plos.org/api/v3/articles",
     info = "totals", months = NULL, days = NULL,
     year = NULL, source = NULL, key = NULL,
-    curl = getCurlHandle(), total_details = FALSE)
+    curl = getCurlHandle(), total_details = FALSE,
+    sum_metrics = NULL)
 }
 \arguments{
   \item{doi}{Digital object identifier for an article in
@@ -55,6 +56,11 @@
   including publication date, title, etc. If you set this
   to TRUE, the output should no longer with with
   \code{\link{almplot}}.}
+
+  \item{sum_metrics}{Just like the output you get from
+  setting info='totals', you can get summary metrics by day
+  (sum_metrics='day'), month (sum_metrics='month'), or year
+  (sum_metrics='year').}
 }
 \value{
   PLoS altmetrics as data.frame's.
@@ -102,7 +108,7 @@ out <- alm(doi=dois)
 out[[1]] # get data for the first DOI
 
 # Search for DOI's, then feed into alm
-dois <- searchplos(terms='evolution', fields='id', limit = 50)
+dois <- searchplos(terms='evolution', fields='id', limit = 52)
 out <- alm(doi=as.character(dois[,1]))
 lapply(out, head)
 
@@ -127,6 +133,15 @@ alm(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter')
 
 # Get detailed totals output
 alm(doi='10.1371/journal.pone.0035869', total_details=TRUE)
+
+# Get summary metrics by day
+alm(doi='10.1371/journal.pone.0036240', sum_metrics='day')
+
+# Get summary metrics by month
+alm(doi='10.1371/journal.pone.0036240', sum_metrics='month')
+
+# Get summary metrics by year
+alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
 }
 }
 \seealso{

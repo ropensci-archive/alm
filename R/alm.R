@@ -27,6 +27,9 @@
 #'    returned; if TRUE, the totals data is in a wide format with more details
 #'    about the paper, including publication date, title, etc. If you set this 
 #'    to TRUE, the output should no longer with with \code{\link{almplot}}.
+#' @param sum_metrics Just like the output you get from setting info='totals', you can 
+#'    get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'), 
+#'    or year (sum_metrics='year').
 #' @seealso \code{\link{almplot}}
 #' @details You can only supply one of the parmeters doi, pmid, pmcid, and mdid.
 #' 
@@ -62,7 +65,7 @@
 #' out[[1]] # get data for the first DOI
 #' 
 #' # Search for DOI's, then feed into alm
-#' dois <- searchplos(terms='evolution', fields='id', limit = 50)
+#' dois <- searchplos(terms='evolution', fields='id', limit = 52)
 #' out <- alm(doi=as.character(dois[,1]))
 #' lapply(out, head)
 #' 
@@ -87,11 +90,22 @@
 #' 
 #' # Get detailed totals output
 #' alm(doi='10.1371/journal.pone.0035869', total_details=TRUE)
+#' 
+#' # Get summary metrics by day
+#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='day')
+#' 
+#' # Get summary metrics by month
+#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='month')
+#' 
+#' # Get summary metrics by year
+#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
 #' }
 #' @export
-alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http://alm.plos.org/api/v3/articles',
+alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, 
+                url = 'http://alm.plos.org/api/v3/articles',
 								info = "totals", months = NULL, days = NULL, year = NULL, 
-								source = NULL, key = NULL, curl = getCurlHandle(), total_details = FALSE)
+								source = NULL, key = NULL, curl = getCurlHandle(), 
+                total_details = FALSE, sum_metrics = NULL)
 {	
 	if(!info %in% c("summary","totals","history","detail")) {
 		stop("info must be one of summary, totals, history, or detail")
@@ -109,6 +123,11 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 		if(info=="totals"){info2 <- NULL} else
 			if(info=="history"|info=="detail"){info2 <- "detail"} else
 				if(info=="summary"){info2 <- "summary"}
+    
+    # set info2 to history if sum_metrics is not NULL
+		if(!is.null(sum_metrics))
+      info <- info2 <- 'history' 
+    
 		args <- compact(list(api_key = key, info = info2, months = months, 
 												 days = days, year = year, source = source2, type = names(id)))
 		if(length(id[[1]])==0){stop("Please provide a DOI")} else
@@ -139,7 +158,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 # 							}
 						}
 						temp <- lapply(idsplit, repeatit)
-						ttt <- do.call(c, temp)
+						tt <- do.call(c, temp)
 					} else {
 						if(names(id) == "doi") {
 							id2 <- paste(sapply(id, function(x) gsub("/", "%2F", x)), collapse=",")
@@ -184,7 +203,9 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
             return(ldply(totals2, function(x) as.data.frame(x)))
           }
 				} else
-				{
+				
+        if(is.null(sum_metrics)) 
+        {
 				  data_2 <- data_$sources
 					servs <- sapply(data_2, function(x) x$name)
 # 					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
@@ -217,13 +238,38 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 					if(y == "history"){ historydf } else
 						if(y == "detail"){ list(totals = totals3, history = historydf) } else
 							stop("info must be one of history, event or detail")
+				} else
+				{
+				  sumby <- paste0("by_", match.arg(sum_metrics, choices=c("day","month","year")))
+          
+				  data_2 <- data_$sources
+				  servs <- sapply(data_2, function(x) x$name)
+				  totals <- lapply(data_2, function(x) x[[sumby]])
+				  totals[sapply(totals,is.null)] <- NA
+				  totals2 <- llply(totals, function(x){
+				    x <- llply(x, function(y) { y[sapply(y, is.null)] <- NA; y })
+				    x
+				  })
+				  names(totals2) <- servs
+				  totalsdf <- ldply(totals2, function(x) ldply(x, function(x) as.data.frame(x)))
+          
+# 				  if(total_details){
+# 				    temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
+# 				    names(temp) <- str_replace_all(names(temp), "\\.", "_")
+# 				    totals3 <- cbind(data.frame(title=data_$title, publication_date=data_$publication_date), temp, date_modified=data_$update_date)
+# 				  } else
+# 				  {
+# 				    totals3 <- totalsdf
+# 				  }
+          
+          return(totalsdf)
 				}
 			}
-			if(length(id[[1]])>1){ lapply(tt, getdata, y=info) } else { getdata(data_=tt[[1]], y=info) }
+			if(length(id[[1]])>1){ lapply(tt, getdata, y=info) } else { getdata(data_=tt[[1]], y=info)}
 		}
 	}
 	
-	# Define safe version so errors don't prevent it from working
+	# Define safe version so errors don't prevent getalm from working
 	safe_getalm <- plyr::failwith(NULL, getalm)
 	
 	# Get the data
