@@ -7,7 +7,7 @@
     info = "totals", months = NULL, days = NULL,
     year = NULL, source = NULL, key = NULL,
     curl = getCurlHandle(), total_details = FALSE,
-    write2couch = FALSE)
+    write2couch = FALSE, couchdbname = NULL)
 }
 \arguments{
   \item{doi}{Digital object identifier for an article in
