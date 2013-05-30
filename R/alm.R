@@ -27,7 +27,6 @@
 #'    returned; if TRUE, the totals data is in a wide format with more details
 #'    about the paper, including publication date, title, etc. If you set this 
 #'    to TRUE, the output should no longer with with \code{\link{almplot}}.
-#' @param couchdbname Name of couchdb database.
 #' @seealso \code{\link{almplot}}
 #' @details You can only supply one of the parmeters doi, pmid, pmcid, and mdid.
 #' 
@@ -92,7 +91,7 @@
 #' @export
 alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http://alm.plos.org/api/v3/articles', 
                 info = "totals", months = NULL, days = NULL, year = NULL, source = NULL, key = NULL, curl = getCurlHandle(), 
-                total_details = FALSE, write2couch = FALSE, couchdbname = NULL)
+                total_details = FALSE, write2couch = FALSE)
 {	
 	if(!info %in% c("summary","totals","history","detail")) {
 		stop("info must be one of summary, totals, history, or detail")
@@ -118,7 +117,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 				args2 <- c(args, ids = id[[1]])
 				out <- getForm(url, .params = args2, curl = curl)
 				if(write2couch){
-				  sofa::sofa_writedoc(dbname=getOption(couchdbname), doc=out, 
+				  sofa::sofa_writedoc(dbname=getOption("couch_db_name"), doc=out, 
 				                         rodb=TRUE, baseurl=url, 
 				                         queryargs=RJSONIO::toJSON(args2, collapse=""))
 				} else { NULL }
@@ -147,7 +146,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 							  out2 <- str_split(out2, ']},')[[1]]
 							  out2 <- c(lapply(out2[-length(out2)], function(x) paste0(x, ']}')), out2[[length(out2)]])
 							  sofa_writelist <- function(x){  
-							    sofa::sofa_writedoc(dbname=getOption(couchdbname), doc=x, 
+							    sofa::sofa_writedoc(dbname=getOption("couch_db_name"), doc=x, 
 							                        rodb=TRUE, baseurl=url, 
 							                        queryargs=RJSONIO::toJSON(args2, collapse=""))
 							  }
@@ -178,7 +177,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url = 'http:
 						  out2 <- str_split(out2, ']},')[[1]]
               out2 <- c(lapply(out2[-length(out2)], function(x) paste0(x, ']}')), out2[[length(out2)]])
 						  sofa_writelist <- function(x){  
-						    sofa::sofa_writedoc(dbname=getOption(couchdbname), doc=x, 
+						    sofa::sofa_writedoc(dbname=getOption("couch_db_name"), doc=x, 
 						                        rodb=TRUE, baseurl=url, 
 						                        queryargs=RJSONIO::toJSON(args2, collapse=""))
 						  }

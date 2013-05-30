@@ -7,7 +7,7 @@
     info = "totals", months = NULL, days = NULL,
     year = NULL, source = NULL, key = NULL,
     curl = getCurlHandle(), total_details = FALSE,
-    write2couch = FALSE, couchdbname = NULL)
+    write2couch = FALSE)
 }
 \arguments{
   \item{doi}{Digital object identifier for an article in
@@ -56,8 +56,6 @@
   including publication date, title, etc. If you set this
   to TRUE, the output should no longer with with
   \code{\link{almplot}}.}
-
-  \item{couchdbname}{Name of couchdb database.}
 }
 \value{
   PLoS altmetrics as data.frame's.
