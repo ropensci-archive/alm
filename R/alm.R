@@ -27,6 +27,7 @@
 #'    returned; if TRUE, the totals data is in a wide format with more details
 #'    about the paper, including publication date, title, etc. If you set this 
 #'    to TRUE, the output should no longer with with \code{\link{almplot}}.
+#' @param couchdbname Name of couchdb database.
 #' @seealso \code{\link{almplot}}
 #' @details You can only supply one of the parmeters doi, pmid, pmcid, and mdid.
 #' 

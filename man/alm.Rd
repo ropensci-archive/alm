@@ -56,6 +56,8 @@
   including publication date, title, etc. If you set this
   to TRUE, the output should no longer with with
   \code{\link{almplot}}.}
+
+  \item{couchdbname}{Name of couchdb database.}
 }
 \value{
   PLoS altmetrics as data.frame's.
