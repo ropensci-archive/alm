@@ -4,102 +4,9 @@
 #' See details for more information.
 #' 
 #' @import RJSONIO RCurl
-#' @param doi Digital object identifier for an article in PLoS Journals (character)
-#' @param pmid PubMed object identifier (numeric)
-#' @param pmcid PubMed Central object identifier (numeric)
-#' @param mdid Mendeley object identifier (character)
-#' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
-#' @param info One of summary, history, or detail(default totals + history in a list). 
-#' 		Not specifying anything (the default) returns data.frame of totals across 
-#' 		data providers. (character)
-#' @param months Number of months since publication to request historical data for.
-#' 		See details for a note. (numeric)
-#' @param days Number of days since publication to request historical data for. 
-#' 		See details for a note. (numeric)
-#' @param year End of which year to request historical data for. 
-#'   	See details for a note. (numeric)
-#' @param source Name of source (or list of sources) to get ALM information for (character)
-#' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
-#' @param ... optional additional curl options (debugging tools mostly)
-#' @param curl If using in a loop, call getCurlHandle() first and pass
-#'    the returned value in here (avoids unnecessary footprint)
-#' @param total_details If FALSE (the default) the standard totals data.frame is
-#'    returned; if TRUE, the totals data is in a wide format with more details
-#'    about the paper, including publication date, title, etc. If you set this 
-#'    to TRUE, the output should no longer with with \code{\link{almplot}}.
-#' @param sum_metrics Just like the output you get from setting info='totals', you can 
-#'    get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'), 
-#'    or year (sum_metrics='year').
-#' @seealso \code{\link{almplot}}
-#' @details You can only supply one of the parmeters doi, pmid, pmcid, and mdid.
-#' 
-#' 		Query for as many articles at a time as you like. Though queries are broken
-#' 		up in to smaller bits of 50 identifiers at a time.  
-#' 		
-#' 		If you supply days, months and/or year parameters, days takes precedence
-#' 		over months and year. 		
-#' @return PLoS altmetrics as data.frame's.
-#' @examples \dontrun{
-#' # The default call with either doi, pmid, pmcid, or mdid without specifying 
-#' # an argument for info
-#' alm(doi="10.1371/journal.pone.0029797")
-#' 
-#' # A single DOI
-#' out <- alm(doi='10.1371/journal.pone.0029797', info='detail')
-#' out[["totals"]] # get totals summary data.frame
-#' out[["history"]] # get history summary data.frame
-#' 
-#' # A single PubMed ID (pmid)
-#' alm(pmid=22590526)
-#' 
-#' # A single PubMed Central ID (pmcid)
-#' alm(pmcid=212692, info='summary')
-#' 
-#' # A single Mendeley UUID (mdid)
-#' alm(mdid="35791700-6d00-11df-a2b2-0026b95e3eb7")
-#'
-#' # Provide more than one DOI
-#' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
-#'		'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-#' out <- alm(doi=dois)
-#' out[[1]] # get data for the first DOI
-#' 
-#' # Search for DOI's, then feed into alm
-#' dois <- searchplos(terms='evolution', fields='id', limit = 52)
-#' out <- alm(doi=as.character(dois[,1]))
-#' lapply(out, head)
-#' 
-#' # Provide more than one pmid
-#' pmids <- c(19300479, 19390606, 19343216)
-#' out <- alm(pmid=pmids)
-#' out[[3]] # get data for the third pmid
-#' 
-#' # Getting just summary data
-#' alm(doi='10.1371/journal.pone.0039395', info='summary')
-#' 
-#' # Using days argument
-#' alm(doi='10.1371/journal.pone.0040117', days=30)
-#' 
-#' # Using the year argument
-#' alm(doi='10.1371/journal.pone.0040117', year=2012)
-#' 
-#' # Getting data for a specific source
-#' alm(doi='10.1371/journal.pone.0035869', source='mendeley')
-#' alm(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'))
-#' alm(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'), info='history')
-#' 
-#' # Get detailed totals output
-#' alm(doi='10.1371/journal.pone.0035869', total_details=TRUE)
-#' 
-#' # Get summary metrics by day
-#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='day')
-#' 
-#' # Get summary metrics by month
-#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='month')
-#' 
-#' # Get summary metrics by year
-#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
-#' }
+#' @importFrom stringr str_replace_all str_split
+#' @template alm_params
+#' @template alm_egs
 #' @export
 alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, 
                 url = 'http://alm.plos.org/api/v3/articles',
@@ -136,7 +43,6 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				args2 <- c(args, ids = id[[1]])
 				out <- getForm(url, .params = args2, curl = curl)
 				tt <- fromJSON(out)
-# 				if(info=="summary"){ttt<-tt} else{ttt <- tt[[1]]$sources}
 			} else
 			{
 				if(length(id[[1]])>1){
@@ -153,9 +59,6 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 							args2 <- c(args, ids = id2)
 							out <- getForm(url, .params = args2, curl = curl)
 							tt <- fromJSON(out)
-# 							if(info=="summary"){tt} else { 
-# 								lapply(tt, function(x) x$article$sources) 
-# 							}
 						}
 						temp <- lapply(idsplit, repeatit)
 						tt <- do.call(c, temp)
@@ -169,9 +72,6 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 						args2 <- c(args, ids = id2)
 						out <- getForm(url, .params = args2, curl = curl)
 						tt <- fromJSON(out)
-# 						if(info=="summary"){ttt<-tt} else { 
-# 							ttt <- lapply(tt, function(x) x$sources) 
-# 						}
 					}
 				}
 			}
@@ -181,7 +81,6 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				if(y == "totals"){
           data_2 <- data_$sources
 					servs <- sapply(data_2, function(x) x$name)
-# 					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
           totals <- lapply(data_2, function(x) x$metrics)
           
           totals2 <- lapply(totals, function(x){
@@ -208,7 +107,6 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
         {
 				  data_2 <- data_$sources
 					servs <- sapply(data_2, function(x) x$name)
-# 					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
 				  totals <- lapply(data_2, function(x) x$metrics)
 				  totals2 <- lapply(totals, function(x){
 				    x[sapply(x, is.null)] <- NA
@@ -252,16 +150,6 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				  })
 				  names(totals2) <- servs
 				  totalsdf <- ldply(totals2, function(x) ldply(x, function(x) as.data.frame(x)))
-          
-# 				  if(total_details){
-# 				    temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
-# 				    names(temp) <- str_replace_all(names(temp), "\\.", "_")
-# 				    totals3 <- cbind(data.frame(title=data_$title, publication_date=data_$publication_date), temp, date_modified=data_$update_date)
-# 				  } else
-# 				  {
-# 				    totals3 <- totalsdf
-# 				  }
-          
           return(totalsdf)
 				}
 			}

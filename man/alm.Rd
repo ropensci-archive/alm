@@ -87,10 +87,12 @@
 # an argument for info
 alm(doi="10.1371/journal.pone.0029797")
 
-# A single DOI
+# Details for a single DOI
 out <- alm(doi='10.1371/journal.pone.0029797', info='detail')
-out[["totals"]] # get totals summary data.frame
-out[["history"]] # get history summary data.frame
+## totals
+out[["totals"]]
+## history
+out[["history"]]
 
 # A single PubMed ID (pmid)
 alm(pmid=22590526)
