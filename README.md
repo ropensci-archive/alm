@@ -45,13 +45,7 @@ and the functions within this package will be able to use your API key without y
 
 #### Install
 
-You can get this package at CRAN [here](http://cran.r-project.org/web/packages/alm/), or install it within R like
-
-```ruby
-install.packages("alm")
-```
-
-Another option to install is install_github within Hadley Wickham's devtools package.
+You can get this package by installing via `install_github()` within Hadley Wickham's devtools package.
 
 ```ruby
 install.packages("devtools")
