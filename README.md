@@ -27,7 +27,7 @@ Yes indeedy.
 
 ### Authentication
 
-You aren't currenlty required to use an API key to access the PLoS ALM API, but soon will need to.
+You aren't currently not required to use an API key to access the PLoS ALM API, but soon will need to.
 
 Get your PLoS API key [here](http://api.plos.org/)
 

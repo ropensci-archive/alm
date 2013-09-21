@@ -3,7 +3,7 @@
 #' This is the main function to search the PLoS ALM (article-level metrics) API. 
 #' See details for more information.
 #' 
-#' @import RJSONIO RCurl plyr
+#' @import RJSONIO RCurl
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
@@ -184,7 +184,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 # 					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
           totals <- lapply(data_2, function(x) x$metrics)
           
-          totals2 <- llply(totals, function(x){
+          totals2 <- lapply(totals, function(x){
             x[sapply(x, is.null)] <- NA
             x
           })
@@ -210,7 +210,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 					servs <- sapply(data_2, function(x) x$name)
 # 					totals <- lapply(data_2, function(x) x$metrics[!sapply(x$metrics, is.null)])
 				  totals <- lapply(data_2, function(x) x$metrics)
-				  totals2 <- llply(totals, function(x){
+				  totals2 <- lapply(totals, function(x){
 				    x[sapply(x, is.null)] <- NA
 				    x
 				  })
@@ -246,8 +246,8 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				  servs <- sapply(data_2, function(x) x$name)
 				  totals <- lapply(data_2, function(x) x[[sumby]])
 				  totals[sapply(totals,is.null)] <- NA
-				  totals2 <- llply(totals, function(x){
-				    x <- llply(x, function(y) { y[sapply(y, is.null)] <- NA; y })
+				  totals2 <- lapply(totals, function(x){
+				    x <- lapply(x, function(y) { y[sapply(y, is.null)] <- NA; y })
 				    x
 				  })
 				  names(totals2) <- servs

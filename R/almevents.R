@@ -2,7 +2,7 @@
 #' 
 #' Events are the details of the metrics that are counted related to PLoS papers.
 #' 
-#' @import RJSONIO RCurl plyr reshape
+#' @import RJSONIO RCurl reshape
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
@@ -217,7 +217,7 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
 					{
 						parsefb <- function(x){ data.frame(x)[,-1] }
-						llply(y$events, parsefb)
+						lapply(y$events, parsefb)
 					}
 				} else if(y$name == "mendeley"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
