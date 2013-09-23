@@ -18,6 +18,9 @@
 
   \item{mdid}{Mendeley object identifier (character)}
 
+  \item{url}{API endpoint, defaults to
+  http://alm.plos.org/api/v3/articles (character)}
+
   \item{months}{Number of months since publication to
   request historical data for.  See details for a note.
   (numeric)}
@@ -65,6 +68,10 @@
   Beware that some data source are not parsed yet, so there
   may be event data but it is not provided yet as it is so
   messy to parse.
+
+  See more info on PLOS's relative metrics event source
+  here
+  \url{http://www.plosone.org/static/almInfo#relativeMetrics}
 }
 \examples{
 \dontrun{
@@ -91,6 +98,7 @@ dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117')
 out <- almevents(doi=dois)
 out[[1]]
 out[[2]]
+out[[1]][["figshare"]][[2]][[1]]
 
 # Specify a specific source
 almevents(doi="10.1371/journal.pone.0035869", source="crossref")

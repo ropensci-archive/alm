@@ -1,6 +1,7 @@
 #' Get title of article by inputting the doi for the article.
 #' 
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom stringr str_replace_all
 #' @param doi digital object identifier for an article in PLoS Journals
 #' @param key your PLoS API key, either enter, or loads from .Rprofile
 #' @param curl If using in a loop, call getCurlHandle() first and pass 

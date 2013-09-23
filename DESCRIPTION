@@ -1,6 +1,6 @@
 Package: alm
 Version: 0.1
-Date: 2013-04-25
+Date: 2013-09-21
 Description: R wrapper to the almetrics API platform developed by PLoS
 Title: R wrapper to the almetrics API platform developed by PLoS
 License: CC0
@@ -24,6 +24,7 @@ Imports:
     plyr,
     stringr,
     reshape,
+    reshape2,
     httr,
     grid,
     gridExtra
@@ -43,3 +44,4 @@ Collate:
     'startup.R'
     'almtotals.R'
     'signposts.R'
+    'plot_signposts.R'

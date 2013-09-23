@@ -14,11 +14,11 @@ test_that("alm returns the correct class", {
 })
 
 test_that("alm returns the correct dimensions", {
-  expect_that(nrow(dat), equals(19))
+  expect_that(nrow(dat), equals(21))
   expect_that(ncol(dat), equals(9))
   expect_that(length(dat2), equals(2))
   expect_that(ncol(dat2[[2]]), equals(3))
   
-  expect_that(ncol(dat3), equals(155))
-  expect_that(nrow(dat4), equals(26))
+  expect_that(ncol(dat3), equals(163))
+  expect_that(nrow(dat4), equals(27))
 })

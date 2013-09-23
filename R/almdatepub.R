@@ -1,6 +1,7 @@
 #' Get the date when the article was published.
 #' 
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom stringr str_split
 #' @param doi Digital object identifier for an article in PLoS Journals
 #' @param get Get year, month, or day; if unspecified, whole date returned.
 #' @param sleep Time (in seconds) before function sends API call - defaults to
@@ -25,7 +26,6 @@
 almdatepub <- function(doi, get = NA, sleep = 0, key = NULL)
 {
 	url = 'http://alm.plos.org/api/v3/articles'
-	
 	getdate <- function(x) {
 		date <- x$publication_date
 		date_vector <- str_split(str_split(date, "T")[[1]][1], "-")[[1]]
@@ -35,10 +35,10 @@ almdatepub <- function(doi, get = NA, sleep = 0, key = NULL)
 					if(get == 'day') {dateout <- as.numeric(date_vector[3])}
 		dateout
 	}
-	
-  Sys.sleep(sleep)
-  key <- getkey(key)
-  if(length(doi)==0){stop("Please provide a DOI")} else
+
+	Sys.sleep(sleep)
+	key <- getkey(key)
+	if(length(doi)==0){stop("Please provide a DOI")} else
 	  if(length(doi)==1){
 	  	doi <- paste("doi/", doi, sep="")
 	  	doi2 <- gsub("/", "%2F", doi)

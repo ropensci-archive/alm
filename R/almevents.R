@@ -2,11 +2,15 @@
 #' 
 #' Events are the details of the metrics that are counted related to PLoS papers.
 #' 
-#' @import RJSONIO RCurl reshape
+#' @importFrom RCurl getCurlHandle getForm
+#' @importFrom RJSONIO fromJSON
+#' @importFrom reshape sort_df
+#' @importFrom plyr compact
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
 #' @param mdid Mendeley object identifier (character)
+#' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param months Number of months since publication to request historical data for.
 #' 		See details for a note. (numeric)
 #' @param days Number of days since publication to request historical data for. 
@@ -32,6 +36,9 @@
 #' 		
 #' 		Beware that some data source are not parsed yet, so there may be event data
 #' 		but it is not provided yet as it is so messy to parse. 
+#'   	
+#'    See more info on PLOS's relative metrics event source here 
+#'    \url{http://www.plosone.org/static/almInfo#relativeMetrics}
 #' @return PLoS altmetrics as data.frame's.
 #' @examples \dontrun{
 #' # For one article
@@ -57,6 +64,7 @@
 #' out <- almevents(doi=dois)
 #' out[[1]]
 #' out[[2]]
+#' out[[1]][["figshare"]][[2]][[1]]
 #' 
 #' # Specify a specific source
 #' almevents(doi="10.1371/journal.pone.0035869", source="crossref")
@@ -65,11 +73,10 @@
 #' almevents(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
 #' }
 #' @export
-almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='http://alm.plos.org/api/v3/articles',
-	months = NULL, days = NULL, source = NULL, key = NULL, curl = getCurlHandle())
+almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, 
+  url='http://alm.plos.org/api/v3/articles', months = NULL, days = NULL, 
+  source = NULL, key = NULL, curl = getCurlHandle())
 {
-# 	url = 'http://alm.plos.org/api/v3/articles'
-	
 	id <- compact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mdid))
 	if(length(id)>1){ stop("Only supply one of: doi, pmid, pmcid, mdid") } else { NULL }
 	key <- getkey(key)
@@ -140,9 +147,7 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 				} else if(y$name == "citeulike"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
 					{
-						temp <- t(data.frame(unlist(y$events)))
-						row.names(temp) <- NULL
-						temp
+            y$events
 					}
 				} else if(y$name == "crossref"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
@@ -186,8 +191,8 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 				} else if(y$name == "researchblogging"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
 					{
-						parserblogging <- function(x){
-							temp <- x$event
+						parserblogging <- function(w){
+							temp <- w$event
 							bloginfo <- data.frame(temp[names(temp) %in% c('post_title','blog_name','blogger_name','published_date','post_url')])
 							if(length(temp$citations$citation[[1]])>1){
 								citations <- paste(sapply(temp$citations$citation, function(z) z$doi), sep="", collapse=",")
@@ -197,14 +202,18 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 							}
 							cbind(bloginfo, citations)
 						}
-						ldply(y$events, parserblogging, .inform=TRUE)
+            if(length(y$events)==1){
+              parserblogging(y$events)
+            } else
+            {
+              do.call(rbind, lapply(y$events, parserblogging))
+            }
 					}
 				} else if(y$name == "biod"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
 					{
-						parserbiod <- function(x){ data.frame(x) }
 						if(length(y$events) > 1){
-							ldply(y$events, parserbiod)	
+							do.call(rbind, lapply(y$events, data.frame))
 						} else
 						{
 							y$events
@@ -212,12 +221,20 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 					}
 				} else if(y$name == "pubmed"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
-						{ sapply(y$events, `[[`, "event_url") }
+						{ sapply(y$events, function(x) x[c("event","event_url")]) }
 				} else if(y$name == "facebook"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
 					{
-						parsefb <- function(x){ data.frame(x)[,-1] }
-						lapply(y$events, parsefb)
+						parsefb <- function(x){ 
+              x[sapply(x, is.null)] <- "none"
+              data.frame(x) 
+						}
+            if(names(y$events)[[1]]=="url"){
+              parsefb(y$events)
+            } else
+            {
+              lapply(y$events, parsefb)
+            }
 					}
 				} else if(y$name == "mendeley"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
@@ -235,15 +252,19 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 				} else if(y$name == "twitter"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
 					{
-						parsetwitter <- function(x){
-							data.frame(t(x$event))
-						}
-						ldply(y$events, parsetwitter)
+					  temp <- lapply(y$events, function(x) data.frame(t(data.frame(x[[1]]))))
+					  tempdf <- do.call(rbind, temp)
+            row.names(tempdf) <- NULL
+            tempdf
 					}
 				} else if(y$name == "wikipedia"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
 					{ 
-						ldply(y$events, function(x) as.data.frame(x)) 
+					  df <- data.frame(y$events)
+					  df$lang <- row.names(df)
+					  names(df) <- c("values","lang")
+					  row.names(df) <- NULL
+					  df
 					}
 				} else if(y$name == "bloglines"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
@@ -292,7 +313,7 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 							if(!names_){as.numeric(as.character(t(sort_df(gg, "it")[,-2])))} else
 							{ sort_df(gg, "it")[,-1] }
 						}
-						df <- ldply(y$events, parsepmc, names_=FALSE)
+						df <- data.frame(do.call(rbind, lapply(y$events, parsepmc, names_=FALSE)))
 						names(df) <- parsepmc(y$events[[1]], TRUE)
 						df
 					}
@@ -313,6 +334,31 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 						 }
 						 ldply(y$events, parsesciseeker)
 					}
+				} else if(y$name == "relativemetric"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    meta <- y$events[names(y$events) %in% c("start_date","end_date")]
+				    data <- do.call(rbind,
+				                    lapply(y$events$subject_areas, function(x) 
+				                      data.frame(x[[1]], t(data.frame(x[[2]])))
+				                    )
+				    )
+            row.names(data) <- NULL
+            names(data) <- c('reference_set','one','two','three','four','five','six','seven')
+				    list(meta=meta, data=data)
+				  }
+				} else if(y$name == "f1000"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+# 				    paste("parser not written yet")
+				  }
+				} else if(y$name == "figshare"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+# 				    paste("parser not written yet")
+				  }
 				}
 			}
 			
@@ -321,10 +367,11 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, url='h
 			
 			# Assign names to each list element
 			if(is.null(label)){		
-				names(datout) <- c("bloglines","citeulike","connotea","crossref","nature",
-													 "postgenomic","pubmed","scopus","plos","researchblogging",
-													 "biod","webofscience","pmc","facebook","mendeley","twitter",
-													 "wikipedia","scienceseeker")
+# 				names(datout) <- c("bloglines","citeulike","connotea","crossref","nature",
+# 													 "postgenomic","pubmed","scopus","plos","researchblogging",
+# 													 "biod","webofscience","pmc","facebook","mendeley","twitter",
+# 													 "wikipedia","scienceseeker","relativemetric","f1000","figshare")
+        names(datout) <- sapply(events[[1]], "[[", "name")
 			} else
 			{
 				names(datout) <- label

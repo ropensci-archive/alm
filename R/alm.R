@@ -3,8 +3,10 @@
 #' This is the main function to search the PLoS ALM (article-level metrics) API. 
 #' See details for more information.
 #' 
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
+#' @importFrom RCurl getForm getCurlHandle
 #' @importFrom stringr str_replace_all str_split
+#' @importFrom plyr compact
 #' @template alm_params
 #' @template alm_egs
 #' @export

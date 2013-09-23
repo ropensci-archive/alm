@@ -1,6 +1,6 @@
 #' Alt-metrics total citations from all sources.
 #' 
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
 #' @param doi digital object identifier for an article in PLoS Journals
 #' @param key your PLoS API key, either enter, or loads from .Rprofile
 #' @param curl If using in a loop, call getCurlHandle() first and pass 

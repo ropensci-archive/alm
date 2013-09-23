@@ -1,6 +1,8 @@
 #' Plot results of a call to the alm function.
 #' 
-#' @import RJSONIO XML RCurl plyr reshape ggplot2 grid gridExtra
+#' @import ggplot2 grid gridExtra
+#' @importFrom reshape2 melt
+#' @importFrom plyr ldply compact
 #' @param dat Output from \code{alm} (character)
 #' @param type One of totalmetrics or history
 #' @param removezero Remove data sources with all zeros prior to plotting.
@@ -18,6 +20,8 @@
 #' @export
 almplot <- function(dat, type = NULL, removezero = TRUE)
 {  
+  .id <- value <- variable <- dates <- totals <- NULL
+  
   if(is.null(type)) {
   	dat_m <- melt(dat$totals, id.vars=".id")
   	dat_m <- na.omit(dat_m)

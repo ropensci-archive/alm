@@ -1,6 +1,6 @@
 #' Get PubMed Central article ID by inputting the doi for the article.
 #' 
-#' @import RJSONIO RCurl
+#' @importFrom RJSONIO fromJSON
 #' @param doi digital object identifier for an article in PLoS Journals
 #' @param key your PLoS API key, either enter, or loads from .Rprofile
 #' @param curl If using in a loop, call getCurlHandle() first and pass 
@@ -17,6 +17,6 @@ almpubmedcentid <- function(doi, key = NULL, curl = getCurlHandle() )
 	doi <- paste("doi/", doi, sep="")
 	doi2 <- gsub("/", "%2F", doi)
 	url2 <- paste(url, "/info%3A", doi2, '?api_key=', key, '&info=summary', sep='')
-  tt <- fromJSON(url2)
-  as.numeric(tt$article$pmcid)
+	tt <- fromJSON(url2)
+	as.numeric(tt$article$pmcid)
 }

@@ -5,10 +5,8 @@
   signposts(doi = NULL, pmid = NULL, pmcid = NULL,
     mdid = NULL,
     url = "http://alm.plos.org/api/v3/articles",
-    info = "totals", months = NULL, days = NULL,
-    year = NULL, source = NULL, key = NULL,
-    curl = getCurlHandle(), total_details = FALSE,
-    sum_metrics = NULL)
+    months = NULL, days = NULL, year = NULL, source = NULL,
+    key = NULL, curl = getCurlHandle())
 }
 \arguments{
   \item{doi}{Digital object identifier for an article in
@@ -65,13 +63,18 @@
 }
 \value{
   A data.frame of the signpost numbers for the searched
-  object.
+  object, and DOIs.
 }
 \description{
   This includes: \itemize{ \item views: counter + pmc (PLOS
   only) \item shares: facebook (+ twitter at PLOS) \item
   bookmarks: mendeley + citeulike \item citations: crossref
   (scopus at PLOS) }
+}
+\details{
+  This is just a wrapper around the function
+  \code{\link{alm}}, forcing info="summary", then coercing
+  signposts data to a data.frame.
 }
 \examples{
 \dontrun{
@@ -94,6 +97,6 @@ signposts(mdid="35791700-6d00-11df-a2b2-0026b95e3eb7")
 }
 }
 \seealso{
-  \code{\link{alm}}
+  \code{\link{alm}}, \code{\link{plot_signposts}}
 }
 
