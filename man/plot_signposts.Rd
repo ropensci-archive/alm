@@ -31,6 +31,12 @@
   This can be used in conjuction with the function
   \code{\link{signposts}}.
 }
+\details{
+  Note that DOIs are the unit of replication of each study.
+  When plotting, if the prefix is common among all DOIs,
+  then just the end of the DOI, the numeric part is printed
+  to make plots less ugly.
+}
 \examples{
 \dontrun{
 # Plot data from a single identifier gives a bar chart
@@ -43,13 +49,16 @@ dat <- signposts(doi=dois)
 plot_signposts(input=dat)
 
 # Or you can make an interactive chart
-plot_signposts(input=dat, type="interactive")
+plot_signposts(input=dat, type="multiBarChart")
 
 # Lots of DOIs
 library(rplos)
 dois <- searchplos('ecology', 'id', limit = 30)
 dat <- signposts(doi=do.call(c,dois$id))
-plot_signposts(input=dat, type="interactive")
+## multiBarChart
+plot_signposts(input=dat, type="multiBarChart")
+## multiBarHorizontalChart
+plot_signposts(input=dat, type="multiBarHorizontalChart")
 }
 }
 \seealso{

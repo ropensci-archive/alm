@@ -21,11 +21,6 @@
   \item{url}{API endpoint, defaults to
   http://alm.plos.org/api/v3/articles (character)}
 
-  \item{info}{One of summary, history, or detail(default
-  totals + history in a list).  Not specifying anything
-  (the default) returns data.frame of totals across data
-  providers. (character)}
-
   \item{months}{Number of months since publication to
   request historical data for.  See details for a note.
   (numeric)}
@@ -48,18 +43,6 @@
   \item{curl}{If using in a loop, call getCurlHandle()
   first and pass the returned value in here (avoids
   unnecessary footprint)}
-
-  \item{total_details}{If FALSE (the default) the standard
-  totals data.frame is returned; if TRUE, the totals data
-  is in a wide format with more details about the paper,
-  including publication date, title, etc. If you set this
-  to TRUE, the output should no longer with with
-  \code{\link{almplot}}.}
-
-  \item{sum_metrics}{Just like the output you get from
-  setting info='totals', you can get summary metrics by day
-  (sum_metrics='day'), month (sum_metrics='month'), or year
-  (sum_metrics='year').}
 }
 \value{
   A data.frame of the signpost numbers for the searched

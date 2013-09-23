@@ -8,7 +8,22 @@
 #'  \item citations: crossref (scopus at PLOS)
 #' }
 #' 
-#' @template alm_params 
+#' @param doi Digital object identifier for an article in PLoS Journals (character)
+#' @param pmid PubMed object identifier (numeric)
+#' @param pmcid PubMed Central object identifier (numeric)
+#' @param mdid Mendeley object identifier (character)
+#' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
+#' @param months Number of months since publication to request historical data for.
+#'    See details for a note. (numeric)
+#' @param days Number of days since publication to request historical data for. 
+#'    See details for a note. (numeric)
+#' @param year End of which year to request historical data for. 
+#'    See details for a note. (numeric)
+#' @param source Name of source (or list of sources) to get ALM information for (character)
+#' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
+#' @param ... optional additional curl options (debugging tools mostly)
+#' @param curl If using in a loop, call getCurlHandle() first and pass
+#'    the returned value in here (avoids unnecessary footprint)
 #' @details This is just a wrapper around the function \code{\link{alm}}, forcing
 #' info="summary", then coercing signposts data to a data.frame.
 #' @seealso \code{\link{alm}}, \code{\link{plot_signposts}}

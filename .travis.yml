@@ -10,7 +10,7 @@ install:
   - "[ ! -d ~/R ] && mkdir ~/R"
   - R --version
   - R -e '.libPaths(); sessionInfo()'
-  - Rscript -e 'install.packages(c("ggplot2","RCurl","RJSONIO","XML","plyr","stringr","reshape","httr","grid","gridExtra","devtools"), dependencies=TRUE, repos = "http://cran.rstudio.org"); library(devtools); library(RCurl); install_github("alm", "ropensci")'
+  - Rscript -e 'install.packages(c("ggplot2","RCurl","RJSONIO","XML","plyr","stringr","reshape","httr","grid","lubridate","rCharts","devtools"), dependencies=TRUE, repos = "http://cran.rstudio.org"); library(devtools); library(RCurl); install_github("alm", "ropensci")'
 
 script:
   - make install

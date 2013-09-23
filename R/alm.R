@@ -4,7 +4,7 @@
 #' See details for more information.
 #' 
 #' @importFrom RJSONIO fromJSON
-#' @importFrom RCurl getForm getCurlHandle
+#' @importFrom httr GET verbose stop_for_status content
 #' @importFrom stringr str_replace_all str_split
 #' @importFrom plyr compact
 #' @template alm_params
@@ -39,12 +39,13 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
     
 		args <- compact(list(api_key = key, info = info2, months = months, 
 												 days = days, year = year, source = source2, type = names(id)))
-		if(length(id[[1]])==0){stop("Please provide a DOI")} else
+		if(length(id[[1]])==0){stop("Please provide a DOI or other identifier")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
 				args2 <- c(args, ids = id[[1]])
-				out <- getForm(url, .params = args2, curl = curl)
-				tt <- fromJSON(out)
+        out <- GET(url, query=args2)
+        stop_for_status(out)
+        tt <- content(out)
 			} else
 			{
 				if(length(id[[1]])>1){
@@ -59,8 +60,9 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 								id2 <- paste(id[[1]], collapse=",")
 							}
 							args2 <- c(args, ids = id2)
-							out <- getForm(url, .params = args2, curl = curl)
-							tt <- fromJSON(out)
+							out <- GET(url, query=args2)
+							stop_for_status(out)
+							tt <- content(out)
 						}
 						temp <- lapply(idsplit, repeatit)
 						tt <- do.call(c, temp)
@@ -72,8 +74,9 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 							id2 <- paste(id[[1]], collapse=",")
 						}
 						args2 <- c(args, ids = id2)
-						out <- getForm(url, .params = args2, curl = curl)
-						tt <- fromJSON(out)
+						out <- GET(url, query=args2)
+						stop_for_status(out)
+						tt <- content(out)
 					}
 				}
 			}
@@ -96,7 +99,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
             temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
             names(temp) <- str_replace_all(names(temp), "\\.", "_")
             return( 
-              cbind(data.frame(title=data_$title, publication_date=data_$publication_date), 
+              cbind(data.frame(doi=data_$doi, title=data_$title, publication_date=data_$publication_date), 
                     temp, date_modified=data_$update_date)
             )
           } else
@@ -120,7 +123,9 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 					if(total_details){
 					  temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
 					  names(temp) <- str_replace_all(names(temp), "\\.", "_")
-					  totals3 <- cbind(data.frame(title=data_$title, publication_date=data_$publication_date), temp, date_modified=data_$update_date)
+					  totals3 <- cbind(data.frame(doi=data_$doi, title=data_$title, 
+                             publication_date=data_$publication_date), 
+                             temp, date_modified=data_$update_date)
 					} else
 					{
 					  totals3 <- totalsdf

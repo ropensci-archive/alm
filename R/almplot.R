@@ -1,6 +1,7 @@
 #' Plot results of a call to the alm function.
 #' 
-#' @import ggplot2 grid gridExtra
+#' @import ggplot2
+#' @importFrom grid grid.newpage pushViewport viewport grid.layout
 #' @importFrom reshape2 melt
 #' @importFrom plyr ldply compact
 #' @param dat Output from \code{alm} (character)
