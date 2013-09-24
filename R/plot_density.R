@@ -1,4 +1,4 @@
-#' Density plots from PLOS Article Level Metrics data
+#' Density and histogram plots from PLOS Article Level Metrics data
 #'
 #' @import ggplot2
 #' @importFrom grid unit grid.text gpar viewport grid.newpage
@@ -12,6 +12,7 @@
 #'    rgb, etc.
 #' @param title Title for the plot, in top matching the color of the density plot.
 #' @param description Optional description, subtending the title. 
+#' @param plot_type Type of plot, one of density (default) or histogram.
 #' @author Martin Fenner, mfenner@@plos.org, modified by Scott Chamberlain
 #' @examples \dontrun{
 #' library(rplos); library(plyr)
@@ -37,18 +38,16 @@
 #' @export
 
 plot_density <- function(input, source="scopus_citations", color="#1447f2", 
-                         title = "", description = "")
+                         title = "", description = "", plot_type="density")
 {
   plos_color <- "#1447f2"
   input$publication_date <- as.Date(input$publication_date)
+  plot_type <- match.arg(plot_type, choices=c("histogram","density"))
+  plot_type <- switch(plot_type, 
+           histogram = "geom_histogram", 
+           density = "geom_density")
   
   # Labels
-  jrnls <- sapply(as.character(input$doi), function(x) strsplit(x, "\\.")[[1]][[3]], USE.NAMES=FALSE)
-  jrnl_doi_abbrev <- c("pone","pgen","ppat","pcbi","pbio","pntd","pmed","pctr")
-  jrnl_lkup <- data.frame(abbrevs=jrnl_doi_abbrev, names=c("PLOS One","PLOS Genetics","PLOS Pathogens","PLOS CompBiol","PLOS Biology","PLOS NTD","PLOS Medicine","PLOS ClinicalTrials"), stringsAsFactors=FALSE)
-  indata <- jrnl_doi_abbrev[jrnl_doi_abbrev %in% unique(jrnls)]
-  journals <- jrnl_lkup[jrnl_lkup$abbrevs %in% indata, "names"]
-  yrs <- unique(year(input$publication_date))  
   plos_xlab <- capwords(gsub("_"," ",source))
 
   # Calculate quantiles and min/max x-axis limits
@@ -78,7 +77,7 @@ plot_density <- function(input, source="scopus_citations", color="#1447f2",
     p <- 
     ggplot(input, aes_string(x=source)) +
       theme_density() +
-      geom_density(fill=plos_color, colour=plos_color) +
+      eval(parse(text=plot_type))(fill=plos_color, colour=plos_color) +
       scale_x_continuous(limits=minmax)
     grid.newpage()
     print(p, vp = viewport(width = 1, height = 1))
@@ -104,7 +103,7 @@ plot_density <- function(input, source="scopus_citations", color="#1447f2",
     dfm <- melt(df)
     p <- ggplot(dfm, aes(x=value, fill=variable, colour=variable)) +
       theme_density() +
-      geom_density() +
+      eval(parse(text=plot_type))() +
       theme(legend.position="none") +
       facet_wrap(~variable, scales="free") +
       scale_colour_manual(values = colors) +
