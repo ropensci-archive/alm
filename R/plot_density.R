@@ -77,7 +77,7 @@ plot_density <- function(input, source="scopus_citations", color="#1447f2",
     p <- 
     ggplot(input, aes_string(x=source)) +
       theme_density() +
-      eval(parse(text=plot_type))(fill=plos_color, colour=plos_color) +
+      eval(parse(text=plot_type))(fill=color, colour=color) +
       scale_x_continuous(limits=minmax)
     grid.newpage()
     print(p, vp = viewport(width = 1, height = 1))
