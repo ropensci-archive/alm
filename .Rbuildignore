@@ -1,0 +1,5 @@
+.gitignore
+inst/assets/
+.travis.yml
+Makefile
+man-roxygen

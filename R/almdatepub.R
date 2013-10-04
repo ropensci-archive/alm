@@ -43,13 +43,13 @@ almdatepub <- function(doi, get = NA, sleep = 0, key = NULL)
 	  	doi <- paste("doi/", doi, sep="")
 	  	doi2 <- gsub("/", "%2F", doi)
 	  	url2 <- paste(url, "/info%3A", doi2, '?api_key=', key, sep='')
-	  	date <- fromJSON(url2)
+	  	date <- RJSONIO::fromJSON(url2)
 	  	getdate(date[[1]])
 	  } else
 	  	if(length(doi)>1){
 	  		doi2 <- paste(sapply(doi, function(x) gsub("/", "%2F", x)), collapse=",")
 	  		url2 <- paste(url, "?ids=", doi2, sep="")
-	  		out <- fromJSON(url2)
+	  		out <- RJSONIO::fromJSON(url2)
 	  		sapply(out, getdate)
 	  	}
 }

@@ -3,7 +3,6 @@
 #' This is the main function to search the PLoS ALM (article-level metrics) API. 
 #' See details for more information.
 #' 
-#' @importFrom RJSONIO fromJSON
 #' @importFrom httr GET verbose stop_for_status content
 #' @importFrom stringr str_replace_all str_split
 #' @importFrom plyr compact

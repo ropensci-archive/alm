@@ -2,7 +2,7 @@
 #' 
 #' This can be used in conjuction with the function \code{\link{signposts}}.
 #' 
-#' @import ggplot2 rCharts
+#' @import ggplot2
 #' @importFrom reshape2 melt
 #' @param input A data.frame from a search from the \code{\link{signposts}} function
 #' @param type Type of chart, one of bar (default), multiBarChart, or 
@@ -25,7 +25,8 @@
 #' plot_signposts(input=dat)
 #' 
 #' # Plot data from many identifiers gives a line chart
-#' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117','10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
+#' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
+#'    '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 #' dat <- signposts(doi=dois)
 #' plot_signposts(input=dat)
 #' 

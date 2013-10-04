@@ -1,6 +1,6 @@
 Package: alm
 Version: 0.1
-Date: 2013-09-23
+Date: 2013-10-04
 Description: R wrapper to the almetrics API platform developed by PLoS
 Title: R wrapper to the almetrics API platform developed by PLoS
 License: CC0
@@ -16,23 +16,24 @@ URL: https://github.com/ropensci/alm
 BugReports: http://www.github.com/ropensci/alm/issues
 LazyLoad: yes
 LazyData: yes
+VignetteBuilder: knitr
 Imports:
     ggplot2,
     RCurl,
     RJSONIO,
-    XML,
     plyr,
     stringr,
     reshape,
     reshape2,
     httr,
     grid,
-    lubridate,
-    rCharts
+    lubridate
 Suggests:
     testthat,
     roxygen2,
-    rplos
+    rplos,
+    knitr,
+    rjson
 Collate:
     'almdatepub.R'
     'almdateupdated.R'
@@ -49,3 +50,4 @@ Collate:
     'signposts.R'
     'plot_signposts.R'
     'plot_density.R'
+    'globals.R'

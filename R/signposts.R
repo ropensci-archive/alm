@@ -19,7 +19,8 @@
 #'    See details for a note. (numeric)
 #' @param year End of which year to request historical data for. 
 #'    See details for a note. (numeric)
-#' @param source Name of source (or list of sources) to get ALM information for (character)
+#' @param source Name of source (or list of sources) to get ALM information for 
+#'    (character)
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
 #' @param ... optional additional curl options (debugging tools mostly)
 #' @param curl If using in a loop, call getCurlHandle() first and pass
@@ -34,7 +35,8 @@
 #' signposts(doi="10.1371/journal.pone.0029797")
 #' 
 #' # Many DOIs
-#' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117','10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
+#' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
+#' '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 #' signposts(doi=dois)
 #' 
 #' # A single PubMed ID (pmid)

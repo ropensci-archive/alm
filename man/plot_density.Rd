@@ -32,24 +32,32 @@
 \examples{
 \dontrun{
 library(rplos); library(plyr)
-dois <- searchplos(terms='*:*', fields="id", toquery=list('cross_published_journal_key:PLoSONE', 'doc_type:full', 'publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]'), limit=200)
+dois <- searchplos(terms='*:*', fields="id",
+   toquery=list('cross_published_journal_key:PLoSONE', 'doc_type:full',
+   'publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]'), limit=200)
 alm <- alm(doi=do.call(c,dois$id), total_details=TRUE)
 alm <- ldply(alm)
 plot_density(alm)
 plot_density(alm, color="#DCA121")
 plot_density(alm, title="Scopus citations from 2010")
-plot_density(alm, title="Scopus citations from 2010", description="Probablity of X number of citations for a paper")
+plot_density(alm, title="Scopus citations from 2010", description="Probablity of
+   X number of citations for a paper")
 plot_density(alm, description="Probablity of X number of citations for a paper")
 plot_density(input=alm, source="crossref_citations")
 plot_density(input=alm, source="twitter_total")
 plot_density(input=alm, source="counter_total")
 plot_density(input=alm, source=c("counter_total","crossref_citations"))
 plot_density(input=alm, source=c("counter_total","crossref_citations"))
-plot_density(input=alm, source=c("counter_total","crossref_citations","twitter_total"))
-plot_density(input=alm, source=c("counter_total","crossref_citations","twitter_total"), color=c("#DBAC6A", "#E09B33", "#A06D34"))
-plot_density(input=alm, source=c("counter_total","crossref_citations","twitter_total","wos_citations"))
-plot_density(input=alm, source=c("counter_total","crossref_citations"), title="Counter, Crossref, Twitter, and Web of Science")
-plot_density(input=alm, source=c("counter_total","crossref_citations","twitter_total","wos_citations"), color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4"))
+plot_density(input=alm, source=c("counter_total","crossref_citations",
+   "twitter_total"))
+plot_density(input=alm, source=c("counter_total","crossref_citations","twitter_total"),
+   color=c("#DBAC6A", "#E09B33", "#A06D34"))
+plot_density(input=alm, source=c("counter_total","crossref_citations",
+   "twitter_total","wos_citations"))
+plot_density(input=alm, source=c("counter_total","crossref_citations"),
+   title="Counter, Crossref, Twitter, and Web of Science")
+plot_density(input=alm, source=c("counter_total","crossref_citations",
+   "twitter_total","wos_citations"), color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4"))
 }
 }
 \author{

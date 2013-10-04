@@ -78,19 +78,22 @@
 # For one article
 out <- almevents(doi="10.1371/journal.pone.0029797")
 names(out) # names of sources
-out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")] # remove those with no data
+# remove those with no data
+out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")]
 out[["pmc"]] # get the results for PubMed Central
 out[["twitter"]] # get the results for twitter (boo, there aren't any)
 out[c("twitter","crossref")] # get the results for two sources
 
 # Another example
 out <- almevents(doi="10.1371/journal.pone.0001543")
-out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")] # remove those with no data
+# remove those with no data
+out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")]
 names(out)
 
 # Another example
 out <- almevents(doi="10.1371/journal.pone.0035869")
-out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")] # remove those with no data
+# remove those with no data
+out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")]
 names(out)
 
 # Two doi's

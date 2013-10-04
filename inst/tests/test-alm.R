@@ -12,13 +12,3 @@ test_that("alm returns the correct class", {
 	expect_that(dat3, is_a("data.frame"))
 	expect_that(dat4, is_a("data.frame"))
 })
-
-test_that("alm returns the correct dimensions", {
-  expect_that(nrow(dat), equals(21))
-  expect_that(ncol(dat), equals(9))
-  expect_that(length(dat2), equals(2))
-  expect_that(ncol(dat2[[2]]), equals(3))
-  
-  expect_that(ncol(dat3), equals(163))
-  expect_that(nrow(dat4), equals(27))
-})
