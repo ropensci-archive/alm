@@ -1,6 +1,6 @@
 Package: alm
 Version: 0.1
-Date: 2013-10-04
+Date: 2013-10-05
 Description: R wrapper to the almetrics API platform developed by PLoS
 Title: R wrapper to the almetrics API platform developed by PLoS
 License: CC0

@@ -53,7 +53,7 @@ plot_signposts(input=dat)
 plot_signposts(input=dat, type="multiBarChart")
 
 # Lots of DOIs
-library(rplos)
+library(rplos); library(rCharts)
 dois <- searchplos('ecology', 'id', limit = 30)
 dat <- signposts(doi=do.call(c,dois$id))
 ## multiBarChart
