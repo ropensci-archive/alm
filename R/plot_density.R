@@ -51,13 +51,13 @@ plot_density <- function(input, source="scopus_citations", color="#1447f2",
   plos_color <- "#1447f2"
   input$publication_date <- as.Date(input$publication_date)
   plot_type <- match.arg(plot_type, choices=c("histogram","density"))
+  yvarname <- switch(plot_type, 
+                      histogram = "No. of articles", 
+                      density = "Probability")
   plot_type <- switch(plot_type, 
-           histogram = "geom_histogram", 
-           density = "geom_density")
+                      histogram = "geom_histogram", 
+                      density = "geom_density")
   
-  # Labels
-  plos_xlab <- capwords(gsub("_"," ",source))
-
   # Calculate quantiles and min/max x-axis limits
   minmax <- c(0, round_any(max(input[,source]), 10, f=ceiling))
   
@@ -82,14 +82,14 @@ plot_density <- function(input, source="scopus_citations", color="#1447f2",
   }
   # Plot
   if(length(source)==1){
-    p <- 
-    ggplot(input, aes_string(x=source)) +
+    plos_xlab <- capwords(gsub("_"," ",source))
+    p <- ggplot(input, aes_string(x=source)) +
       theme_density() +
       eval(parse(text=plot_type))(fill=color, colour=color) +
       scale_x_continuous(limits=minmax)
     grid.newpage()
     print(p, vp = viewport(width = 1, height = 1))
-    grid.text("Probabilty", x=0.03, y=0.5, rot=90, gp=gpar(cex=1, col=plos_color))
+    grid.text(yvarname, x=0.03, y=0.5, rot=90, gp=gpar(cex=1, col=plos_color))
     grid.text(plos_xlab, x=0.5, y=0.04, gp=gpar(cex=1, col=plos_color))
     if(nchar(title)==0 & nchar(description)!=0){
       grid.text(paste(strwrap(description,width=90), collapse="\n"), x=0.1, y=0.95, just="left", gp=gpar(cex=1))
@@ -118,8 +118,8 @@ plot_density <- function(input, source="scopus_citations", color="#1447f2",
       scale_fill_manual(values = colors)
     grid.newpage()
     print(p, vp = viewport(width = 1, height = 1))
-    grid.text("Probabilty", x=0.03, y=0.5, rot=90, gp=gpar(cex=1))
-    grid.text(plos_xlab, x=0.5, y=0.04, gp=gpar(cex=1))
+    grid.text(yvarname, x=0.03, y=0.5, rot=90, gp=gpar(cex=1))
+#     grid.text("Count", x=0.5, y=0.04, gp=gpar(cex=1))
     if(nchar(title)==0 & nchar(description)!=0){
       grid.text(paste(strwrap(description,width=90), collapse="\n"), x=0.1, y=0.95, just="left", gp=gpar(cex=1))
     } else if(nchar(description)==0 & nchar(title)!=0){
