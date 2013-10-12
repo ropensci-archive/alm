@@ -50,6 +50,10 @@
 #' out[["twitter"]] # get the results for twitter (boo, there aren't any)
 #' out[c("twitter","crossref")] # get the results for two sources
 #' 
+#' # 
+#' out <- alm(doi="10.1371/journal.pgen.1003471")
+#' out[["wordpress"]]
+#' 
 #' # Another example
 #' out <- almevents(doi="10.1371/journal.pone.0001543")
 #' # remove those with no data
@@ -361,6 +365,36 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				  {
 				    y$events
 # 				    paste("parser not written yet")
+				  }
+				} else if(y$name == "wordpress"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+# 				    paste("parser not written yet")
+				  }
+				} else if(y$name == "pmceurope"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+				    # 				    paste("parser not written yet")
+				  }
+				} else if(y$name == "pmceuropedata"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+				    # 				    paste("parser not written yet")
+				  }
+				} else if(y$name == "openedition"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+				    # 				    paste("parser not written yet")
+				  }
+				} else if(y$name == "reddit"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+				    # 				    paste("parser not written yet")
 				  }
 				}
 			}

@@ -84,6 +84,10 @@ out[["pmc"]] # get the results for PubMed Central
 out[["twitter"]] # get the results for twitter (boo, there aren't any)
 out[c("twitter","crossref")] # get the results for two sources
 
+#
+out <- alm(doi="10.1371/journal.pgen.1003471")
+out[["wordpress"]]
+
 # Another example
 out <- almevents(doi="10.1371/journal.pone.0001543")
 # remove those with no data
