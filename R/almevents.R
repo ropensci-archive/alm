@@ -5,7 +5,7 @@
 #' @importFrom RCurl getCurlHandle getForm
 #' @importFrom RJSONIO fromJSON
 #' @importFrom reshape sort_df
-#' @importFrom plyr compact
+#' @importFrom plyr compact rbind.fill
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
@@ -345,7 +345,7 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				  if(length(y$events)==0){paste("sorry, no events content yet")} else
 				  {
 				    meta <- y$events[names(y$events) %in% c("start_date","end_date")]
-				    data <- do.call(rbind,
+				    data <- do.call(rbind.fill,
 				                    lapply(y$events$subject_areas, function(x) 
 				                      data.frame(x[[1]], t(data.frame(x[[2]])))
 				                    )
