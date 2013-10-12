@@ -351,7 +351,7 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				                    )
 				    )
             row.names(data) <- NULL
-            names(data) <- c('reference_set','one','two','three','four','five','six','seven')
+#             names(data) <- c('reference_set','one','two','three','four','five','six','seven')
 				    list(meta=meta, data=data)
 				  }
 				} else if(y$name == "f1000"){
