@@ -52,3 +52,4 @@ Collate:
     'plot_signposts.R'
     'plot_density.R'
     'globals.R'
+    'plot_timeline.R'
