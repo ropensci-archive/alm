@@ -9,7 +9,7 @@
 #' @template alm_params
 #' @template alm_egs
 #' @export
-alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, 
+alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
                 url = 'http://alm.plos.org/api/v3/articles',
 								info = "totals", months = NULL, days = NULL, year = NULL, 
 								source = NULL, key = NULL, curl = getCurlHandle(), 
