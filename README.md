@@ -6,7 +6,7 @@
      /        \  |_______ 	|        |
 </pre>
 
-<!-- [![Build Status](https://api.travis-ci.org/ropensci/alm.png)](https://travis-ci.org/ropensci/alm) -->
+[![Build Status](https://api.travis-ci.org/ropensci/alm.png)](https://travis-ci.org/ropensci/alm)
 
 ### What it is!?
 

@@ -5,6 +5,7 @@ MINOR IMPROVEMENTS
 
 * Vignette changed to a link to the vignette on the web, and the file moved to vignettes/ dir from inst/doc dir.
 * Added parsers for F1000, Figshare, and Wordpress events data in almevents(). Note that the parsing for Figshare just returns the raw data in list format - there is a lot of text/paragraphs, so it didn't make sense to return as as data.frame.
+* Added link to online tutorial to most function docs.
 
 alm 0.1
 ===============
