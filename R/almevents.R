@@ -78,6 +78,9 @@
 #' 
 #' # Specify two specific sources
 #' almevents(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
+#' 
+#' # Figshare data 
+#' almevents(doi="10.1371/journal.pone.0069841")
 #' }
 #' @export
 almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, 
@@ -90,12 +93,12 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 	if(is.null(source)){source2 <- NULL} else{ source2 <- paste(source,collapse=",") }
 	
 	parse_events <- function() {	
-		args <- compact(
-			list(
-				api_key = key, info = 'event', months = months, 
-				days = days, source = source2, type = names(id)
-				)
-			)
+	  args <- compact(
+	    list(
+	      api_key = key, info = 'event', months = months, 
+	      days = days, source = source2, type = names(id)
+	    )
+	  )
 		if(length(id[[1]])==0){stop("Please provide a DOI")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
@@ -357,20 +360,17 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				} else if(y$name == "f1000"){
 				  if(length(y$events)==0){paste("sorry, no events content yet")} else
 				  {
-				    y$events
-# 				    paste("parser not written yet")
+				    data.frame(rbind(y$events), stringsAsFactors=FALSE)
 				  }
 				} else if(y$name == "figshare"){
 				  if(length(y$events)==0){paste("sorry, no events content yet")} else
 				  {
-				    y$events
-# 				    paste("parser not written yet")
+				    y$events$items
 				  }
 				} else if(y$name == "wordpress"){
 				  if(length(y$events)==0){paste("sorry, no events content yet")} else
 				  {
-				    y$events
-# 				    paste("parser not written yet")
+				    lapply(y$events, function(x) do.call(c, x))
 				  }
 				} else if(y$name == "pmceurope"){
 				  if(length(y$events)==0){paste("sorry, no events content yet")} else

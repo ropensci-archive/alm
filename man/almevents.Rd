@@ -112,6 +112,9 @@ almevents(doi="10.1371/journal.pone.0035869", source="crossref")
 
 # Specify two specific sources
 almevents(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
+
+# Figshare data
+almevents(doi="10.1371/journal.pone.0069841")
 }
 }
 

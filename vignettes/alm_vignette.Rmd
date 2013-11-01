@@ -1,6 +1,6 @@
 <!--
-%\VignetteEngine{knitr}
-%\VignetteIndexEntry{An R Markdown Vignette made with knitr}
+%\VignetteEngine{knitr::knitr}
+%\VignetteIndexEntry{alm vignette}
 -->
 
 alm tutorial
