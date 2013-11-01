@@ -6,6 +6,8 @@
 #' @param curl If using in a loop, call getCurlHandle() first and pass 
 #'  the returned value in here (avoids unnecessary footprint)
 #' @return The PubMed Central article ID.
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' almpubmedcentid(doi = '10.1371/journal.pbio.0000012')
 #' }

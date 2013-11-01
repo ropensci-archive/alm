@@ -7,6 +7,8 @@
 #'  the returned value in here (avoids unnecessary footprint)
 #' @return data.frame of total no. views (counter + pmc), shares (facebook + twitter),
 #' 		bookmarks (mendeley + citeulike), and citations (crossref)
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' almtotals(doi = '10.1371/journal.pbio.0000012')
 #' }

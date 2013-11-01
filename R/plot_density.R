@@ -14,6 +14,8 @@
 #' @param description Optional description, subtending the title. 
 #' @param plot_type Type of plot, one of density (default) or histogram.
 #' @author Martin Fenner, mfenner@@plos.org, modified by Scott Chamberlain
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' library(rplos); library(plyr)
 #' dois <- searchplos(terms='*:*', fields="id", 

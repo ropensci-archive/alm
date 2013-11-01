@@ -19,6 +19,8 @@
 #' part is printed to make plots less ugly. 
 #' @seealso \code{\link{alm}}, \code{\link{plot_signposts}}
 #' @return A data.frame of the signpost numbers for the searched object.
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' # Plot data from a single identifier gives a bar chart
 #' dat <- signposts(doi="10.1371/journal.pone.0029797")

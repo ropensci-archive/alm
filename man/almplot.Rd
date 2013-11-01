@@ -32,6 +32,10 @@ almplot(dat=out, type='history') # just historical data
 almplot(dat=out) # leaving type as NULL prints both plots
 }
 }
+\references{
+  See a tutorial/vignette for alm at
+  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+}
 \seealso{
   \code{\link{alm}} which is required to use this function.
 }

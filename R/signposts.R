@@ -29,6 +29,8 @@
 #' info="summary", then coercing signposts data to a data.frame.
 #' @seealso \code{\link{alm}}, \code{\link{plot_signposts}}
 #' @return A data.frame of the signpost numbers for the searched object, and DOIs.
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' # The default call with either doi, pmid, pmcid, or mdid without specifying 
 #' # an argument for info

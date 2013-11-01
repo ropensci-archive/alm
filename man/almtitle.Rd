@@ -27,4 +27,8 @@
 almtitle(doi='10.1371/journal.pbio.0000012')
 }
 }
+\references{
+  See a tutorial/vignette for alm at
+  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+}
 

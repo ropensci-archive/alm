@@ -80,6 +80,10 @@ signposts(pmcid=212692)
 signposts(mdid="35791700-6d00-11df-a2b2-0026b95e3eb7")
 }
 }
+\references{
+  See a tutorial/vignette for alm at
+  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+}
 \seealso{
   \code{\link{alm}}, \code{\link{plot_signposts}}
 }

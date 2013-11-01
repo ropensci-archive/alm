@@ -117,4 +117,8 @@ almevents(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
 almevents(doi="10.1371/journal.pone.0069841")
 }
 }
+\references{
+  See a tutorial/vignette for alm at
+  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+}
 

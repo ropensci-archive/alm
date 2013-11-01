@@ -12,6 +12,8 @@
 #' 		you get history and summary data so that either or both can be plotted
 #' 		in this function.
 #' @seealso \code{\link{alm}} which is required to use this function.
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' out <- alm(doi='10.1371/journal.pone.0001543', info='detail')
 #' almplot(out, type='totalmetrics') # just totalmetrics data

@@ -62,6 +62,10 @@ plot_signposts(input=dat, type="multiBarChart")
 plot_signposts(input=dat, type="multiBarHorizontalChart")
 }
 }
+\references{
+  See a tutorial/vignette for alm at
+  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+}
 \seealso{
   \code{\link{alm}}, \code{\link{plot_signposts}}
 }

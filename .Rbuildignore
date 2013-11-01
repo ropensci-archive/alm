@@ -3,12 +3,6 @@ inst/assets/
 .travis.yml
 Makefile
 man-roxygen
-inst/ignore
-inst/assets
-vignettes/cache
-vignettes/figure
-vignettes/alm_vignette.html
-vignettes/alm_vignette.Rmd
-vignettes/alm_vignette.md
-vignettes/margins.sty
-vignettes/Makefile
+stuff/ignore
+stuff/assets
+stuff/doc

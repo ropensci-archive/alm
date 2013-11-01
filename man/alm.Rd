@@ -146,6 +146,10 @@ alm(doi='10.1371/journal.pone.0036240', sum_metrics='month')
 alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
 }
 }
+\references{
+  See a tutorial/vignette for alm at
+  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+}
 \seealso{
   \code{\link{almplot}}
 }

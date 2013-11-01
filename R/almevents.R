@@ -40,6 +40,8 @@
 #'    See more info on PLOS's relative metrics event source here 
 #'    \url{http://www.plosone.org/static/almInfo#relativeMetrics}
 #' @return PLoS altmetrics as data.frame's.
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' # For one article
 #' out <- almevents(doi="10.1371/journal.pone.0029797")

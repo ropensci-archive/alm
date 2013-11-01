@@ -64,4 +64,8 @@ plot_density(input=alm, source=c("counter_total","crossref_citations",
   Martin Fenner, mfenner@plos.org, modified by Scott
   Chamberlain
 }
+\references{
+  See a tutorial/vignette for alm at
+  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+}
 

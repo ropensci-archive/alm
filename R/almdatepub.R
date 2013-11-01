@@ -8,6 +8,8 @@
 #'    zero.  Set to higher number if you are using this function in a loop with
 #'    many API calls.
 #' @param key your PLoS API key, either enter, or loads from .Rprofile
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @return Date when article was published.
 #' @examples \dontrun{
 #' almdatepub(doi='10.1371/journal.pone.0026871')

@@ -8,6 +8,8 @@
 #' @importFrom plyr compact
 #' @template alm_params
 #' @template alm_egs
+#' @references See a tutorial/vignette for alm at 
+#' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @export
 alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
                 url = 'http://alm.plos.org/api/v3/articles',

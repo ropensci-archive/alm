@@ -35,4 +35,8 @@ dois <- c('10.1371/journal.pone.0026871','10.1371/journal.pone.0048868',
 almdatepub(doi=dois, get="month")
 }
 }
+\references{
+  See a tutorial/vignette for alm at
+  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+}
 
