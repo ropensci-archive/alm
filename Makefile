@@ -16,3 +16,8 @@ install: build
 check: build
 	cd ..;\
 	R CMD check $(PKGNAME)_$(PKGVERS).tar.gz --as-cran
+
+vignettes: 
+	Rscript -e 'setwd("~/github/ropensci/alm/vignettes"); library(knitr); knit("alm_vignette.Rmd")'
+	cd vignettes;\
+	pandoc -H margins.sty alm_vignette.md -o alm_vignette.pdf

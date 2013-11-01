@@ -559,15 +559,11 @@ plot_signposts(input = dat)
 ![plot of chunk signposts2](figure/signposts2.png) 
 
 
-Or make an interactive chart. The plot won't show below. Try it on your own though! It should open in your browser and you can interact with it.
-
-
-```r
-plot_signposts(input = dat, type = "multiBarChart")
-```
-
+Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
 
 ## Density and histogram plots from PLOS Article Level Metrics data
+
+Note: Do you the key below in the `searchplos` call in this example, but if you plan to use rplos more, get your own API key [here](http://api.plos.org/).
 
 
 ```r
@@ -575,7 +571,7 @@ library(rplos)
 library(plyr)
 dois <- searchplos(terms = "*:*", fields = "id", toquery = list("cross_published_journal_key:PLoSONE", 
     "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), 
-    limit = 100)
+    limit = 100, key = "WQcDSXml2VSWx3P")
 alm <- alm(doi = do.call(c, dois$id), total_details = TRUE)
 alm <- ldply(alm)
 ```
@@ -615,7 +611,7 @@ Plot a particular source
 
 
 ```r
-names(alm)[1:20]
+names(alm)[1:35]
 ```
 
 ```
@@ -625,7 +621,12 @@ names(alm)[1:20]
 [10] "bloglines_likes"     "bloglines_citations" "bloglines_total"    
 [13] "citeulike_pdf"       "citeulike_html"      "citeulike_shares"   
 [16] "citeulike_groups"    "citeulike_comments"  "citeulike_likes"    
-[19] "citeulike_citations" "citeulike_total"    
+[19] "citeulike_citations" "citeulike_total"     "connotea_pdf"       
+[22] "connotea_html"       "connotea_shares"     "connotea_groups"    
+[25] "connotea_comments"   "connotea_likes"      "connotea_citations" 
+[28] "connotea_total"      "crossref_pdf"        "crossref_html"      
+[31] "crossref_shares"     "crossref_groups"     "crossref_comments"  
+[34] "crossref_likes"      "crossref_citations" 
 ```
 
 ```r
