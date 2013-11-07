@@ -116,4 +116,6 @@ alm(doi='10.1371/journal.pone.0035869', total_details=TRUE)
 1                       3                   3                32898
 ```
 
-### >>> alm is part of the [rOpenSci Project](http://ropensci.github.com)
+---
+
+[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
