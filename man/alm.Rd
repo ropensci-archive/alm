@@ -2,12 +2,10 @@
 \alias{alm}
 \title{Retrieve PLoS article-level metrics (ALM).}
 \usage{
-  alm(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
-    url = "http://alm.plos.org/api/v3/articles",
-    info = "totals", months = NULL, days = NULL,
-    year = NULL, source = NULL, key = NULL,
-    curl = getCurlHandle(), total_details = FALSE,
-    sum_metrics = NULL)
+alm(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
+  url = "http://alm.plos.org/api/v3/articles", info = "totals",
+  months = NULL, days = NULL, year = NULL, source = NULL, key = NULL,
+  curl = getCurlHandle(), total_details = FALSE, sum_metrics = NULL)
 }
 \arguments{
   \item{doi}{Digital object identifier for an article in
@@ -63,23 +61,23 @@
   (sum_metrics='year').}
 }
 \value{
-  PLoS altmetrics as data.frame's.
+PLoS altmetrics as data.frame's.
 }
 \description{
-  This is the main function to search the PLoS ALM
-  (article-level metrics) API. See details for more
-  information.
+This is the main function to search the PLoS ALM
+(article-level metrics) API. See details for more
+information.
 }
 \details{
-  You can only supply one of the parmeters doi, pmid,
-  pmcid, and mdid.
+You can only supply one of the parmeters doi, pmid, pmcid,
+and mdid.
 
-  Query for as many articles at a time as you like. Though
-  queries are broken up in to smaller bits of 50
-  identifiers at a time.
+Query for as many articles at a time as you like. Though
+queries are broken up in to smaller bits of 50 identifiers
+at a time.
 
-  If you supply days, months and/or year parameters, days
-  takes precedence over months and year.
+If you supply days, months and/or year parameters, days
+takes precedence over months and year.
 }
 \examples{
 \dontrun{
@@ -101,7 +99,8 @@ alm(pmid=22590526)
 alm(pmcid=212692, info='summary')
 
 # A single Mendeley UUID (mdid)
-alm(mdid="35791700-6d00-11df-a2b2-0026b95e3eb7")
+alm(mdid="edc2e519-cc10-36fc-a68d-12e0116c6ac0")
+alm(mdid=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0", "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
 
 # Provide more than one DOI
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
@@ -147,10 +146,10 @@ alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
 }
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 \seealso{
-  \code{\link{almplot}}
+\code{\link{almplot}}
 }
 

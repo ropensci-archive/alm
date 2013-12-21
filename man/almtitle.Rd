@@ -2,7 +2,7 @@
 \alias{almtitle}
 \title{Get title of article by inputting the doi for the article.}
 \usage{
-  almtitle(doi, key = NULL, curl = getCurlHandle())
+almtitle(doi, key = NULL, curl = getCurlHandle())
 }
 \arguments{
   \item{doi}{digital object identifier for an article in
@@ -16,11 +16,10 @@
   unnecessary footprint)}
 }
 \value{
-  Title of article, in xml format.
+Title of article, in xml format.
 }
 \description{
-  Get title of article by inputting the doi for the
-  article.
+Get title of article by inputting the doi for the article.
 }
 \examples{
 \dontrun{
@@ -28,7 +27,7 @@ almtitle(doi='10.1371/journal.pbio.0000012')
 }
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 

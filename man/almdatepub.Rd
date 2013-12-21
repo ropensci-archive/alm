@@ -2,7 +2,7 @@
 \alias{almdatepub}
 \title{Get the date when the article was published.}
 \usage{
-  almdatepub(doi, get = NA, sleep = 0, key = NULL)
+almdatepub(doi, get = NA, sleep = 0, key = NULL)
 }
 \arguments{
   \item{doi}{Digital object identifier for an article in
@@ -19,10 +19,10 @@
   .Rprofile}
 }
 \value{
-  Date when article was published.
+Date when article was published.
 }
 \description{
-  Get the date when the article was published.
+Get the date when the article was published.
 }
 \examples{
 \dontrun{
@@ -36,7 +36,7 @@ almdatepub(doi=dois, get="month")
 }
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 

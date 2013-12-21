@@ -2,9 +2,9 @@
 \alias{almdateupdated}
 \title{Get the date when article was last updated.}
 \usage{
-  almdateupdated()
+almdateupdated()
 }
 \description{
-  Get the date when article was last updated.
+Get the date when article was last updated.
 }
 

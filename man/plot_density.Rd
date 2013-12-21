@@ -2,9 +2,8 @@
 \alias{plot_density}
 \title{Density and histogram plots from PLOS Article Level Metrics data}
 \usage{
-  plot_density(input, source = "scopus_citations",
-    color = "#1447f2", title = "", description = "",
-    plot_type = "density")
+plot_density(input, source = "scopus_citations", color = "#1447f2",
+  title = "", description = "", plot_type = "density")
 }
 \arguments{
   \item{input}{A data.frame, usuaally from a call to
@@ -26,8 +25,8 @@
   or histogram.}
 }
 \description{
-  Density and histogram plots from PLOS Article Level
-  Metrics data
+Density and histogram plots from PLOS Article Level Metrics
+data
 }
 \examples{
 \dontrun{
@@ -61,11 +60,11 @@ plot_density(input=alm, source=c("counter_total","crossref_citations",
 }
 }
 \author{
-  Martin Fenner, mfenner@plos.org, modified by Scott
-  Chamberlain
+Martin Fenner, mfenner@plos.org, modified by Scott
+Chamberlain
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 

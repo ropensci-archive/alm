@@ -83,6 +83,9 @@
 #' 
 #' # Figshare data 
 #' almevents(doi="10.1371/journal.pone.0069841")
+#' 
+#' # Datacite data
+#' almevents("10.1371/journal.pone.0012090")
 #' }
 #' @export
 almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, 
@@ -393,6 +396,29 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				    # 				    paste("parser not written yet")
 				  }
 				} else if(y$name == "reddit"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+				    # 				    paste("parser not written yet")
+				  }
+				}  else if(y$name == "datacite"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+				  }
+				}  else if(y$name == "copernicus"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+				    # 				    paste("parser not written yet")
+				  }
+				}  else if(y$name == "articlecoverage"){
+				  if(length(y$events)==0){paste("sorry, no events content yet")} else
+				  {
+				    y$events
+				    # 				    paste("parser not written yet")
+				  }
+				}  else if(y$name == "articlecoveragecurated"){
 				  if(length(y$events)==0){paste("sorry, no events content yet")} else
 				  {
 				    y$events

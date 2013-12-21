@@ -2,7 +2,7 @@
 \alias{almpubmedcentid}
 \title{Get PubMed Central article ID by inputting the doi for the article.}
 \usage{
-  almpubmedcentid(doi, key = NULL, curl = getCurlHandle())
+almpubmedcentid(doi, key = NULL, curl = getCurlHandle())
 }
 \arguments{
   \item{doi}{digital object identifier for an article in
@@ -16,11 +16,11 @@
   unnecessary footprint)}
 }
 \value{
-  The PubMed Central article ID.
+The PubMed Central article ID.
 }
 \description{
-  Get PubMed Central article ID by inputting the doi for
-  the article.
+Get PubMed Central article ID by inputting the doi for the
+article.
 }
 \examples{
 \dontrun{
@@ -28,7 +28,7 @@ almpubmedcentid(doi = '10.1371/journal.pbio.0000012')
 }
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 

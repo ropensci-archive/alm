@@ -2,7 +2,7 @@
 \alias{almtotals}
 \title{Alt-metrics total citations from all sources.}
 \usage{
-  almtotals(doi, key = NULL, curl = getCurlHandle())
+almtotals(doi, key = NULL, curl = getCurlHandle())
 }
 \arguments{
   \item{doi}{digital object identifier for an article in
@@ -16,12 +16,12 @@
   unnecessary footprint)}
 }
 \value{
-  data.frame of total no. views (counter + pmc), shares
-  (facebook + twitter), bookmarks (mendeley + citeulike),
-  and citations (crossref)
+data.frame of total no. views (counter + pmc), shares
+(facebook + twitter), bookmarks (mendeley + citeulike), and
+citations (crossref)
 }
 \description{
-  Alt-metrics total citations from all sources.
+Alt-metrics total citations from all sources.
 }
 \examples{
 \dontrun{
@@ -29,7 +29,7 @@ almtotals(doi = '10.1371/journal.pbio.0000012')
 }
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 

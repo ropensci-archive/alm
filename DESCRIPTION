@@ -35,20 +35,3 @@ Suggests:
     knitr,
     rjson
 Enhances: rCharts
-Collate:
-    'almdatepub.R'
-    'almdateupdated.R'
-    'almpubmedcentid.R'
-    'almpubmedid.R'
-    'almtitle.R'
-    'almupdated.R'
-    'zzz.R'
-    'alm.R'
-    'almplot.R'
-    'almevents.R'
-    'startup.R'
-    'almtotals.R'
-    'signposts.R'
-    'plot_signposts.R'
-    'plot_density.R'
-    'globals.R'

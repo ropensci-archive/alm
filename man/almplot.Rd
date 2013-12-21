@@ -2,7 +2,7 @@
 \alias{almplot}
 \title{Plot results of a call to the alm function.}
 \usage{
-  almplot(dat, type = NULL, removezero = TRUE)
+almplot(dat, type = NULL, removezero = TRUE)
 }
 \arguments{
   \item{dat}{Output from \code{alm} (character)}
@@ -13,16 +13,16 @@
   prior to plotting.}
 }
 \value{
-  A ggplot2 bar plot for `totalmetrics` or line plot for
-  `history`.
+A ggplot2 bar plot for `totalmetrics` or line plot for
+`history`.
 }
 \description{
-  Plot results of a call to the alm function.
+Plot results of a call to the alm function.
 }
 \details{
-  You have to specify info='detail' in your call to
-  \code{alm} so that you get history and summary data so
-  that either or both can be plotted in this function.
+You have to specify info='detail' in your call to
+\code{alm} so that you get history and summary data so that
+either or both can be plotted in this function.
 }
 \examples{
 \dontrun{
@@ -33,10 +33,10 @@ almplot(dat=out) # leaving type as NULL prints both plots
 }
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 \seealso{
-  \code{\link{alm}} which is required to use this function.
+\code{\link{alm}} which is required to use this function.
 }
 

@@ -2,8 +2,7 @@
 \alias{plot_signposts}
 \title{Plot PLOS article-level metrics data.}
 \usage{
-  plot_signposts(input, type = "bar", width = 800,
-    height = 500)
+plot_signposts(input, type = "bar", width = 800, height = 500)
 }
 \arguments{
   \item{input}{A data.frame from a search from the
@@ -24,18 +23,18 @@
   otherwise ignored. Height of the plotting area.}
 }
 \value{
-  A data.frame of the signpost numbers for the searched
-  object.
+A data.frame of the signpost numbers for the searched
+object.
 }
 \description{
-  This can be used in conjuction with the function
-  \code{\link{signposts}}.
+This can be used in conjuction with the function
+\code{\link{signposts}}.
 }
 \details{
-  Note that DOIs are the unit of replication of each study.
-  When plotting, if the prefix is common among all DOIs,
-  then just the end of the DOI, the numeric part is printed
-  to make plots less ugly.
+Note that DOIs are the unit of replication of each study.
+When plotting, if the prefix is common among all DOIs, then
+just the end of the DOI, the numeric part is printed to
+make plots less ugly.
 }
 \examples{
 \dontrun{
@@ -63,10 +62,10 @@ plot_signposts(input=dat, type="multiBarHorizontalChart")
 }
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 \seealso{
-  \code{\link{alm}}, \code{\link{plot_signposts}}
+\code{\link{alm}}, \code{\link{plot_signposts}}
 }
 

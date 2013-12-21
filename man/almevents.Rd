@@ -2,11 +2,9 @@
 \alias{almevents}
 \title{Retrieve PLoS article-level metrics (ALM) events.}
 \usage{
-  almevents(doi = NULL, pmid = NULL, pmcid = NULL,
-    mdid = NULL,
-    url = "http://alm.plos.org/api/v3/articles",
-    months = NULL, days = NULL, source = NULL, key = NULL,
-    curl = getCurlHandle())
+almevents(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
+  url = "http://alm.plos.org/api/v3/articles", months = NULL, days = NULL,
+  source = NULL, key = NULL, curl = getCurlHandle())
 }
 \arguments{
   \item{doi}{Digital object identifier for an article in
@@ -40,38 +38,36 @@
   unnecessary footprint)}
 }
 \value{
-  PLoS altmetrics as data.frame's.
+PLoS altmetrics as data.frame's.
 }
 \description{
-  Events are the details of the metrics that are counted
-  related to PLoS papers.
+Events are the details of the metrics that are counted
+related to PLoS papers.
 }
 \details{
-  You can only supply one of the parmeters doi, pmid,
-  pmcid, and mdid.
+You can only supply one of the parmeters doi, pmid, pmcid,
+and mdid.
 
-  Query for as many articles at a time as you like. Though
-  queries are broken up in to smaller bits of 30
-  identifiers at a time.
+Query for as many articles at a time as you like. Though
+queries are broken up in to smaller bits of 30 identifiers
+at a time.
 
-  If you supply both the days and months parameters, days
-  takes precedence, and months is ignored.
+If you supply both the days and months parameters, days
+takes precedence, and months is ignored.
 
-  You can get events from many different sources. After
-  calling almevents, then index the output by the data
-  provider you want. The options are: bloglines, citeulike,
-  connotea, crossref, nature, postgenomic, pubmed, scopus,
-  plos, researchblogging, biod, webofscience, pmc,
-  facebook, mendeley, twitter, wikipedia, and
-  scienceseeker.
+You can get events from many different sources. After
+calling almevents, then index the output by the data
+provider you want. The options are: bloglines, citeulike,
+connotea, crossref, nature, postgenomic, pubmed, scopus,
+plos, researchblogging, biod, webofscience, pmc, facebook,
+mendeley, twitter, wikipedia, and scienceseeker.
 
-  Beware that some data source are not parsed yet, so there
-  may be event data but it is not provided yet as it is so
-  messy to parse.
+Beware that some data source are not parsed yet, so there
+may be event data but it is not provided yet as it is so
+messy to parse.
 
-  See more info on PLOS's relative metrics event source
-  here
-  \url{http://www.plosone.org/static/almInfo#relativeMetrics}
+See more info on PLOS's relative metrics event source here
+\url{http://www.plosone.org/static/almInfo#relativeMetrics}
 }
 \examples{
 \dontrun{
@@ -115,10 +111,13 @@ almevents(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
 
 # Figshare data
 almevents(doi="10.1371/journal.pone.0069841")
+
+# Datacite data
+almevents("10.1371/journal.pone.0012090")
 }
 }
 \references{
-  See a tutorial/vignette for alm at
-  \url{http://ropensci.org/tutorials/alm_tutorial.html}
+See a tutorial/vignette for alm at
+\url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 
