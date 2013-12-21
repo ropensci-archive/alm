@@ -1,3 +1,12 @@
+alm 0.1.2
+===============
+
+MINOR IMPROVEMENTS
+
+* Added mdid's for PLOS articles, so searching for mdid's with alm() or almevents() works now.
+* Added basic handler for new sources in alm: datacite, Copernicus, ariclecoverge, and ariclecovergeupdated. 
+* Collate removed from DESCRIPTION tile.
+
 alm 0.1.1
 ===============
 
