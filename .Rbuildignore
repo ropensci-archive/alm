@@ -3,6 +3,6 @@ inst/assets/
 .travis.yml
 Makefile
 man-roxygen
-stuff/ignore
-stuff/assets
-stuff/doc
+inst/ignore
+inst/assets
+inst/stuff

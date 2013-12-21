@@ -26,7 +26,8 @@
 #' alm(pmcid=212692, info='summary')
 #' 
 #' # A single Mendeley UUID (mdid)
-#' alm(mdid="35791700-6d00-11df-a2b2-0026b95e3eb7")
+#' alm(mdid="edc2e519-cc10-36fc-a68d-12e0116c6ac0")
+#' alm(mdid=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0", "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
 #'
 #' # Provide more than one DOI
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
