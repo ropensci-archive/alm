@@ -12,10 +12,10 @@
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @export
 alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
-                url = 'http://alm.plos.org/api/v3/articles',
-								info = "totals", months = NULL, days = NULL, year = NULL, 
-								source = NULL, key = NULL, curl = getCurlHandle(), 
-                total_details = FALSE, sum_metrics = NULL)
+  url = 'http://alm.plos.org/api/v3/articles',
+	info = "totals", months = NULL, days = NULL, year = NULL, 
+	source = NULL, key = NULL, curl = getCurlHandle(), 
+  total_details = FALSE, sum_metrics = NULL)
 {	
 	if(!info %in% c("summary","totals","history","detail")) {
 		stop("info must be one of summary, totals, history, or detail")
