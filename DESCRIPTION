@@ -17,6 +17,7 @@ BugReports: http://www.github.com/ropensci/alm/issues
 LazyLoad: yes
 LazyData: yes
 VignetteBuilder: knitr
+Description: rCharts (https://github.com/ramnathv/rCharts)
 Imports:
     ggplot2,
     RCurl,
