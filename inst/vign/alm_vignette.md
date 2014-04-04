@@ -64,29 +64,29 @@ alm(doi = "10.1371/journal.pone.0029797")[, -c(6:8)]
 2                crossref   NA    NA     NA     NA      7
 3                  nature   NA    NA     NA     NA      4
 4                  pubmed   NA    NA     NA     NA      2
-5                  scopus   NA    NA     NA     NA      0
-6                 counter 2371 27772     NA     NA  30251
+5                  scopus   NA    NA     NA     NA      7
+6                 counter 2409 29017     NA     NA  31537
 7        researchblogging   NA    NA     NA     NA      1
-8                     wos   NA    NA     NA     NA      6
-9                     pmc   64   416     NA     NA    480
-10               facebook   NA    NA      0     NA      0
-11               mendeley   NA    NA     69      0     69
-12                twitter   NA    NA     NA     NA     11
-13              wikipedia   NA    NA     NA     NA     49
-14          scienceseeker   NA    NA     NA     NA      0
-15         relativemetric   NA    NA     NA     NA 150729
-16                  f1000   NA    NA     NA     NA      0
-17               figshare    0     8     NA     NA      8
-18              pmceurope   NA    NA     NA     NA      4
-19          pmceuropedata   NA    NA     NA     NA     10
-20            openedition   NA    NA     NA     NA      0
-21              wordpress   NA    NA     NA     NA      0
-22                 reddit   NA    NA     NA     NA      0
-23               datacite   NA    NA     NA     NA      0
-24             copernicus   NA    NA     NA     NA      0
-25        articlecoverage   NA    NA     NA     NA      0
-26 articlecoveragecurated   NA    NA     NA     NA      0
-27          plos_comments   NA    NA     NA     NA     16
+8                     pmc   64   416     NA     NA    480
+9                facebook   NA    NA      0     NA      0
+10               mendeley   NA    NA     69      0     69
+11                twitter   NA    NA     NA     NA     12
+12              wikipedia   NA    NA     NA     NA     50
+13          scienceseeker   NA    NA     NA     NA      0
+14         relativemetric   NA    NA     NA     NA 150729
+15                  f1000   NA    NA     NA     NA      0
+16               figshare    0     9     NA     NA      9
+17              pmceurope   NA    NA     NA     NA      4
+18          pmceuropedata   NA    NA     NA     NA     49
+19            openedition   NA    NA     NA     NA      0
+20              wordpress   NA    NA     NA     NA      0
+21                 reddit   NA    NA     NA     NA      0
+22               datacite   NA    NA     NA     NA      0
+23             copernicus   NA    NA     NA     NA      0
+24        articlecoverage   NA    NA     NA     NA      0
+25 articlecoveragecurated   NA    NA     NA     NA      0
+26          plos_comments   NA    NA     NA     NA     16
+27         twitter_search   NA    NA     NA     NA      0
 ```
 
 
@@ -106,20 +106,20 @@ out[["totals"]][, -c(6:8)]
 2                crossref   NA    NA     NA     NA      7
 3                  nature   NA    NA     NA     NA      4
 4                  pubmed   NA    NA     NA     NA      2
-5                  scopus   NA    NA     NA     NA      0
-6                 counter 2371 27772     NA     NA  30251
+5                  scopus   NA    NA     NA     NA      7
+6                 counter 2409 29017     NA     NA  31537
 7        researchblogging   NA    NA     NA     NA      1
 8                     pmc   64   416     NA     NA    480
 9                facebook   NA    NA      0     NA      0
 10               mendeley   NA    NA     69      0     69
-11                twitter   NA    NA     NA     NA     11
-12              wikipedia   NA    NA     NA     NA     49
+11                twitter   NA    NA     NA     NA     12
+12              wikipedia   NA    NA     NA     NA     50
 13          scienceseeker   NA    NA     NA     NA      0
 14         relativemetric   NA    NA     NA     NA 150729
 15                  f1000   NA    NA     NA     NA      0
-16               figshare    0     8     NA     NA      8
+16               figshare    0     9     NA     NA      9
 17              pmceurope   NA    NA     NA     NA      4
-18          pmceuropedata   NA    NA     NA     NA     10
+18          pmceuropedata   NA    NA     NA     NA     49
 19            openedition   NA    NA     NA     NA      0
 20              wordpress   NA    NA     NA     NA      0
 21                 reddit   NA    NA     NA     NA      0
@@ -128,6 +128,7 @@ out[["totals"]][, -c(6:8)]
 24        articlecoverage   NA    NA     NA     NA      0
 25 articlecoveragecurated   NA    NA     NA     NA      0
 26          plos_comments   NA    NA     NA     NA     16
+27         twitter_search   NA    NA     NA     NA      0
 ```
 
 ```r
@@ -137,12 +138,12 @@ head(out[["history"]])
 
 ```
         .id      dates totals
-1 citeulike 2014-01-27      1
-2  crossref 2014-01-26      7
-3    nature 2014-01-30      4
-4    pubmed 2014-01-25      2
-5   counter 2014-02-25  30251
-6   counter 2014-02-24  30238
+1 citeulike 2014-03-04      1
+2 citeulike 2014-01-27      1
+3  crossref 2014-03-05      7
+4  crossref 2014-01-26      7
+5    nature 2014-01-30      4
+6    pubmed 2014-03-04      2
 ```
 
 
@@ -160,19 +161,19 @@ alm(pmid = 22590526)[, -c(6:8)]
 2                crossref   NA    NA     NA     NA     3
 3                  nature   NA    NA     NA     NA     1
 4                  pubmed   NA    NA     NA     NA     5
-5                  scopus   NA    NA     NA     NA     0
-6                 counter 1032 14687     NA     NA 15760
+5                  scopus   NA    NA     NA     NA     7
+6                 counter 1052 15026     NA     NA 16120
 7        researchblogging   NA    NA     NA     NA     1
 8                     pmc   31   119     NA     NA   150
-9                facebook   NA    NA      0     NA     0
-10               mendeley   NA    NA     59      0    59
-11                twitter   NA    NA     NA     NA   143
+9                facebook   NA    NA     66     NA   171
+10               mendeley   NA    NA     63      0    63
+11                twitter   NA    NA     NA     NA   151
 12              wikipedia   NA    NA     NA     NA     0
 13          scienceseeker   NA    NA     NA     NA     0
 14         relativemetric   NA    NA     NA     NA 33527
 15                  f1000   NA    NA     NA     NA     0
 16               figshare   NA    NA     NA     NA     0
-17              pmceurope   NA    NA     NA     NA     4
+17              pmceurope   NA    NA     NA     NA     5
 18          pmceuropedata   NA    NA     NA     NA     0
 19            openedition   NA    NA     NA     NA     0
 20              wordpress   NA    NA     NA     NA     1
@@ -182,6 +183,7 @@ alm(pmid = 22590526)[, -c(6:8)]
 24        articlecoverage   NA    NA     NA     NA     0
 25 articlecoveragecurated   NA    NA     NA     NA     0
 26          plos_comments   NA    NA     NA     NA     3
+27         twitter_search   NA    NA     NA     NA     0
 ```
 
 ```r
@@ -193,11 +195,11 @@ alm(pmcid = 212692)[, -c(6:8)]
 ```
                       .id  pdf  html shares groups   total
 1               citeulike   NA    NA      8     NA       8
-2                crossref   NA    NA     NA     NA     150
+2                crossref   NA    NA     NA     NA     152
 3                  nature   NA    NA     NA     NA       0
-4                  pubmed   NA    NA     NA     NA     149
-5                  scopus   NA    NA     NA     NA     324
-6                 counter 2533 20295     NA     NA   22979
+4                  pubmed   NA    NA     NA     NA     156
+5                  scopus   NA    NA     NA     NA     326
+6                 counter 2554 20447     NA     NA   23155
 7        researchblogging   NA    NA     NA     NA       0
 8                     pmc 2331  4898     NA     NA    7229
 9                facebook   NA    NA      0     NA       0
@@ -207,7 +209,7 @@ alm(pmcid = 212692)[, -c(6:8)]
 13          scienceseeker   NA    NA     NA     NA       0
 14         relativemetric   NA    NA     NA     NA 1346375
 15                  f1000   NA    NA     NA     NA       0
-16               figshare    1     4     NA     NA       5
+16               figshare    1     6     NA     NA       7
 17              pmceurope   NA    NA     NA     NA     192
 18          pmceuropedata   NA    NA     NA     NA      52
 19            openedition   NA    NA     NA     NA       0
@@ -218,6 +220,7 @@ alm(pmcid = 212692)[, -c(6:8)]
 24        articlecoverage   NA    NA     NA     NA       0
 25 articlecoveragecurated   NA    NA     NA     NA       0
 26          plos_comments   NA    NA     NA     NA       0
+27         twitter_search   NA    NA     NA     NA       0
 ```
 
 ```r
@@ -248,9 +251,9 @@ lapply(out, head)
 1 citeulike  NA   NA      0     NA       NA    NA        NA     0
 2  crossref  NA   NA     NA     NA       NA    NA         3     3
 3    nature  NA   NA     NA     NA       NA    NA         0     0
-4    pubmed  NA   NA     NA     NA       NA    NA         1     1
+4    pubmed  NA   NA     NA     NA       NA    NA         2     2
 5    scopus  NA   NA     NA     NA       NA    NA         5     5
-6   counter 298 1408     NA     NA       NA    NA        NA  1719
+6   counter 310 1504     NA     NA       NA    NA        NA  1830
 
 [[2]]
         .id pdf html shares groups comments likes citations total
@@ -258,8 +261,8 @@ lapply(out, head)
 2  crossref  NA   NA     NA     NA       NA    NA         0     0
 3    nature  NA   NA     NA     NA       NA    NA         0     0
 4    pubmed  NA   NA     NA     NA       NA    NA         1     1
-5    scopus  NA   NA     NA     NA       NA    NA         0     0
-6   counter 201  994     NA     NA       NA    NA        NA  1217
+5    scopus  NA   NA     NA     NA       NA    NA         3     3
+6   counter 208 1040     NA     NA       NA    NA        NA  1271
 
 [[3]]
         .id  pdf  html shares groups comments likes citations total
@@ -267,17 +270,17 @@ lapply(out, head)
 2  crossref   NA    NA     NA     NA       NA    NA         7     7
 3    nature   NA    NA     NA     NA       NA    NA         4     4
 4    pubmed   NA    NA     NA     NA       NA    NA         2     2
-5    scopus   NA    NA     NA     NA       NA    NA         0     0
-6   counter 2371 27772     NA     NA       NA    NA        NA 30251
+5    scopus   NA    NA     NA     NA       NA    NA         7     7
+6   counter 2409 29017     NA     NA       NA    NA        NA 31537
 
 [[4]]
         .id pdf html shares groups comments likes citations total
 1 citeulike  NA   NA      0     NA       NA    NA        NA     0
 2  crossref  NA   NA     NA     NA       NA    NA         7     7
 3    nature  NA   NA     NA     NA       NA    NA         0     0
-4    pubmed  NA   NA     NA     NA       NA    NA         6     6
-5    scopus  NA   NA     NA     NA       NA    NA         8     8
-6   counter 426 2580     NA     NA       NA    NA        NA  3046
+4    pubmed  NA   NA     NA     NA       NA    NA         7     7
+5    scopus  NA   NA     NA     NA       NA    NA        11    11
+6   counter 429 2605     NA     NA       NA    NA        NA  3077
 ```
 
 
@@ -299,7 +302,7 @@ alm(doi = "10.1371/journal.pone.0036240", sum_metrics = "year")[, -c(6:8)]
 5                  scopus   NA  NA    NA     NA        NA    NA NA
 6                 counter 2012 699 10502     NA        NA 11234 NA
 7                 counter 2013 299  3605     NA        NA  3911 NA
-8                 counter 2014  34   580     NA        NA   615 NA
+8                 counter 2014  54   919     NA        NA   975 NA
 9        researchblogging 2013  NA    NA     NA         1     1 NA
 10                    pmc 2012  16    53     NA        NA    69 NA
 11                    pmc 2013  13    66     NA        NA    79 NA
@@ -308,7 +311,7 @@ alm(doi = "10.1371/journal.pone.0036240", sum_metrics = "year")[, -c(6:8)]
 14               mendeley   NA  NA    NA     NA        NA    NA NA
 15                twitter 2012  NA    NA     NA        NA   103 NA
 16                twitter 2013  NA    NA     NA        NA    33 NA
-17                twitter 2014  NA    NA     NA        NA     7 NA
+17                twitter 2014  NA    NA     NA        NA    15 NA
 18              wikipedia   NA  NA    NA     NA        NA    NA NA
 19          scienceseeker   NA  NA    NA     NA        NA    NA NA
 20         relativemetric   NA  NA    NA     NA        NA    NA NA
@@ -324,6 +327,7 @@ alm(doi = "10.1371/journal.pone.0036240", sum_metrics = "year")[, -c(6:8)]
 30        articlecoverage   NA  NA    NA     NA        NA    NA NA
 31 articlecoveragecurated   NA  NA    NA     NA        NA    NA NA
 32          plos_comments   NA  NA    NA     NA        NA    NA NA
+33         twitter_search   NA  NA    NA     NA        NA    NA NA
 ```
 
 
@@ -340,17 +344,6 @@ alm(doi = "10.1371/journal.pone.0035869", total_details = TRUE)[, 3:10]
   citeulike_groups citeulike_comments citeulike_likes citeulike_citations
 1               NA                 NA              NA                  NA
 ```
-
-
-## Get altmetrics data for a single paper, and visualize the total data across dates
-
-
-```r
-out <- alm(doi = "10.1371/journal.pone.0001543", info = "detail")
-almplot(out, type = "totalmetrics")
-```
-
-![plot of chunk totalmets](figure/totalmets.png) 
 
 
 ## Get detailed data for altmetrics using `almevents`
@@ -375,6 +368,7 @@ names(out)  # names of sources
 [21] "reddit"                 "datacite"              
 [23] "copernicus"             "articlecoverage"       
 [25] "articlecoveragecurated" "plos_comments"         
+[27] "twitter_search"        
 ```
 
 ```r
@@ -438,7 +432,7 @@ out[["pmc"]]  # get the results for PubMed Central
 ```
 
 ```r
-out[["twitter"]]  # get the results for twitter (boo, there aren't any)
+out[["twitter"]]  # get the results for twitter
 ```
 
 ```
@@ -454,6 +448,7 @@ out[["twitter"]]  # get the results for twitter (boo, there aren't any)
 9  313850610174799873
 10 403828926247878656
 11 435274395284553728
+12 435885455439970304
                                                                                                                                            text
 1                                   #PLOS: Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/yEGLyWTf
 2                                   #PLOS: Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/497NRrMR
@@ -466,6 +461,7 @@ out[["twitter"]]  # get the results for twitter (boo, there aren't any)
 9                                        Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/2G6fQJvFhq
 10       @Specklet Cool! We had a paper on the smallest frog too, but picture is of it sitting on a dime not a finger :( http://t.co/xJUPb4T3mU
 11                                                                                               My son Derrick Thompson http://t.co/btDVdo8TdH
+12   @BBCNature Too cool. Apparently it beat out a species of teleost fish by 0.02 mm #zoology #vertebrates #worldrecord http://t.co/FYc7glZkMk
                        created_at            user          user_name
 1  Sun Aug 19 07:26:06 +0000 2012        opdebult     Jan ten Hoopen
 2  Sun Aug 19 07:27:15 +0000 2012      forestalis     forestalis.org
@@ -478,6 +474,7 @@ out[["twitter"]]  # get the results for twitter (boo, there aren't any)
 9  Tue Mar 19 03:13:11 +0000 2013       didicikit                FGÇ
 10 Fri Nov 22 10:14:53 +0000 2013 mattjhodgkinson    Matt Hodgkinson
 11 Mon Feb 17 04:47:57 +0000 2014  MsMeechieMeech Demetrice Thompson
+12 Tue Feb 18 21:16:05 +0000 2014  Dr_Anonymous85    Dr. Anonymous85
                                                                                         user_profile_image
 1                                           http://a0.twimg.com/profile_images/1741153180/Tidan_normal.jpg
 2                                    http://a0.twimg.com/profile_images/654250700/ForestalisIco_normal.jpg
@@ -490,112 +487,7 @@ out[["twitter"]]  # get the results for twitter (boo, there aren't any)
 9                                             http://a0.twimg.com/profile_images/1809269429/hop_normal.jpg
 10                         http://pbs.twimg.com/profile_images/2595571976/bc2za9tnyui0wxobreb0_normal.jpeg
 11                             http://pbs.twimg.com/profile_images/416963593188302848/WNE4ujvS_normal.jpeg
-```
-
-```r
-out[c("twitter", "crossref")]  # get the results for two sources
-```
-
-```
-$twitter
-                   id
-1  237088032224849920
-2  237088322290331648
-3  263798980054487041
-4  263799348842872832
-5  263960642589949953
-6  282528931503038464
-7  282528931612082177
-8  284131287810338818
-9  313850610174799873
-10 403828926247878656
-11 435274395284553728
-                                                                                                                                           text
-1                                   #PLOS: Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/yEGLyWTf
-2                                   #PLOS: Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/497NRrMR
-3         Happy #Halloween from Maria @PLOSONE, dressed as a tiny frog, complete with dime for scale! http://t.co/YWcdPoGP http://t.co/lAxWAHOG
-4  RT @multidiscipl1ne: Happy #Halloween from Maria @PLOSONE, dressed as a tiny frog, complete with dime for scale! http://t.co/YWcdPoGP ht ...
-5  RT @multidiscipl1ne: Happy #Halloween from Maria @PLOSONE, dressed as a tiny frog, complete with dime for scale! http://t.co/YWcdPoGP ht ...
-6               2012: Discovery of the World's Smallest Vertebrate: a frog http://t.co/BwkxRTdm in @PLOSONE via http://t.co/rnM3iFD0 @Hominidos
-7                2012: Descubrimiento del vertebrado más pequeño: una rana http://t.co/BwkxRTdm in @PLOSONE via http://t.co/rnM3iFD0 @Hominidos
-8                                                                                                           @JayBeeAndCrew http://t.co/okFRfXfA
-9                                        Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/2G6fQJvFhq
-10       @Specklet Cool! We had a paper on the smallest frog too, but picture is of it sitting on a dime not a finger :( http://t.co/xJUPb4T3mU
-11                                                                                               My son Derrick Thompson http://t.co/btDVdo8TdH
-                       created_at            user          user_name
-1  Sun Aug 19 07:26:06 +0000 2012        opdebult     Jan ten Hoopen
-2  Sun Aug 19 07:27:15 +0000 2012      forestalis     forestalis.org
-3  Thu Nov 01 00:25:53 +0000 2012 multidiscipl1ne     Lindsay Kelley
-4  Thu Nov 01 00:27:20 +0000 2012     BernScience   Rachel Bernstein
-5  Thu Nov 01 11:08:16 +0000 2012 mattjhodgkinson    Matt Hodgkinson
-6  Sat Dec 22 16:52:01 +0000 2012 sferrebenedicto     Salva Ferré B.
-7  Sat Dec 22 16:52:01 +0000 2012 sferrebenedicto     Salva Ferré B.
-8  Thu Dec 27 02:59:12 +0000 2012     LeeAnaconda             LeeAnn
-9  Tue Mar 19 03:13:11 +0000 2013       didicikit                FGÇ
-10 Fri Nov 22 10:14:53 +0000 2013 mattjhodgkinson    Matt Hodgkinson
-11 Mon Feb 17 04:47:57 +0000 2014  MsMeechieMeech Demetrice Thompson
-                                                                                        user_profile_image
-1                                           http://a0.twimg.com/profile_images/1741153180/Tidan_normal.jpg
-2                                    http://a0.twimg.com/profile_images/654250700/ForestalisIco_normal.jpg
-3  http://a0.twimg.com/profile_images/1910116023/261235_920680811178_6708085_43508969_7138379_n_normal.jpg
-4                                             http://a0.twimg.com/profile_images/1788875907/new_normal.jpg
-5                           http://a0.twimg.com/profile_images/2595571976/bc2za9tnyui0wxobreb0_normal.jpeg
-6               http://a0.twimg.com/profile_images/2935384666/94c858315bbf621ae3916019026a6c24_normal.jpeg
-7               http://a0.twimg.com/profile_images/2935384666/94c858315bbf621ae3916019026a6c24_normal.jpeg
-8               http://a0.twimg.com/profile_images/2765018809/5b540749006aaf85c5661c67d93b68e7_normal.jpeg
-9                                             http://a0.twimg.com/profile_images/1809269429/hop_normal.jpg
-10                         http://pbs.twimg.com/profile_images/2595571976/bc2za9tnyui0wxobreb0_normal.jpeg
-11                             http://pbs.twimg.com/profile_images/416963593188302848/WNE4ujvS_normal.jpeg
-
-$crossref
-                  issn                             journal_title
-1 1439-6092; 1618-1077           Organisms Diversity & Evolution
-2 1313-2970; 1313-2989                                   ZooKeys
-3             00218790                 Journal of Animal Ecology
-4 1936-6426; 1936-6434         Evolution: Education and Outreach
-5 0018-0831; 1938-5099                             Herpetologica
-6             10557903     Molecular Phylogenetics and Evolution
-7             00244066 Biological Journal of the Linnean Society
-                   journal_abbreviation
-1                       Org Divers Evol
-2                               ZOOKEYS
-3                           J Anim Ecol
-4                      Evo Edu Outreach
-5                         Herpetologica
-6 Molecular Phylogenetics and Evolution
-7                  Biol J Linn Soc Lond
-                                                                                                                                                                         article_title
-1 New insights into the systematics and molecular phylogeny of the Malagasy snake genus Liopholidophis suggest at least one rapid reversal of extreme sexual dimorphism in tail length
-2                                                                                                Accelerating innovative publishing in taxonomy and systematics: 250 issues of ZooKeys
-3                                                                                                                    The evolutionary ecology of dwarfism in three-spined sticklebacks
-4                                                                                                                                           Heterochrony: the Evolution of Development
-5                                                 A New Species of Miniaturized Toadlet, GenusBrachycephalus(Anura: Brachycephalidae), from the Atlantic Forest of Southeastern Brazil
-6                                              Genetic diversity, phylogeny and evolution of alkaloid sequestering in Cuban miniaturized frogs of the Eleutherodactylus limbatus group
-7                                                                                               Are diminutive turtles miniaturized? The ontogeny of plastron shape in emydine turtles
-                                                                                               contributor
-1                    Frank Glaw; Christoph Kucharzewski; Zoltán T. Nagy; Oliver Hawlitschek; Miguel Vences
-2                                                Terry Erwin; Lyubomir Penev; Pavel Stoev; Teodor Georgiev
-3                                              Andrew D. C. MacColl; Aliya El Nagar; Job de Roij; Tom Webb
-4                                                                                      Kenneth J. McNamara
-5 Rute B. G Clemente-Carvalho; Ariovaldo A Giaretta; Thais H Condez; Célio F. B Haddad; Sergio F. dos Reis
-6                               Ariel Rodríguez; Dennis Poth; Stefan Schulz; Marcelo Gehara; Miguel Vences
-7                                                                  Kenneth D. Angielczyk; Chris R. Feldman
-  year publication_type                                doi fl_count volume
-1 2013        full_text          10.1007/s13127-013-0152-4        0   <NA>
-2 2012        full_text           10.3897/zookeys.251.4516        2    251
-3 2013        full_text            10.1111/1365-2656.12028        0     82
-4 2012        full_text          10.1007/s12052-012-0420-3        2      5
-5 2012        full_text 10.1655/HERPETOLOGICA-D-11-00085.1        0     68
-6 2013        full_text        10.1016/j.ympev.2013.04.031        0     68
-7 2013        full_text                  10.1111/bij.12010        1    108
-  issue first_page
-1  <NA>       <NA>
-2     0          1
-3     3        642
-4     2        203
-5     3        365
-6     3        541
-7     4        727
+12                             http://pbs.twimg.com/profile_images/434163067874578432/acvRaMuQ_normal.jpeg
 ```
 
 
@@ -608,7 +500,7 @@ almtotals(doi = "10.1371/journal.pbio.0000012")
 
 ```
   views shares bookmarks citations
-1 30208      0       112       324
+1 30384      0       112       326
 ```
 
 
@@ -643,7 +535,7 @@ Or plot many identifiers gives a line chart
 dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", 
     "10.1371/journal.pone.0039395")
 dat <- signposts(doi = dois)
-plot_signposts(input = dat)
+plot_signposts(input = dat) + theme_grey(base_size = 12)
 ```
 
 ![plot of chunk signposts2](figure/signposts2.png) 
@@ -659,7 +551,7 @@ Note: Do you the key below in the `searchplos` call in this example, but if you 
 ```r
 library(rplos)
 library(plyr)
-dois <- searchplos(terms = "science", fields = "id", toquery = list("cross_published_journal_key:PLoSONE", 
+dois <- searchplos(q = "science", fl = "id", fq = list("cross_published_journal_key:PLoSONE", 
     "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), 
     limit = 200)
 ```
@@ -748,8 +640,92 @@ Plot many sources in different panels in the same plot, and pass in colors just 
 ```r
 plot_density(input = alm, source = c("counter_total", "crossref_citations", 
     "twitter_total", "wos_citations"), color = c("#83DFB4", "#EFA5A5", "#CFD470", 
-    "#B2C9E4"))
+    "#B2C9E4")) + theme_grey(base_size = 12)
 ```
 
 ![plot of chunk plot_densityplot5](figure/plot_densityplot5.png) 
+
+```
+NULL
+```
+
+
+## CrossRef article level metrics
+
+Remember to get your api key from CrossRef, pass it in in the key parameter. Notice that we are passing the base url for the Crossref API, whereas the default is for the PLOS url [http://alm.plos.org/api/v3/articles](http://alm.plos.org/api/v3/articles).
+
+
+```r
+url <- "http://alm.labs.crossref.org/api/v3/articles"
+dois <- c("10.1371/journal.pone.0086859", "10.1038/nature12990", "10.5860/choice.51-3037")
+alm(doi = dois, url = url, key = getOption("crossrefalmkey"))
+```
+
+```
+[[1]]
+                .id pdf html shares groups comments likes citations total
+1          crossref  NA   NA     NA     NA       NA    NA         0     0
+2          mendeley  NA   NA     NA   TRUE       NA    NA        NA     0
+3          facebook  NA   NA      0     NA        0     0        NA     0
+4  researchblogging  NA   NA     NA     NA       NA    NA         0     0
+5               pmc  NA   NA     NA     NA       NA    NA         0     0
+6        copernicus  NA   NA     NA     NA       NA    NA        NA     0
+7    twitter_search  NA   NA     NA     NA       NA    NA         0     0
+8         citeulike  NA   NA      0     NA       NA    NA        NA     0
+9            pubmed  NA   NA     NA     NA       NA    NA         0     0
+10        wordpress  NA   NA     NA     NA       NA    NA         0     0
+11           reddit  NA   NA     NA     NA       NA    NA         0     0
+12        wikipedia  NA   NA     NA     NA       NA    NA         3     3
+13   doi_resolution  NA   NA     NA     NA       NA    NA         0     0
+14         datacite  NA   NA     NA     NA       NA    NA         0     0
+15        pmceurope  NA   NA     NA     NA       NA    NA         0     0
+16    pmceuropedata  NA   NA     NA     NA       NA    NA         0     0
+17    scienceseeker  NA   NA     NA     NA       NA    NA         0     0
+18           nature  NA   NA     NA     NA       NA    NA         0     0
+19      openedition  NA   NA     NA     NA       NA    NA         0     0
+
+[[2]]
+                .id pdf html shares groups comments likes citations total
+1       openedition  NA   NA     NA     NA       NA    NA         0     0
+2            nature  NA   NA     NA     NA       NA    NA         0     0
+3     scienceseeker  NA   NA     NA     NA       NA    NA         0     0
+4     pmceuropedata  NA   NA     NA     NA       NA    NA         0     0
+5         pmceurope  NA   NA     NA     NA       NA    NA         9     9
+6          datacite  NA   NA     NA     NA       NA    NA         0     0
+7    doi_resolution  NA   NA     NA     NA       NA    NA         0     0
+8         wikipedia  NA   NA     NA     NA       NA    NA         0     0
+9            reddit  NA   NA     NA     NA       NA    NA         0     0
+10         crossref  NA   NA     NA     NA       NA    NA         0     0
+11        wordpress  NA   NA     NA     NA       NA    NA         0     0
+12           pubmed  NA   NA     NA     NA       NA    NA        13    13
+13        citeulike  NA   NA      0     NA       NA    NA        NA     0
+14   twitter_search  NA   NA     NA     NA       NA    NA         0     0
+15       copernicus  NA   NA     NA     NA       NA    NA        NA     0
+16              pmc  NA   NA     NA     NA       NA    NA         0     0
+17 researchblogging  NA   NA     NA     NA       NA    NA         0     0
+18         facebook  NA   NA      0     NA        0     0        NA     0
+19         mendeley  NA   NA     NA   TRUE       NA    NA        NA     0
+
+[[3]]
+                .id pdf html shares groups comments likes citations total
+1         wordpress  NA   NA     NA     NA       NA    NA         0     0
+2          crossref  NA   NA     NA     NA       NA    NA         0     0
+3          mendeley  NA   NA     NA   TRUE       NA    NA        NA     0
+4          facebook  NA   NA      0     NA        0     0        NA     0
+5  researchblogging  NA   NA     NA     NA       NA    NA         0     0
+6               pmc  NA   NA     NA     NA       NA    NA         0     0
+7        copernicus  NA   NA     NA     NA       NA    NA        NA     0
+8    twitter_search  NA   NA     NA     NA       NA    NA         0     0
+9         citeulike  NA   NA      0     NA       NA    NA        NA     0
+10           pubmed  NA   NA     NA     NA       NA    NA         0     0
+11           reddit  NA   NA     NA     NA       NA    NA         0     0
+12        wikipedia  NA   NA     NA     NA       NA    NA         2     2
+13   doi_resolution  NA   NA     NA     NA       NA    NA         0     0
+14         datacite  NA   NA     NA     NA       NA    NA         0     0
+15        pmceurope  NA   NA     NA     NA       NA    NA         0     0
+16    pmceuropedata  NA   NA     NA     NA       NA    NA         0     0
+17    scienceseeker  NA   NA     NA     NA       NA    NA         0     0
+18           nature  NA   NA     NA     NA       NA    NA         0     0
+19      openedition  NA   NA     NA     NA       NA    NA         0     0
+```
 

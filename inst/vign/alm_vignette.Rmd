@@ -50,14 +50,14 @@ library(alm)
 
 (We'll not print a few columns so the table prints nicely)
 
-```{r alm1, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r alm1, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 alm(doi="10.1371/journal.pone.0029797")[,-c(6:8)]
 ```
 
 
 ## Details for a single DOI
 
-```{r alm2, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r alm2, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 out <- alm(doi='10.1371/journal.pone.0029797', info='detail')
 ## totals
 out[["totals"]][,-c(6:8)]
@@ -67,7 +67,7 @@ head(out[["history"]])
 
 ## Search using various identifiers, including pubmed id, pmc id, and mendeley id
 
-```{r alm3, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r alm3, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 # A single PubMed ID (pmid)
 alm(pmid=22590526)[,-c(6:8)]
  
@@ -81,7 +81,7 @@ alm(mdid="35791700-6d00-11df-a2b2-0026b95e3eb7")[,-c(6:8)]
 
 ## Search on many identifiers
 
-```{r xxx, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r xxx, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 	'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 out <- alm(doi=dois)
@@ -92,60 +92,52 @@ lapply(out, head)
 
 You can also get metrics by day (`sum_metrics='day'`) or month (`sum_metrics='month'`)
 
-```{r byyear, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r byyear, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')[,-c(6:8)]
 ```
 
 ## Output an-easy-to-combine-with-other-results data.frame
 
-```{r easytocombine, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r easytocombine, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 alm(doi='10.1371/journal.pone.0035869', total_details=TRUE)[,3:10]
-```
-
-## Get altmetrics data for a single paper, and visualize the total data across dates
-
-```{r totalmets, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
-out <- alm(doi='10.1371/journal.pone.0001543', info='detail')
-almplot(out, type='totalmetrics')
 ```
 
 ## Get detailed data for altmetrics using `almevents`
 
-```{r almevents, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r almevents, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 out <- almevents(doi="10.1371/journal.pone.0029797")
 names(out) # names of sources
 out <- out[!out %in% c("sorry, no events content yet","parser not written yet")] # remove those with no data
 out[["pmc"]] # get the results for PubMed Central
-out[["twitter"]] # get the results for twitter (boo, there aren't any)
-out[c("twitter","crossref")] # get the results for two sources
+out[["twitter"]] # get the results for twitter
 ```
 
 ## Alt-metrics total citations from all sources.
 
-```{r almtotals, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r almtotals, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 almtotals(doi = '10.1371/journal.pbio.0000012')
 ```
 
 ## Get title of article by inputting the doi for the article.
 
-```{r almtitle, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r almtitle, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 almtitle(doi='10.1371/journal.pbio.0000012')
 ```
 
 
 ## Retrieve and plot PLOS article-level metrics signposts.
 
-```{r signposts1, message=FALSE, warning=FALSE, comment=NA, cache=FALSE, fig.keep='high'}
+```{r signposts1, message=FALSE, warning=FALSE, comment=NA, cache=TRUE, fig.keep='high'}
 dat <- signposts(doi="10.1371/journal.pone.0029797")
 plot_signposts(input=dat)
 ```
 
 Or plot many identifiers gives a line chart
 
-```{r signposts2, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r signposts2, message=FALSE, warning=FALSE, comment=NA, cache=TRUE, fig.width=7}
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117','10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 dat <- signposts(doi=dois)
-plot_signposts(input=dat)
+plot_signposts(input=dat) + theme_grey(base_size = 12)
 ```
 
 Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
@@ -154,9 +146,9 @@ Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarC
 
 Note: Do you the key below in the `searchplos` call in this example, but if you plan to use rplos more, get your own API key [here](http://api.plos.org/).
 
-```{r plot_densityprep, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r plot_densityprep, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 library(rplos); library(plyr)
-dois <- searchplos(terms='science', fields="id", toquery=list('cross_published_journal_key:PLoSONE', 'doc_type:full', 'publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]'), limit=200)
+dois <- searchplos(q='science', fl="id", fq=list('cross_published_journal_key:PLoSONE', 'doc_type:full', 'publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]'), limit=200)
 ```
 
 Remove non-full article DOIs
@@ -168,38 +160,48 @@ dois <- dois[!grepl("annotation", dois)]
 
 Collect altmetrics data and combine to a `data.frame` with `ldply`
 
-```{r plot_densityprep2, message=FALSE, warning=FALSE, comment=NA, cache=FALSE}
+```{r plot_densityprep2, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
 alm <- alm(doi=dois, total_details=TRUE)
 alm <- ldply(alm)
 ```
 
 The default plot
 
-```{r plot_densityplot1, message=FALSE, warning=FALSE, comment=NA, cache=FALSE, fig.width=5, fig.height=4}
+```{r plot_densityplot1, message=FALSE, warning=FALSE, comment=NA, cache=TRUE, fig.width=5, fig.height=4}
 plot_density(alm)
 ```
 
 You can change the color of the density plot
 
-```{r plot_densityplot2, message=FALSE, warning=FALSE, comment=NA, cache=FALSE, fig.width=5, fig.height=4}
+```{r plot_densityplot2, message=FALSE, warning=FALSE, comment=NA, cache=TRUE, fig.width=5, fig.height=4}
 plot_density(alm, color="#EFA5A5")
 ```
 
 Pass in a title or description subtending the title
 
-```{r plot_densityplot3, message=FALSE, warning=FALSE, comment=NA, cache=FALSE, fig.width=5, fig.height=4}
+```{r plot_densityplot3, message=FALSE, warning=FALSE, comment=NA, cache=TRUE, fig.width=5, fig.height=4}
 plot_density(alm, title="Scopus citations from 2010")
 ```
 
 Plot a particular source
 
-```{r plot_densityplot4, message=FALSE, warning=FALSE, comment=NA, cache=FALSE, fig.width=5, fig.height=4}
+```{r plot_densityplot4, message=FALSE, warning=FALSE, comment=NA, cache=TRUE, fig.width=5, fig.height=4}
 names(alm)[1:35]
 plot_density(input=alm, source="crossref_citations")
 ```
 
 Plot many sources in different panels in the same plot, and pass in colors just for fun
 
-```{r plot_densityplot5, message=FALSE, warning=FALSE, comment=NA, cache=FALSE, fig.width=5, fig.height=4}
-plot_density(input=alm, source=c("counter_total","crossref_citations","twitter_total","wos_citations"), color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4"))
+```{r plot_densityplot5, message=FALSE, warning=FALSE, comment=NA, cache=TRUE, fig.width=7, fig.height=6}
+plot_density(input=alm, source=c("counter_total","crossref_citations","twitter_total","wos_citations"), color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4")) + theme_grey(base_size = 12)
+```
+
+## CrossRef article level metrics
+
+Remember to get your api key from CrossRef, pass it in in the key parameter. Notice that we are passing the base url for the Crossref API, whereas the default is for the PLOS url [http://alm.plos.org/api/v3/articles](http://alm.plos.org/api/v3/articles).
+
+```{r crossref, message=FALSE, warning=FALSE, comment=NA, cache=TRUE}
+url <- "http://alm.labs.crossref.org/api/v3/articles"
+dois <- c("10.1371/journal.pone.0086859", "10.1038/nature12990", "10.5860/choice.51-3037")
+alm(doi=dois, url = url, key=getOption("crossrefalmkey"))
 ```
