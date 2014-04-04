@@ -109,7 +109,7 @@ out <- almevents(doi="10.1371/journal.pone.0029797")
 names(out) # names of sources
 out <- out[!out %in% c("sorry, no events content yet","parser not written yet")] # remove those with no data
 out[["pmc"]] # get the results for PubMed Central
-out[["twitter"]] # get the results for twitter
+out[["twitter"]][1:3,] # get the results for twitter
 ```
 
 ## Alt-metrics total citations from all sources.

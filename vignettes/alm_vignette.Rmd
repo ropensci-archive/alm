@@ -432,62 +432,26 @@ out[["pmc"]]  # get the results for PubMed Central
 ```
 
 ```r
-out[["twitter"]]  # get the results for twitter
+out[["twitter"]][1:3, ]  # get the results for twitter
 ```
 
 ```
-                   id
-1  237088032224849920
-2  237088322290331648
-3  263798980054487041
-4  263799348842872832
-5  263960642589949953
-6  282528931503038464
-7  282528931612082177
-8  284131287810338818
-9  313850610174799873
-10 403828926247878656
-11 435274395284553728
-12 435885455439970304
-                                                                                                                                           text
-1                                   #PLOS: Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/yEGLyWTf
-2                                   #PLOS: Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/497NRrMR
-3         Happy #Halloween from Maria @PLOSONE, dressed as a tiny frog, complete with dime for scale! http://t.co/YWcdPoGP http://t.co/lAxWAHOG
-4  RT @multidiscipl1ne: Happy #Halloween from Maria @PLOSONE, dressed as a tiny frog, complete with dime for scale! http://t.co/YWcdPoGP ht ...
-5  RT @multidiscipl1ne: Happy #Halloween from Maria @PLOSONE, dressed as a tiny frog, complete with dime for scale! http://t.co/YWcdPoGP ht ...
-6               2012: Discovery of the World's Smallest Vertebrate: a frog http://t.co/BwkxRTdm in @PLOSONE via http://t.co/rnM3iFD0 @Hominidos
-7                2012: Descubrimiento del vertebrado más pequeño: una rana http://t.co/BwkxRTdm in @PLOSONE via http://t.co/rnM3iFD0 @Hominidos
-8                                                                                                           @JayBeeAndCrew http://t.co/okFRfXfA
-9                                        Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/2G6fQJvFhq
-10       @Specklet Cool! We had a paper on the smallest frog too, but picture is of it sitting on a dime not a finger :( http://t.co/xJUPb4T3mU
-11                                                                                               My son Derrick Thompson http://t.co/btDVdo8TdH
-12   @BBCNature Too cool. Apparently it beat out a species of teleost fish by 0.02 mm #zoology #vertebrates #worldrecord http://t.co/FYc7glZkMk
-                       created_at            user          user_name
-1  Sun Aug 19 07:26:06 +0000 2012        opdebult     Jan ten Hoopen
-2  Sun Aug 19 07:27:15 +0000 2012      forestalis     forestalis.org
-3  Thu Nov 01 00:25:53 +0000 2012 multidiscipl1ne     Lindsay Kelley
-4  Thu Nov 01 00:27:20 +0000 2012     BernScience   Rachel Bernstein
-5  Thu Nov 01 11:08:16 +0000 2012 mattjhodgkinson    Matt Hodgkinson
-6  Sat Dec 22 16:52:01 +0000 2012 sferrebenedicto     Salva Ferré B.
-7  Sat Dec 22 16:52:01 +0000 2012 sferrebenedicto     Salva Ferré B.
-8  Thu Dec 27 02:59:12 +0000 2012     LeeAnaconda             LeeAnn
-9  Tue Mar 19 03:13:11 +0000 2013       didicikit                FGÇ
-10 Fri Nov 22 10:14:53 +0000 2013 mattjhodgkinson    Matt Hodgkinson
-11 Mon Feb 17 04:47:57 +0000 2014  MsMeechieMeech Demetrice Thompson
-12 Tue Feb 18 21:16:05 +0000 2014  Dr_Anonymous85    Dr. Anonymous85
-                                                                                        user_profile_image
-1                                           http://a0.twimg.com/profile_images/1741153180/Tidan_normal.jpg
-2                                    http://a0.twimg.com/profile_images/654250700/ForestalisIco_normal.jpg
-3  http://a0.twimg.com/profile_images/1910116023/261235_920680811178_6708085_43508969_7138379_n_normal.jpg
-4                                             http://a0.twimg.com/profile_images/1788875907/new_normal.jpg
-5                           http://a0.twimg.com/profile_images/2595571976/bc2za9tnyui0wxobreb0_normal.jpeg
-6               http://a0.twimg.com/profile_images/2935384666/94c858315bbf621ae3916019026a6c24_normal.jpeg
-7               http://a0.twimg.com/profile_images/2935384666/94c858315bbf621ae3916019026a6c24_normal.jpeg
-8               http://a0.twimg.com/profile_images/2765018809/5b540749006aaf85c5661c67d93b68e7_normal.jpeg
-9                                             http://a0.twimg.com/profile_images/1809269429/hop_normal.jpg
-10                         http://pbs.twimg.com/profile_images/2595571976/bc2za9tnyui0wxobreb0_normal.jpeg
-11                             http://pbs.twimg.com/profile_images/416963593188302848/WNE4ujvS_normal.jpeg
-12                             http://pbs.twimg.com/profile_images/434163067874578432/acvRaMuQ_normal.jpeg
+                  id
+1 237088032224849920
+2 237088322290331648
+3 263798980054487041
+                                                                                                                                   text
+1                           #PLOS: Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/yEGLyWTf
+2                           #PLOS: Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate http://t.co/497NRrMR
+3 Happy #Halloween from Maria @PLOSONE, dressed as a tiny frog, complete with dime for scale! http://t.co/YWcdPoGP http://t.co/lAxWAHOG
+                      created_at            user      user_name
+1 Sun Aug 19 07:26:06 +0000 2012        opdebult Jan ten Hoopen
+2 Sun Aug 19 07:27:15 +0000 2012      forestalis forestalis.org
+3 Thu Nov 01 00:25:53 +0000 2012 multidiscipl1ne Lindsay Kelley
+                                                                                       user_profile_image
+1                                          http://a0.twimg.com/profile_images/1741153180/Tidan_normal.jpg
+2                                   http://a0.twimg.com/profile_images/654250700/ForestalisIco_normal.jpg
+3 http://a0.twimg.com/profile_images/1910116023/261235_920680811178_6708085_43508969_7138379_n_normal.jpg
 ```
 
 

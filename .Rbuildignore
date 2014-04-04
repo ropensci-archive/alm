@@ -1,5 +1,4 @@
 .gitignore
-inst/assets/
 .travis.yml
 appveyor.yml
 Makefile

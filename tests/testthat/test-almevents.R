@@ -1,7 +1,9 @@
 # tests for almevents fxn in alm
 context("almevents")
 
-out <- almevents(doi="10.1371/journal.pone.0029797")
+key <- "rkfDr76z75benY3pytM1"
+
+out <- almevents(doi="10.1371/journal.pone.0029797", key=key)
 out <- out[!out %in% c("sorry, no events content yet","parser not written yet")] # remove those with no data
 
 test_that("almevents returns the correct class", {
@@ -10,7 +12,7 @@ test_that("almevents returns the correct class", {
 })
 
 test_that("almevents returns the correct dimensions", {
-  expect_that(nrow(out[["pmc"]]), equals(12))
-  expect_that(ncol(out[["twitter"]]), equals(5))
+  expect_that(nrow(out[["pmc"]]), equals(25))
+  expect_that(ncol(out[["twitter"]]), equals(6))
   expect_that(length(out[c("twitter","crossref")]), equals(2))
 })

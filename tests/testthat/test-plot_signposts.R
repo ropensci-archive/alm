@@ -1,14 +1,16 @@
 # tests for plot_signposts fxn in alm
 context("plot_signposts")
 
+key <- "rkfDr76z75benY3pytM1"
+
 # Plot data from a single identifier gives a bar chart
-dat <- signposts(doi="10.1371/journal.pone.0029797")
+dat <- signposts(doi="10.1371/journal.pone.0029797", key=key)
 p <- plot_signposts(input=dat)
 
 # Plot data from many identifiers gives a line chart
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
           '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-dat <- signposts(doi=dois)
+dat <- signposts(doi=dois, key=key)
 q <- plot_signposts(input=dat)
 
 test_that("plot_signposts returns the correct class", {
