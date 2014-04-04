@@ -1,6 +1,7 @@
 .gitignore
 inst/assets/
 .travis.yml
+appveyor.yml
 Makefile
 man-roxygen
 inst/ignore

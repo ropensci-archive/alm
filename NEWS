@@ -1,3 +1,13 @@
+alm 0.1.4
+===============
+
+MINOR IMPROVEMENTS
+
+* Put a note about where to get rCharts from Github in DESCIPTION file (#16)
+* Updated vignette with example using Crossref article level metrics API.
+* Updating to using new roxygen2 version.
+* Parsing added for new sources: datacite, copernicus, articlecoverage, and articlecoveragecurated (#13) - more parsing needs to be added for event sources, will be added soon.
+
 alm 0.1.2
 ===============
 
