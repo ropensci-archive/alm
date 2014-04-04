@@ -3,7 +3,7 @@
 #' @import ggplot2
 #' @importFrom grid grid.newpage pushViewport viewport grid.layout
 #' @importFrom reshape2 melt
-#' @importFrom plyr ldply compact
+#' @importFrom plyr ldply
 #' @param dat Output from \code{alm} (character)
 #' @param type One of totalmetrics or history
 #' @param removezero Remove data sources with all zeros prior to plotting.
@@ -38,7 +38,7 @@ almplot <- function(dat, type = NULL, removezero = TRUE)
   		datt <- dat$history
   		datt$dates <- as.Date(datt$dates)
   		temp <- split(datt, datt$.id)
-  		dat2 <- ldply(compact(lapply(temp, function(x) if(sum(x$totals)==0){NULL} else {x})))
+  		dat2 <- ldply(almcompact(lapply(temp, function(x) if(sum(x$totals)==0){NULL} else {x})))
   	} else {dat2 <- dat$history}
   	q <- ggplot(dat2, aes(dates, totals, group=.id, colour=.id)) +
   		geom_line() + 
@@ -64,7 +64,7 @@ almplot <- function(dat, type = NULL, removezero = TRUE)
       		datt <- dat$history
       		datt$dates <- as.Date(datt$dates)
       		temp <- split(datt, datt$.id)
-      		dat2 <- ldply(compact(lapply(temp, function(x) if(sum(x$totals)==0){NULL} else {x})))
+      		dat2 <- ldply(almcompact(lapply(temp, function(x) if(sum(x$totals)==0){NULL} else {x})))
       	} else {dat2 <- dat$history}
       	ggplot(dat2, aes(dates, totals, group=.id, colour=.id)) +
       		geom_line() + 

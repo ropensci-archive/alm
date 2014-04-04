@@ -70,18 +70,8 @@ out[["pmc"]] # get the results for PubMed Central
 out[["twitter"]] # get the results for twitter (boo, there aren't any)
 out[c("twitter","crossref")] # get the results for two sources
 
-#
-out <- alm(doi="10.1371/journal.pgen.1003471")
-out[["wordpress"]]
-
 # Another example
 out <- almevents(doi="10.1371/journal.pone.0001543")
-# remove those with no data
-out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")]
-names(out)
-
-# Another example
-out <- almevents(doi="10.1371/journal.pone.0035869")
 # remove those with no data
 out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")]
 names(out)
@@ -100,10 +90,10 @@ almevents(doi="10.1371/journal.pone.0035869", source="crossref")
 almevents(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
 
 # Figshare data
-almevents(doi="10.1371/journal.pone.0069841")
+almevents(doi="10.1371/journal.pone.0069841", source='figshare')
 
 # Datacite data
-almevents("10.1371/journal.pone.0012090")
+almevents("10.1371/journal.pone.0012090", source='datacite')
 }
 }
 \references{

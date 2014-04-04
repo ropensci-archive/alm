@@ -3,9 +3,7 @@
 #' This is the main function to search the PLoS ALM (article-level metrics) API. 
 #' See details for more information.
 #' 
-#' @importFrom httr GET verbose stop_for_status content
 #' @importFrom stringr str_replace_all str_split
-#' @importFrom plyr compact
 #' @export
 #' @template alm_params
 #' @template alm_egs
@@ -23,7 +21,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 	}
 	if(!is.null(doi))
 		doi <- doi[!grepl("image", doi)] # remove any DOIs of images
-	id <- compact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mdid))
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mdid))
 	
 	if(length(id)>1){ stop("Only supply one of: doi, pmid, pmcid, mdid") } else { NULL }
 	key <- getkey(key)
@@ -39,7 +37,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 		if(!is.null(sum_metrics))
       info <- info2 <- 'history' 
     
-		args <- compact(list(api_key = key, info = info2, months = months, 
+		args <- almcompact(list(api_key = key, info = info2, months = months, 
 												 days = days, year = year, source = source2, type = names(id)))
 		if(length(id[[1]])==0){stop("Please provide a DOI or other identifier")} else
 			if(length(id[[1]])==1){

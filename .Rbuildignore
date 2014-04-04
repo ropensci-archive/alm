@@ -7,3 +7,4 @@ inst/ignore
 inst/assets
 inst/stuff
 vignettes/margins.sty
+.Rhistory

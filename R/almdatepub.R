@@ -1,7 +1,8 @@
 #' Get the date when the article was published.
 #' 
-#' @importFrom RJSONIO fromJSON
+#' @import httr
 #' @importFrom stringr str_split
+#' @export
 #' @param doi Digital object identifier for an article in PLoS Journals
 #' @param get Get year, month, or day; if unspecified, whole date returned.
 #' @param sleep Time (in seconds) before function sends API call - defaults to
@@ -20,11 +21,7 @@
 #' 		'10.1371/journal.pone.0048705','10.1371/journal.pone.0048731')
 #' almdatepub(doi=dois, get="month")
 #' }
-#' @examples \donttest{
-#' #' # DOI that does not work, gives NA so that looping isn't interrupted
-#' almdatepub(doi="10.1371/journal.pone.002699", get='year')
-#' }
-#' @export
+
 almdatepub <- function(doi, get = NA, sleep = 0, key = NULL)
 {
 	url = 'http://alm.plos.org/api/v3/articles'
@@ -44,14 +41,23 @@ almdatepub <- function(doi, get = NA, sleep = 0, key = NULL)
 	  if(length(doi)==1){
 	  	doi <- paste("doi/", doi, sep="")
 	  	doi2 <- gsub("/", "%2F", doi)
-	  	url2 <- paste(url, "/info%3A", doi2, '?api_key=', key, sep='')
-	  	date <- RJSONIO::fromJSON(url2)
-	  	getdate(date[[1]])
+# 	  	url2 <- paste(url, "/info%3A", doi2, '?api_key=', key, sep='')
+	  	url2 <- paste(url, "/info%3A", doi2, sep='')
+# 	  	date <- RJSONIO::fromJSON(url2)
+      tt <- GET(url2, query=list(api_key = key))
+      warn_for_status(tt)
+      res <- content(tt, as = "text")
+      out <- RJSONIO::fromJSON(res)
+	  	getdate(out[[1]])
 	  } else
 	  	if(length(doi)>1){
 	  		doi2 <- paste(sapply(doi, function(x) gsub("/", "%2F", x)), collapse=",")
 	  		url2 <- paste(url, "?ids=", doi2, sep="")
-	  		out <- RJSONIO::fromJSON(url2)
+# 	  		out <- RJSONIO::fromJSON(url2)
+        tt <- GET(url2, query=list(api_key = key))
+        warn_for_status(tt)
+        res <- content(tt, as = "text")
+        out <- RJSONIO::fromJSON(res)
 	  		sapply(out, getdate)
 	  	}
 }

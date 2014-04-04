@@ -25,18 +25,18 @@ VignetteBuilder: knitr
 Imports:
     ggplot2,
     RCurl,
-    RJSONIO,
     plyr,
     stringr,
     reshape,
     reshape2,
     httr,
     grid,
+    RJSONIO,
     lubridate
 Suggests:
     testthat,
     roxygen2,
     rplos,
     knitr,
-    rjson
+    jsonlite
 Enhances: rCharts

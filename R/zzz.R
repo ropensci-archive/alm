@@ -91,3 +91,8 @@ capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
 							sep="", collapse=" "), USE.NAMES=F)
 		}
 }
+
+#' Remove null elements in a list
+#' @param x A list
+#' @export
+almcompact <- function (x) Filter(Negate(is.null), x)

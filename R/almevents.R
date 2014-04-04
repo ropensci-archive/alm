@@ -5,7 +5,8 @@
 #' @importFrom RCurl getCurlHandle getForm
 #' @importFrom RJSONIO fromJSON
 #' @importFrom reshape sort_df
-#' @importFrom plyr compact rbind.fill
+#' @importFrom plyr rbind.fill
+#' @export
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
@@ -52,18 +53,8 @@
 #' out[["twitter"]] # get the results for twitter (boo, there aren't any)
 #' out[c("twitter","crossref")] # get the results for two sources
 #' 
-#' # 
-#' out <- alm(doi="10.1371/journal.pgen.1003471")
-#' out[["wordpress"]]
-#' 
 #' # Another example
 #' out <- almevents(doi="10.1371/journal.pone.0001543")
-#' # remove those with no data
-#' out <- out[!out %in% c("sorry, no events content yet","parser not written yet")]
-#' names(out)
-#' 
-#' # Another example
-#' out <- almevents(doi="10.1371/journal.pone.0035869")
 #' # remove those with no data
 #' out <- out[!out %in% c("sorry, no events content yet","parser not written yet")]
 #' names(out)
@@ -82,23 +73,23 @@
 #' almevents(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
 #' 
 #' # Figshare data 
-#' almevents(doi="10.1371/journal.pone.0069841")
+#' almevents(doi="10.1371/journal.pone.0069841", source='figshare')
 #' 
 #' # Datacite data
-#' almevents("10.1371/journal.pone.0012090")
+#' almevents("10.1371/journal.pone.0012090", source='datacite')
 #' }
-#' @export
+
 almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, 
   url='http://alm.plos.org/api/v3/articles', months = NULL, days = NULL, 
   source = NULL, key = NULL, curl = getCurlHandle())
 {
-	id <- compact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mdid))
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mdid))
 	if(length(id)>1){ stop("Only supply one of: doi, pmid, pmcid, mdid") } else { NULL }
 	key <- getkey(key)
 	if(is.null(source)){source2 <- NULL} else{ source2 <- paste(source,collapse=",") }
 	
 	parse_events <- function() {	
-	  args <- compact(
+	  args <- almcompact(
 	    list(
 	      api_key = key, info = 'event', months = months, 
 	      days = days, source = source2, type = names(id)
@@ -244,12 +235,12 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
               x[sapply(x, is.null)] <- "none"
               data.frame(x) 
 						}
-            if(names(y$events)[[1]]=="url"){
-              parsefb(y$events)
-            } else
-            {
-              lapply(y$events, parsefb)
-            }
+# 						  if("url" %in% names(y$events[[1]])){
+# 						    parsefb(y$events)
+# 						  } else
+# 						  {
+            lapply(y$events, parsefb)
+# 						  }
 					}
 				} else if(y$name == "mendeley"){
 					if(length(y$events)==0){paste("sorry, no events content yet")} else
