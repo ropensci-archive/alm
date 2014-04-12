@@ -71,3 +71,20 @@
 #' # Get summary metrics by year
 #' alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
 #' }
+#' 
+#' @examples \dontest{
+#' # Crossref article data
+#' # You need to get an API key first, and pass in a different URL
+#' url <- "http://alm.labs.crossref.org/api/v3/articles"
+#' alm(doi='10.1371/journal.pone.0086859', url = url, key = getOption("crossrefalmkey"))
+#' 
+#' # Public Knowledge Project article data
+#' # You need to get an API key first, and pass in a different URL
+#' url <- 'http://pkp-alm.lib.sfu.ca/api/v3/articles'
+#' alm(doi='10.3402/gha.v7.23554', url = url, key = getOption("pkpalmkey"))
+#' 
+#' # Copernicus publishers article data
+#' # You need to get an API key first, and pass in a different URL
+#' url <- 'http://metricus.copernicus.org/api/v3/articles'
+#' alm(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
+#' }
