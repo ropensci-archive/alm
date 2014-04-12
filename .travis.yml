@@ -10,3 +10,5 @@ before_script:
   - ./travis-tool.sh bootstrap
   - ./travis-tool.sh install_deps
   - ./travis-tool.sh github_package assertthat
+notifications:
+ slack: ropensci:wh30e1MP9Am3wXb2wJx1ZRFi
