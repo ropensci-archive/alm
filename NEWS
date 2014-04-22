@@ -1,3 +1,10 @@
+alm 0.1.6
+===============
+
+BUG FIXES
+
+* Fixed a few tests that were failing due to changes in the PLOS ALM API.
+
 alm 0.1.4
 ===============
 
