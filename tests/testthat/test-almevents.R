@@ -12,7 +12,7 @@ test_that("almevents returns the correct class", {
 })
 
 test_that("almevents returns the correct dimensions", {
-  expect_that(nrow(out[["pmc"]]), equals(25))
+  expect_that(ncol(out[["pmc"]]), equals(11))
   expect_that(ncol(out[["twitter"]]), equals(6))
   expect_that(length(out[c("twitter","crossref")]), equals(2))
 })
