@@ -22,6 +22,7 @@ BugReports: http://www.github.com/ropensci/alm/issues
 LazyLoad: yes
 LazyData: yes
 VignetteBuilder: knitr
+Roxygen: list(wrap = FALSE)
 Imports:
     ggplot2,
     RCurl,
