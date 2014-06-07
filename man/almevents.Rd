@@ -71,7 +71,7 @@ out[["twitter"]] # get the results for twitter (boo, there aren't any)
 out[c("twitter","crossref")] # get the results for two sources
 
 # Another example
-out <- almevents(doi="10.1371/journal.pone.0001543")
+(out <- almevents(doi="10.1371/journal.pone.0001543"))
 # remove those with no data
 out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")]
 names(out)
@@ -81,7 +81,7 @@ dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117')
 out <- almevents(doi=dois)
 out[[1]]
 out[[2]]
-out[[1]][["figshare"]][[2]][[1]]
+out[[1]][["figshare"]][[2]]
 
 # Specify a specific source
 almevents(doi="10.1371/journal.pone.0035869", source="crossref")

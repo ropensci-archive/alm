@@ -10,16 +10,16 @@
 
 ### What it is!?
 
-`alm` is a set of functions to access article level metrics from the Public Library of Science journals using their ALM API. 
+`alm` is a set of functions to access article level metrics from the Public Library of Science journals using their ALM API.
 
 
-### What is an article level metric? 
+### What is an article level metric?
 
-Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the Journal Impact Factor. 
+Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the Journal Impact Factor.
 
 ### Are there other altmetrics data providers?
 
-Yes indeedy. 
+Yes indeedy.
 
 + [ImpactStory](http://impactstory.it/)
 + [Altmetric.com](http://altmetric.com/)
@@ -31,15 +31,9 @@ You aren't currently not required to use an API key to access the PLoS ALM API, 
 
 Get your PLoS API key [here](http://api.plos.org/)
 
-Put your API key in your .Rprofile file using exactly this: 
-options(PlosApiKey = "YOUalmAPIKEY"), 
-and the functions within this package will be able to use your API key without you having to enter it every time you run a search. 
-
-### Tutorials and help
-
-*Coming soon* 
-
-<!-- alm tutorial at rOpenSci website [here](#) -->
+Put your API key in your .Rprofile file using exactly this:
+options(PlosApiKey = "YOUalmAPIKEY"),
+and the functions within this package will be able to use your API key without you having to enter it every time you run a search.
 
 ### Quick start
 
@@ -152,7 +146,7 @@ head(out[["history"]])
 
 
 ```coffee
-dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", 
+dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797",
     "10.1371/journal.pone.0039395")
 out <- alm(doi = dois)
 lapply(out, head)
@@ -219,19 +213,19 @@ names(out)  # names of sources
 ```
 
 ```
- [1] "citeulike"              "crossref"              
- [3] "nature"                 "pubmed"                
- [5] "scopus"                 "counter"               
- [7] "researchblogging"       "pmc"                   
- [9] "facebook"               "mendeley"              
-[11] "twitter"                "wikipedia"             
-[13] "scienceseeker"          "relativemetric"        
-[15] "f1000"                  "figshare"              
-[17] "pmceurope"              "pmceuropedata"         
-[19] "openedition"            "wordpress"             
-[21] "reddit"                 "datacite"              
-[23] "copernicus"             "articlecoverage"       
-[25] "articlecoveragecurated" "plos_comments"         
+ [1] "citeulike"              "crossref"
+ [3] "nature"                 "pubmed"
+ [5] "scopus"                 "counter"
+ [7] "researchblogging"       "pmc"
+ [9] "facebook"               "mendeley"
+[11] "twitter"                "wikipedia"
+[13] "scienceseeker"          "relativemetric"
+[15] "f1000"                  "figshare"
+[17] "pmceurope"              "pmceuropedata"
+[19] "openedition"            "wordpress"
+[21] "reddit"                 "datacite"
+[23] "copernicus"             "articlecoverage"
+[25] "articlecoveragecurated" "plos_comments"
 ```
 
 ```coffee
@@ -302,20 +296,20 @@ dat <- signposts(doi = "10.1371/journal.pone.0029797")
 plot_signposts(input = dat)
 ```
 
-![plot of chunk signposts1](inst/vign/figure/signposts1.png) 
+![plot of chunk signposts1](inst/vign/figure/signposts1.png)
 
 
 Or plot many identifiers gives a line chart
 
 
 ```coffee
-dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", 
+dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797",
     "10.1371/journal.pone.0039395")
 dat <- signposts(doi = dois)
 plot_signposts(input = dat)
 ```
 
-![plot of chunk signposts2](inst/vign/figure/signposts2.png) 
+![plot of chunk signposts2](inst/vign/figure/signposts2.png)
 
 
 Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
@@ -328,8 +322,8 @@ Note: Do you the key below in the `searchplos` call in this example, but if you 
 ```coffee
 library(rplos)
 library(plyr)
-dois <- searchplos(terms = "science", fields = "id", toquery = list("cross_published_journal_key:PLoSONE", 
-    "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), 
+dois <- searchplos(terms = "science", fields = "id", toquery = list("cross_published_journal_key:PLoSONE",
+    "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"),
     limit = 200)
 ```
 
@@ -359,19 +353,19 @@ The default plot
 plot_density(alm)
 ```
 
-![plot of chunk plot_densityplot1](inst/vign/figure/plot_densityplot1.png) 
+![plot of chunk plot_densityplot1](inst/vign/figure/plot_densityplot1.png)
 
 
 Plot many sources in different panels in the same plot, and pass in colors just for fun
 
 
 ```coffee
-plot_density(input = alm, source = c("counter_total", "crossref_citations", 
-    "twitter_total", "wos_citations"), color = c("#83DFB4", "#EFA5A5", "#CFD470", 
+plot_density(input = alm, source = c("counter_total", "crossref_citations",
+    "twitter_total", "wos_citations"), color = c("#83DFB4", "#EFA5A5", "#CFD470",
     "#B2C9E4"))
 ```
 
-![plot of chunk plot_densityplot5](inst/vign/figure/plot_densityplot5.png) 
+![plot of chunk plot_densityplot5](inst/vign/figure/plot_densityplot5.png)
 
 
 
