@@ -94,6 +94,13 @@ almevents(doi="10.1371/journal.pone.0069841", source='figshare')
 
 # Datacite data
 almevents("10.1371/journal.pone.0012090", source='datacite')
+
+# F1000 Prime data
+almevents("10.1371/journal.pbio.1001041", source='f1000')
+dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
+           '10.1371/journal.pbio.0040020','10.1371/journal.pmed.1001300')
+res <- almevents(doi = dois, source='f1000')
+res[[3]]
 }
 }
 \references{

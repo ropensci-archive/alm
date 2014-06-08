@@ -77,6 +77,39 @@
 #'
 #' # Datacite data
 #' almevents("10.1371/journal.pone.0012090", source='datacite')
+#' 
+#' # F1000 Prime data
+#' almevents("10.1371/journal.pbio.1001041", source='f1000')
+#' dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
+#'            '10.1371/journal.pbio.0040020','10.1371/journal.pmed.1001300')
+#' res <- almevents(doi = dois, source='f1000')
+#' res[[3]]
+#' }
+#' 
+#' @examples \dontest{
+#' # Crossref article data
+#' # You need to get an API key first, and pass in a different URL
+#' url <- "http://alm.labs.crossref.org/api/v3/articles"
+#' key <- getOption("crossrefalmkey")
+#' # With wikipedia data
+#' almevents(doi='10.1371/journal.pone.0086859', url = url, key = key)
+#' # With facebook data
+#' alm(doi='10.1080/15459624.2013.816432', url = url, key = key)
+#' almevents(doi='10.1080/15459624.2013.816432', url = url, key = key)
+#' # With CrossRef citation data - no events data for citations though...
+#' alme(doi='10.1021/cr400135x', url = url, key = key)
+#' almevents(doi='10.1021/cr400135x', url = url, key = key)
+#' # With 
+#' 
+#' # Public Knowledge Project article data
+#' # You need to get an API key first, and pass in a different URL
+#' url <- 'http://pkp-alm.lib.sfu.ca/api/v3/articles'
+#' almevents(doi='10.3402/gha.v7.23554', url = url, key = getOption("pkpalmkey"))
+#' 
+#' # Copernicus publishers article data
+#' # You need to get an API key first, and pass in a different URL
+#' url <- 'http://metricus.copernicus.org/api/v3/articles'
+#' almevents(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
 #' }
 
 almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
@@ -101,6 +134,7 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				args2 <- c(args, ids = id[[1]])
 				out <- getForm(url, .params = args2, curl = curl)
 				ttt <- RJSONIO::fromJSON(out)
+# 				ttt <- jsonlite::fromJSON(out, FALSE)
 			} else
 				if(length(id[[1]])>1){
 					if(length(id[[1]])>50){
@@ -238,27 +272,23 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
               x[sapply(x, is.null)] <- "none"
               data.frame(x)
 						}
-# 						  if("url" %in% names(y$events[[1]])){
-# 						    parsefb(y$events)
-# 						  } else
-# 						  {
             lapply(y$events, parsefb)
-# 						  }
 					}
 				} else if(y$name == "mendeley"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
-						parsemendeley <- function(mm){
-							readers <- data.frame(name="readers", value=mm$readers, stringsAsFactors = FALSE)
-							disc <- if(length(mm$discipline) > 1){
-                ldply(mm$discipline, function(x) data.frame(x, stringsAsFactors = FALSE))[,-1]
-							} else { data.frame(mm$discipline, stringsAsFactors = FALSE)[,-1] }
-							country <- ldply(mm$country, function(x) data.frame(x, stringsAsFactors = FALSE))
-							status <- ldply(mm$status, function(x) data.frame(x, stringsAsFactors = FALSE))
-							dfs <- list(readers = readers, discipline = disc, country = country, status = status)
-							ldply(dfs)
-						}
-						parsemendeley(y$events)
+# 						parsemendeley <- function(mm){
+# 							readers <- data.frame(name="readers", value=mm$readers, stringsAsFactors = FALSE)
+# 							disc <- if(length(mm$discipline) > 1){
+#                 ldply(mm$discipline, function(x) data.frame(x, stringsAsFactors = FALSE))[,-1]
+# 							} else { data.frame(mm$discipline, stringsAsFactors = FALSE)[,-1] }
+# 							country <- ldply(mm$country, function(x) data.frame(x, stringsAsFactors = FALSE))
+# 							status <- ldply(mm$status, function(x) data.frame(x, stringsAsFactors = FALSE))
+# 							dfs <- list(readers = readers, discipline = disc, country = country, status = status)
+# 							ldply(dfs)
+# 						}
+# 						parsemendeley(y$events)
+					  y$events
 					}
 				} else if(y$name == "twitter"){
 					if(length(y$events)==0){paste(sorry)} else
@@ -305,7 +335,6 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				} else if(y$name == "scopus"){
 					if(length(y$events)==0){paste(sorry)} else
 						{
-#               y$events[[1]]
               y$events
 						}
 				} else if(y$name == "wos"){
@@ -358,13 +387,13 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				                    )
 				    )
             row.names(data) <- NULL
-#             names(data) <- c('reference_set','one','two','three','four','five','six','seven')
 				    list(meta=meta, data=data)
 				  }
 				} else if(y$name == "f1000"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-				    data.frame(rbind(y$events), stringsAsFactors=FALSE)
+# 				    data.frame(rbind(y$events), stringsAsFactors=FALSE)
+            y$events
 				  }
 				} else if(y$name == "figshare"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -380,25 +409,21 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
 				    y$events
-				    # 				    paste("parser not written yet")
 				  }
 				} else if(y$name == "pmceuropedata"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
 				    y$events
-				    # 				    paste("parser not written yet")
 				  }
 				} else if(y$name == "openedition"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
 				    y$events
-				    # 				    paste("parser not written yet")
 				  }
 				} else if(y$name == "reddit"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
 				    y$events
-				    # 				    paste("parser not written yet")
 				  }
 				}  else if(y$name == "datacite"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -421,6 +446,16 @@ almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				    y$events
 				  }
 				}  else if(y$name == "plos_comments"){
+				  if(length(y$events)==0){paste(sorry)} else
+				  {
+				    y$events
+				  }
+				}  else if(y$name == "twitter_search"){
+				  if(length(y$events)==0){paste(sorry)} else
+				  {
+				    y$events
+				  }
+				}  else if(y$name == "doi_resolution"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
 				    y$events
