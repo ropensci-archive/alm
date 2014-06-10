@@ -8,3 +8,4 @@ inst/assets
 inst/stuff
 vignettes/margins.sty
 .Rhistory
+tests/test-all.R
