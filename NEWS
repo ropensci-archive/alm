@@ -1,3 +1,15 @@
+alm 0.1.8
+===============
+
+BUG FIXES
+
+* Fixed bug in `almevents()` that was causing the function to fail - due to change in the webservices (#18)
+
+MINOR IMPROVEMENTS
+
+* Tidied code a bit and fixed parsing in a few sources in `almevents()`.
+* Added more examples in `almevents()` for using CrossRef, PKP, and Copernicus.
+
 alm 0.1.6
 ===============
 
@@ -21,7 +33,7 @@ alm 0.1.2
 MINOR IMPROVEMENTS
 
 * Added mdid's for PLOS articles, so searching for mdid's with alm() or almevents() works now.
-* Added basic handler for new sources in alm: datacite, Copernicus, ariclecoverge, and ariclecovergeupdated. 
+* Added basic handler for new sources in alm: datacite, Copernicus, ariclecoverge, and ariclecovergeupdated.
 * Collate removed from DESCRIPTION tile.
 
 alm 0.1.1
@@ -36,6 +48,6 @@ MINOR IMPROVEMENTS
 alm 0.1
 ===============
 
-NEW FEATURES 
+NEW FEATURES
 
 * Released to CRAN
