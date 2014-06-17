@@ -87,4 +87,9 @@
 #' # You need to get an API key first, and pass in a different URL
 #' url <- 'http://metricus.copernicus.org/api/v3/articles'
 #' alm(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
+#' 
+#' # eLife publishers article data
+#' # You need to get an API key first, and pass in a different URL
+#' url <- 'http://alm.svr.elifesciences.org/api/v3/articles'
+#' alm(doi='10.7554/eLife.00471', url = url, key = getOption("elifealmkey"))
 #' }
