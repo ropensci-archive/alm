@@ -11,8 +11,16 @@ test_that("almevents returns the correct class", {
 	expect_that(out[["pmc"]], is_a("data.frame"))
 })
 
-test_that("almevents returns the correct dimensions", {
-  expect_that(ncol(out[["pmc"]]), equals(11))
-  expect_that(ncol(out[["twitter"]]), equals(6))
-  expect_that(length(out[c("twitter","crossref")]), equals(2))
+test_that("almevents returns correct things when two dois passed in", {
+  dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117')
+  out2 <- almevents(doi=dois, key=key)
+  expect_is(out2, "list")
+  expect_equal(length(out2), 2)
+  expect_equal(length(out2), 2)
+})
+
+test_that("almevents returns correctly when one specific source requested", {
+  out3 <- almevents(doi="10.1371/journal.pone.0035869", source="crossref", key=key)
+  expect_equal(length(out3), 1)
+  expect_match(names(out3), "crossref")
 })
