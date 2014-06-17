@@ -1,3 +1,15 @@
+alm 0.1.9
+===============
+
+BUG FIXES
+
+* Fixed some broken tests
+
+MINOR IMPROVEMENTS
+
+* Added additional exmple to `almevents()` to get data from the eLife ALM API server
+
+
 alm 0.1.8
 ===============
 
