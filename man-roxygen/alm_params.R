@@ -1,7 +1,7 @@
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
-#' @param mdid Mendeley object identifier (character)
+#' @param mendeley Mendeley object identifier (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param info One of summary, history, or detail(default totals + history in a list). 
 #' 		Not specifying anything (the default) returns data.frame of totals across 

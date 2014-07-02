@@ -10,7 +10,7 @@
 #' @references See a tutorial/vignette for alm at 
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 
-alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
+alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
   url = 'http://alm.plos.org/api/v3/articles',
 	info = "totals", months = NULL, days = NULL, year = NULL, 
 	source = NULL, key = NULL, curl = getCurlHandle(), 
@@ -21,7 +21,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 	}
 	if(!is.null(doi))
 		doi <- doi[!grepl("image", doi)] # remove any DOIs of images
-	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mdid))
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mendeley))
 	
 	if(length(id)>1){ stop("Only supply one of: doi, pmid, pmcid, mdid") } else { NULL }
 	key <- getkey(key)
@@ -45,7 +45,8 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 				args2 <- c(args, ids = id[[1]])
         out <- GET(url, query=args2)
         stop_for_status(out)
-        tt <- content(out)
+        tt <- content(out, as = "text")
+        tt <- RJSONIO::fromJSON(tt, simplifyWithNames = FALSE)
 			} else
 			{
 				if(length(id[[1]])>1){
@@ -62,7 +63,8 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 							args2 <- c(args, ids = id2)
 							out <- GET(url, query=args2)
 							stop_for_status(out)
-							tt <- content(out)
+							tt <- content(out, as = "text")
+							tt <- RJSONIO::fromJSON(tt, simplifyWithNames = FALSE)
 						}
 						temp <- lapply(idsplit, repeatit)
 						tt <- do.call(c, temp)
@@ -76,7 +78,8 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
 						args2 <- c(args, ids = id2)
 						out <- GET(url, query=args2)
 						stop_for_status(out)
-						tt <- content(out)
+						tt <- content(out, as = "text")
+						tt <- RJSONIO::fromJSON(tt, simplifyWithNames = FALSE)
 					}
 				}
 			}

@@ -10,7 +10,7 @@
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
-#' @param mdid Mendeley object identifier (character)
+#' @param mendeley Mendeley object identifier (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param months Number of months since publication to request historical data for.
 #' 		See details for a note. (numeric)
@@ -21,7 +21,7 @@
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
 #' @param curl If using in a loop, call getCurlHandle() first and pass
 #'  the returned value in here (avoids unnecessary footprint)
-#' @details You can only supply one of the parmeters doi, pmid, pmcid, and mdid.
+#' @details You can only supply one of the parmeters doi, pmid, pmcid, and mendeley.
 #'
 #' 		Query for as many articles at a time as you like. Though queries are broken
 #' 		up in to smaller bits of 30 identifiers at a time.
@@ -77,7 +77,7 @@
 #'
 #' # Datacite data
 #' almevents("10.1371/journal.pone.0012090", source='datacite')
-#' 
+#'
 #' # F1000 Prime data
 #' almevents("10.1371/journal.pbio.1001041", source='f1000')
 #' dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
@@ -85,7 +85,7 @@
 #' res <- almevents(doi = dois, source='f1000')
 #' res[[3]]
 #' }
-#' 
+#'
 #' @examples \dontest{
 #' # Crossref article data
 #' # You need to get an API key first, and pass in a different URL
@@ -99,25 +99,25 @@
 #' # With CrossRef citation data - no events data for citations though...
 #' alme(doi='10.1021/cr400135x', url = url, key = key)
 #' almevents(doi='10.1021/cr400135x', url = url, key = key)
-#' # With 
-#' 
+#' # With
+#'
 #' # Public Knowledge Project article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- 'http://pkp-alm.lib.sfu.ca/api/v3/articles'
 #' almevents(doi='10.3402/gha.v7.23554', url = url, key = getOption("pkpalmkey"))
-#' 
+#'
 #' # Copernicus publishers article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- 'http://metricus.copernicus.org/api/v3/articles'
 #' almevents(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
 #' }
 
-almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL,
+almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
   url='http://alm.plos.org/api/v3/articles', months = NULL, days = NULL,
   source = NULL, key = NULL, curl = getCurlHandle())
 {
-	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mdid))
-	if(length(id)>1){ stop("Only supply one of: doi, pmid, pmcid, mdid") } else { NULL }
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mendeley))
+	if(length(id)>1){ stop("Only supply one of: doi, pmid, pmcid, mendeley") } else { NULL }
 	key <- getkey(key)
 	if(is.null(source)){source2 <- NULL} else{ source2 <- paste(source,collapse=",") }
 

@@ -11,7 +11,7 @@
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
-#' @param mdid Mendeley object identifier (character)
+#' @param mendeley Mendeley object identifier (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param months Number of months since publication to request historical data for.
 #'    See details for a note. (numeric)
@@ -32,7 +32,7 @@
 #' @references See a tutorial/vignette for alm at 
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
-#' # The default call with either doi, pmid, pmcid, or mdid without specifying 
+#' # The default call with either doi, pmid, pmcid, or mendeley without specifying 
 #' # an argument for info
 #' signposts(doi="10.1371/journal.pone.0029797")
 #' 
@@ -47,16 +47,16 @@
 #' # A single PubMed Central ID (pmcid)
 #' signposts(pmcid=212692)
 #' 
-#' # A single Mendeley UUID (mdid)
-#' signposts(mdid="35791700-6d00-11df-a2b2-0026b95e3eb7")
+#' # A single Mendeley UUID (mendeley)
+#' signposts(mendeley="35791700-6d00-11df-a2b2-0026b95e3eb7")
 #' }
 #' @export
-signposts <- function(doi = NULL, pmid = NULL, pmcid = NULL, mdid = NULL, 
+signposts <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, 
                 url = 'http://alm.plos.org/api/v3/articles',
                 months = NULL, days = NULL, year = NULL, 
                 source = NULL, key = NULL, curl = getCurlHandle())
 {	
-  temp <- alm(doi = doi, pmid = pmid, pmcid = pmcid, mdid = mdid, url = url, 
+  temp <- alm(doi = doi, pmid = pmid, pmcid = pmcid, mendeley = mendeley, url = url, 
       info = "summary", months = months, days = days, year = year, source = source, 
       key = key, curl = curl)
   if(class(try(temp[[2]], silent=TRUE)) == "try-error"){
