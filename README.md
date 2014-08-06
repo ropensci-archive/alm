@@ -6,7 +6,8 @@
      /        \  |_______ 	|        |
 </pre>
 
-[![Build Status](https://api.travis-ci.org/ropensci/alm.png)](https://travis-ci.org/ropensci/alm)
+Unix: [![Build Status](https://api.travis-ci.org/ropensci/alm.png)](https://travis-ci.org/ropensci/alm)
+Windows: [![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq)](https://ci.appveyor.com/project/sckott/alm)
 
 ### What it is!?
 
