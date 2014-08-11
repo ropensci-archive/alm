@@ -6,7 +6,11 @@
      /        \  |_______ 	|        |
 </pre>
 
-[![Build Status](https://api.travis-ci.org/ropensci/alm.png)](https://travis-ci.org/ropensci/alm)
+|Platform|master|dev|
+|----|----|----|
+|Linux|[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=master)](https://travis-ci.org/ropensci/alm?branch=master)|[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=dev)](https://travis-ci.org/ropensci/alm?branch=dev)|
+|Windows|[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/master)](https://ci.appveyor.com/project/sckott/alm/branch/master)|[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/dev)](https://ci.appveyor.com/project/sckott/alm/branch/dev)|
+
 
 ### What it is!?
 
