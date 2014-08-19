@@ -37,7 +37,8 @@
 #'
 #' # Search for DOI's, then feed into alm
 #' library('rplos')
-#' dois <- searchplos(q='evolution', fl='id', fq='doc_type:full', limit = 52)
+#' dois <- searchplos(q='evolution', fl='id', 
+#'    fq=list('-article_type:correction','doc_type:full'), limit = 52)
 #' out <- alm(doi=as.character(dois[,1]))
 #' lapply(out, head)
 #'
@@ -45,15 +46,6 @@
 #' pmids <- c(19300479, 19390606, 19343216)
 #' out <- alm(pmid=pmids)
 #' out[[3]] # get data for the third pmid
-#'
-#' # Getting just summary data
-#' alm(doi='10.1371/journal.pone.0039395', info='summary')
-#'
-#' # Using days argument
-#' alm(doi='10.1371/journal.pone.0040117', days=30)
-#'
-#' # Using the year argument
-#' alm(doi='10.1371/journal.pone.0040117', year=2012)
 #'
 #' # Getting data for a specific source
 #' alm(doi='10.1371/journal.pone.0035869', source='mendeley')
@@ -71,12 +63,19 @@
 #'
 #' # Get summary metrics by year
 #' alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
+#' 
+#' # Curl debugging
+#' library('httr')
+#' alm(doi="10.1371/journal.pone.0029797", config=verbose())
+#' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
+#'  	'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
+#' alm(doi=dois, config=verbose())
 #' }
 #'
 #' @examples \dontest{
 #' # Crossref article data
 #' # You need to get an API key first, and pass in a different URL
-#' url <- "http://alm.labs.crossref.org/api/v3/articles"
+#' url <- "http://alm.labs.crossref.org/api/v5/articles"
 #' alm(doi='10.1371/journal.pone.0086859', url = url, key = getOption("crossrefalmkey"))
 #'
 #' # Public Knowledge Project article data

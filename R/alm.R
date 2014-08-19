@@ -10,23 +10,18 @@
 #' @references See a tutorial/vignette for alm at 
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 
-alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
-  url = 'http://alm.plos.org/api/v3/articles',
-	info = "totals", months = NULL, days = NULL, year = NULL, 
-	source = NULL, key = NULL, curl = getCurlHandle(), 
-  total_details = FALSE, sum_metrics = NULL)
+alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info = "totals", 
+  source = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL,
+	url = 'http://alm.plos.org/api/v5/articles', ...)
 {	
-	if(!info %in% c("summary","totals","history","detail")) {
-		stop("info must be one of summary, totals, history, or detail")
-	}
-	if(!is.null(doi))
+	key <- getkey(key)
+  info <- match.arg(info, c("summary","totals","detail"))
+  source2 <- if(is.null(source)) NULL else paste(source, collapse=",")
+	
+  if(!is.null(doi))
 		doi <- doi[!grepl("image", doi)] # remove any DOIs of images
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mendeley))
-	
-	if(length(id)>1){ stop("Only supply one of: doi, pmid, pmcid, mdid") } else { NULL }
-	key <- getkey(key)
-	
-	if(is.null(source)){source2 <- NULL} else{ source2 <- paste(source,collapse=",") }
+	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mdid")
 	
 	getalm <- function() {
 		if(info=="totals"){info2 <- NULL} else
@@ -42,11 +37,7 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 		if(length(id[[1]])==0){stop("Please provide a DOI or other identifier")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
-				args2 <- c(args, ids = id[[1]])
-        out <- GET(url, query=args2)
-        stop_for_status(out)
-        tt <- content(out, as = "text")
-        tt <- RJSONIO::fromJSON(tt, simplifyWithNames = FALSE)
+				tt <- alm_GET(url, c(args, ids = id[[1]]), ...)
 			} else
 			{
 				if(length(id[[1]])>1){
@@ -60,116 +51,104 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 							{
 								id2 <- paste(id[[1]], collapse=",")
 							}
-							args2 <- c(args, ids = id2)
-							out <- GET(url, query=args2)
-							stop_for_status(out)
-							tt <- content(out, as = "text")
-							tt <- RJSONIO::fromJSON(tt, simplifyWithNames = FALSE)
+							tt <- alm_GET(url, c(args, ids = id2), ...)
 						}
 						temp <- lapply(idsplit, repeatit)
 						tt <- do.call(c, temp)
 					} else {
-						if(names(id) == "doi") {
-							id2 <- paste(sapply(id, function(x) gsub("/", "%2F", x)), collapse=",")
-						} else
-						{
-							id2 <- paste(id[[1]], collapse=",")
-						}
-						args2 <- c(args, ids = id2)
-						out <- GET(url, query=args2)
-						stop_for_status(out)
-						tt <- content(out, as = "text")
-						tt <- RJSONIO::fromJSON(tt, simplifyWithNames = FALSE)
+					  id2 <- if(names(id) == "doi") { 
+					    paste(sapply(id, function(x) gsub("/", "%2F", x)), collapse=",")
+					  } else { paste(id[[1]], collapse=",") }
+						tt <- alm_GET(url, c(args, ids = id2), ...)
 					}
 				}
 			}
-		if(info=="summary"){tt} else
-		{
-			getdata <- function(data_, y) {
-				if(y == "totals"){
-          data_2 <- data_$sources
-					servs <- sapply(data_2, function(x) x$name)
-          totals <- lapply(data_2, function(x) x$metrics)
-          
-          totals2 <- lapply(totals, function(x){
-            x[sapply(x, is.null)] <- NA
-            x
-          })
-					
-          names(totals2) <- servs
-          
-          if(total_details){
-            temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
-            names(temp) <- str_replace_all(names(temp), "\\.", "_")
-            return( 
-              cbind(data.frame(doi=data_$doi, title=data_$title, publication_date=data_$publication_date), 
-                    temp, date_modified=data_$update_date)
-            )
-          } else
-          {
-            return(ldply(totals2, function(x) as.data.frame(x)))
-          }
-				} else
-				
-        if(is.null(sum_metrics)) 
-        {
-				  data_2 <- data_$sources
-					servs <- sapply(data_2, function(x) x$name)
-				  totals <- lapply(data_2, function(x) x$metrics)
-				  totals2 <- lapply(totals, function(x){
-				    x[sapply(x, is.null)] <- NA
-				    x
-				  })
-					names(totals2) <- servs
-					totalsdf <- ldply(totals2, function(x) as.data.frame(x))
-          
-					if(total_details){
-					  temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
-					  names(temp) <- str_replace_all(names(temp), "\\.", "_")
-					  totals3 <- cbind(data.frame(doi=data_$doi, title=data_$title, 
-                             publication_date=data_$publication_date), 
-                             temp, date_modified=data_$update_date)
-					} else
-					{
-					  totals3 <- totalsdf
-					}
-					
-					hist <- lapply(data_2, function(x) x$histories)
-					gethist <- function(y) {
-						dates <- sapply(y, function(x) str_split(x[[1]], "T")[[1]][[1]])
-						totals <- sapply(y, function(x) x[[2]])
-						data.frame(dates=dates, totals=totals)	
-					}
-					histdfs <- lapply(hist, gethist)
-					names(histdfs) <- servs
-					historydf <- ldply(histdfs)
-					if(y == "history"){ historydf } else
-						if(y == "detail"){ list(totals = totals3, history = historydf) } else
-							stop("info must be one of history, event or detail")
-				} else
-				{
-				  sumby <- paste0("by_", match.arg(sum_metrics, choices=c("day","month","year")))
-          
-				  data_2 <- data_$sources
-				  servs <- sapply(data_2, function(x) x$name)
-				  totals <- lapply(data_2, function(x) x[[sumby]])
-				  totals[sapply(totals,is.null)] <- NA
-				  totals2 <- lapply(totals, function(x){
-				    x <- lapply(x, function(y) { y[sapply(y, is.null)] <- NA; y })
-				    x
-				  })
-				  names(totals2) <- servs
-				  totalsdf <- ldply(totals2, function(x) ldply(x, function(x) as.data.frame(x)))
-          return(totalsdf)
-				}
-			}
-			if(length(id[[1]])>1){ lapply(tt, getdata, y=info) } else { getdata(data_=tt[[1]], y=info)}
+		if(info=="summary"){ 
+      list(meta=metadf(tt), 
+           info=get_details(tt$data[[1]]),
+           signposts=get_signpost(tt$data[[1]]))
+    } else {		  
+			if(length(id[[1]])>1){
+        lapply(tt$data, getdata, y=info, z=total_details, w=sum_metrics) 
+			} else { getdata(x=tt$data[[1]], y=info, z=total_details, w=sum_metrics) }
 		}
 	}
 	
-	# Define safe version so errors don't prevent getalm from working
 	safe_getalm <- plyr::failwith(NULL, getalm)
-	
-	# Get the data
 	safe_getalm()
+}
+
+alm_GET <- function(x, y, ...){
+  out <- GET(x, query=y, ...)
+  stop_for_status(out)
+  tt <- content(out, as = "text")
+  jsonlite::fromJSON(tt, FALSE)
+}
+
+getdata <- function(x, y, z=FALSE, w=NULL) {
+  if(y == "totals"){
+    get_totals(x = x, z)
+  } else {
+    if(is.null(w)){
+      data_2 <- x$sources
+      totals3 <- get_totals(data_2, z)
+    } else {
+      get_sumby(x$sources, w)
+    }
+  }
+}
+
+metadf <- function(x){
+  tmp <- x[!names(x) == 'data']
+  tmp[vapply(tmp, is.null, logical(1))] <- NA
+  data.frame(tmp, stringsAsFactors = FALSE)
+}
+
+# get_totals(x=data_)
+# get_totals(x=data_, TRUE)
+get_totals <- function(x, total_details=FALSE){
+  servs <- sapply(x$sources, function(x) x$name)
+  totals <- lapply(x$sources, function(x) x$metrics)
+  totals2 <- lapply(totals, function(x){
+    x[sapply(x, is.null)] <- NA
+    x
+  })
+  names(totals2) <- servs
+  
+  if(total_details){
+    temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
+    names(temp) <- str_replace_all(names(temp), "\\.", "_")
+    cbind(data.frame(
+      doi=x$doi, 
+      title=x$title), 
+      temp, date_modified=x$update_date)
+  } else { ldply(totals2, function(x) as.data.frame(x)) }
+}
+
+# get_details(data_)
+# get_signpost(data_)
+get_details <- function(x){
+  date_parts <- x$issued$`date-parts`[[1]]
+  date_parts[[2]] <- if(nchar(date_parts[[2]]) == 1) paste0("0", date_parts[[2]])
+  date_parts <- paste(date_parts, collapse = "-")
+  tmp <- x[ !names(x) %in% c('sources','issued','viewed','saved','discussed','cited') ]
+  data.frame(tmp, date=date_parts, stringsAsFactors = FALSE)
+}
+
+get_signpost <- function(x){
+  data.frame(x[ names(x) %in% c('doi','viewed','saved','discussed','cited') ], stringsAsFactors = FALSE)
+}
+
+# get_sumby(x=data_$sources, y=sum_metrics)
+get_sumby <- function(x, y){
+  sumby <- paste0("by_", match.arg(y, choices=c("day","month","year")))
+  servs <- sapply(x, function(z) z$name)
+  totals <- lapply(x, function(z) z[[sumby]])
+  totals[sapply(totals,is.null)] <- NA
+  totals2 <- lapply(totals, function(z){
+    z <- lapply(z, function(w) { w[sapply(w, is.null)] <- NA; w })
+    z
+  })
+  names(totals2) <- servs
+  ldply(totals2, function(v) ldply(v, as.data.frame))
 }
