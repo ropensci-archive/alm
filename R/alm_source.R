@@ -77,43 +77,6 @@ alm_source <- function(source = 'crossref', info = "totals", key = NULL, total_d
   safe_getalm()
 }
 
-alm_GET <- function(x, y, ...){
-  out <- GET(x, query=y, ...)
-  stop_for_status(out)
-  tt <- content(out, as = "text")
-  jsonlite::fromJSON(tt, FALSE)
-}
-
-getdata <- function(x, y, z=FALSE, w=NULL) {
-  if(y == "totals"){
-    get_totals(x, z)
-  } else {
-    if(is.null(w)){
-      tots <- get_totals(x, z)
-      summets <- get_sumby(x$sources, w)
-      list(info=get_details(x),
-           signposts=get_signpost(x), 
-           totals=tots, 
-           sum_metrics=summets)
-    } else {
-      get_sumby(x$sources, w)
-    }
-  }
-}
-
-getsummary <- function(x) {
-  list(info=get_details(x),
-       signposts=get_signpost(x))
-}
-
-metadf <- function(x){
-  tmp <- x[!names(x) == 'data']
-  tmp[vapply(tmp, is.null, logical(1))] <- NA
-  data.frame(tmp, stringsAsFactors = FALSE)
-}
-
-# get_totals(x=data_)
-# get_totals(x=data_, TRUE)
 get_totals <- function(x, total_details=FALSE){
   servs <- sapply(x$sources, function(x) x$name)
   totals <- lapply(x$sources, function(x) x$metrics)
@@ -133,8 +96,6 @@ get_totals <- function(x, total_details=FALSE){
   } else { data.frame(doi=x$doi, ldply(totals2, function(x) as.data.frame(x))) }
 }
 
-# get_details(data_)
-# get_signpost(data_)
 get_details <- function(x){
   date_parts <- x$issued$`date-parts`[[1]]
   date_parts[[2]] <- if(nchar(date_parts[[2]]) == 1) paste0("0", date_parts[[2]])
@@ -149,19 +110,3 @@ get_signpost <- function(x){
   tmp[vapply(tmp, is.null, logical(1))] <- NA
   data.frame(tmp, stringsAsFactors = FALSE)
 }
-
-# get_sumby(x=data_$sources, y=sum_metrics)
-get_sumby <- function(x, y){
-  sumby <- paste0("by_", match.arg(y, choices=c("day","month","year")))
-  servs <- sapply(x, function(z) z$name)
-  totals <- lapply(x, function(z) z[[sumby]])
-  totals[sapply(totals,is.null)] <- NA
-  totals2 <- lapply(totals, function(z){
-    z <- lapply(z, function(w) { w[sapply(w, is.null)] <- NA; w })
-    z
-  })
-  names(totals2) <- servs
-  tmp <- ldply(totals2, function(v) ldply(v, as.data.frame))
-  if(NROW(tmp) == 0) NULL else tmp
-}
-
