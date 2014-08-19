@@ -16,8 +16,6 @@ alm(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 
 \item{mendeley}{Mendeley object identifier (character)}
 
-\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
-
 \item{info}{One of totals, summary, or detail (default totals + sum_metrics data in a list).
 Not specifying anything (the default) returns data.frame of totals across
 data providers. (character)}
@@ -25,8 +23,6 @@ data providers. (character)}
 \item{source}{Name of source (or list of sources) to get ALM information for (character)}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
-
-\item{...}{optional additional curl options (debugging tools mostly)}
 
 \item{total_details}{If FALSE (the default) the standard totals data.frame is
 returned; if TRUE, the totals data is in a wide format with more details
@@ -36,6 +32,10 @@ to TRUE, the output should no longer with with \code{\link{almplot}}.}
 \item{sum_metrics}{Just like the output you get from setting info='totals', you can
 get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'),
 or year (sum_metrics='year').}
+
+\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
+
+\item{...}{optional additional curl options (debugging tools mostly)}
 }
 \value{
 PLoS altmetrics as data.frame's.
