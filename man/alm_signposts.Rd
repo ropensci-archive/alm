@@ -4,8 +4,8 @@
 \title{Retrieve PLOS article-level metrics signposts.}
 \usage{
 alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
-  url = "http://alm.plos.org/api/v3/articles", months = NULL, days = NULL,
-  year = NULL, source = NULL, key = NULL, curl = getCurlHandle())
+  source = NULL, key = NULL, url = "http://alm.plos.org/api/v5/articles",
+  ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}
@@ -18,24 +18,12 @@ alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 
 \item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
 
-\item{months}{Number of months since publication to request historical data for.
-See details for a note. (numeric)}
-
-\item{days}{Number of days since publication to request historical data for.
-See details for a note. (numeric)}
-
-\item{year}{End of which year to request historical data for.
-See details for a note. (numeric)}
-
 \item{source}{Name of source (or list of sources) to get ALM information for
 (character)}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
 \item{...}{optional additional curl options (debugging tools mostly)}
-
-\item{curl}{If using in a loop, call getCurlHandle() first and pass
-the returned value in here (avoids unnecessary footprint)}
 }
 \value{
 A data.frame of the signpost numbers for the searched object, and DOIs.
@@ -50,7 +38,7 @@ This includes:
 }
 }
 \details{
-This is just a wrapper around the function \code{\link{alm}}, forcing
+This is just a wrapper around the function \code{\link{alm_ids}}, forcing
 info="summary", then coercing signposts data to a data.frame.
 }
 \examples{
@@ -70,8 +58,9 @@ alm_signposts(pmid=22590526)
 # A single PubMed Central ID (pmcid)
 alm_signposts(pmcid=212692)
 
-# A single Mendeley UUID (mendeley)
-alm_signposts(mendeley="35791700-6d00-11df-a2b2-0026b95e3eb7")
+# Curl debugging
+library('httr')
+alm_signposts(pmid=22590526, config=verbose())
 }
 }
 \references{
@@ -79,6 +68,6 @@ See a tutorial/vignette for alm at
 \url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 \seealso{
-\code{\link{alm}}, \code{\link{plot_signposts}}
+\code{\link{alm_ids}}, \code{\link{plot_signposts}}
 }
 

@@ -55,8 +55,10 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info
 				}
 			}
 		if(info=="summary"){ 
-		  restmp <- if(length(id[[1]]) > 1) lapply(tt$data, getsummary) else getsummary(tt$data[[1]])
-      names(restmp) <- vapply(tt$data, function(x) x$doi, character(1))
+		  if(length(id[[1]]) > 1){
+		    restmp <- lapply(tt$data, getsummary) 
+        names(restmp) <- vapply(tt$data, function(x) x$doi, character(1))
+		  } else { restmp <- getsummary(tt$data[[1]]) }
       list(meta=metadf(tt), data=restmp)
     } else {		  
 			if(length(id[[1]]) > 1){
