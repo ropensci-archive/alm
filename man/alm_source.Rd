@@ -26,6 +26,12 @@ to TRUE, the output should no longer with with \code{\link{almplot}}.}
 get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'),
 or year (sum_metrics='year').}
 
+\item{limit}{(integer) Number from 1 to infinity. This doubles as the rows parameter, which is
+what's called internally to the API service. The max results per page is 50, so if you use a
+value > 50, then we essentially loop through to get all the results you want.}
+
+\item{page}{(integer) Number from 1 to infinity.}
+
 \item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
 
 \item{...}{optional additional curl options (debugging tools mostly)}

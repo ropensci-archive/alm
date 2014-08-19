@@ -17,6 +17,10 @@
 #' @param sum_metrics Just like the output you get from setting info='totals', you can 
 #'    get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'), 
 #'    or year (sum_metrics='year').
+#' @param limit (integer) Number from 1 to infinity. This doubles as the rows parameter, which is 
+#'    what's called internally to the API service. The max results per page is 50, so if you use a
+#'    value > 50, then we essentially loop through to get all the results you want.
+#' @param page (integer) Number from 1 to infinity.
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param ... optional additional curl options (debugging tools mostly)
 #' @references See a tutorial/vignette for alm at 
