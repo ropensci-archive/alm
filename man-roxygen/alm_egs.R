@@ -10,10 +10,10 @@
 #' @examples \dontrun{
 #' # The default call with either doi, pmid, pmcid, or mendeley without specifying
 #' # an argument for info
-#' alm(doi="10.1371/journal.pone.0029797")
+#' alm_ids(doi="10.1371/journal.pone.0029797")
 #'
 #' # Details for a single DOI
-#' out <- alm(doi='10.1371/journal.pone.0029797', info='detail')
+#' out <- alm_ids(doi='10.1371/journal.pone.0029797', info='detail')
 #' out
 #' ## totals
 #' out[["info"]]
@@ -21,79 +21,79 @@
 #' out[["sum_metrics"]]
 #'
 #' # A single PubMed ID (pmid)
-#' alm(pmid=22590526)
+#' alm_ids(pmid=22590526)
 #'
 #' # A single PubMed Central ID (pmcid)
-#' alm(pmcid=212692, info='summary')
+#' alm_ids(pmcid=212692, info='summary')
 #'
 #' # A single Mendeley UUID (mendeley)
-#' alm(mendeley="437b07d9-bc40-4c57-b60e-1f60fefe2300")
-#' alm(mendeley=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0", "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
+#' alm_ids(mendeley="437b07d9-bc40-4c57-b60e-1f60fefe2300")
+#' alm_ids(mendeley=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0", "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
 #'
 #' # Provide more than one DOI
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 #'		'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-#' out <- alm(doi=dois)
+#' out <- alm_ids(doi=dois)
 #' out[[1]] # get data for the first DOI
 #'
 #' # Search for DOI's, then feed into alm
 #' library('rplos')
-#' dois <- searchplos(q='evolution', fl='id', 
+#' dois <- searchplos(q='evolution', fl='id',
 #'    fq=list('-article_type:correction','doc_type:full'), limit = 52)
-#' out <- alm(doi=as.character(dois[,1]))
+#' out <- alm_ids(doi=as.character(dois[,1]))
 #' lapply(out, head)
 #'
 #' # Provide more than one pmid
 #' pmids <- c(19300479, 19390606, 19343216)
-#' out <- alm(pmid=pmids)
+#' out <- alm_ids(pmid=pmids)
 #' out[[3]] # get data for the third pmid
 #'
 #' # Getting data for a specific source
-#' alm(doi='10.1371/journal.pone.0035869', source='mendeley')
-#' alm(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'))
-#' alm(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'), info='history')
+#' alm_ids(doi='10.1371/journal.pone.0035869', source='mendeley')
+#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'))
+#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'), info='history')
 #'
 #' # Get detailed totals output
-#' alm(doi='10.1371/journal.pone.0035869', total_details=TRUE)
+#' alm_ids(doi='10.1371/journal.pone.0035869', total_details=TRUE)
 #'
 #' # Get summary metrics by day
-#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='day')
+#' alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='day')
 #'
 #' # Get summary metrics by month
-#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='month')
+#' alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='month')
 #'
 #' # Get summary metrics by year
-#' alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
-#' 
+#' alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='year')
+#'
 #' # Search by source only, without article identifiers
-#' alm(source='crossref')
-#' 
+#' alm_ids(source='crossref')
+#'
 #' # Curl debugging
 #' library('httr')
-#' alm(doi="10.1371/journal.pone.0029797", config=verbose())
+#' alm_ids(doi="10.1371/journal.pone.0029797", config=verbose())
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 #'  	'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-#' alm(doi=dois, config=verbose())
+#' alm_ids(doi=dois, config=verbose())
 #' }
 #'
 #' @examples \dontest{
 #' # Crossref article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- "http://alm.labs.crossref.org/api/v5/articles"
-#' alm(doi='10.1371/journal.pone.0086859', url = url, key = getOption("crossrefalmkey"))
+#' alm_ids(doi='10.1371/journal.pone.0086859', url = url, key = getOption("crossrefalmkey"))
 #'
 #' # Public Knowledge Project article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- 'http://pkp-alm.lib.sfu.ca/api/v3/articles'
-#' alm(doi='10.3402/gha.v7.23554', url = url, key = getOption("pkpalmkey"))
+#' alm_ids(doi='10.3402/gha.v7.23554', url = url, key = getOption("pkpalmkey"))
 #'
 #' # Copernicus publishers article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- 'http://metricus.copernicus.org/api/v3/articles'
-#' alm(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
+#' alm_ids(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
 #'
 #' # eLife publishers article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- 'http://alm.svr.elifesciences.org/api/v3/articles'
-#' alm(doi='10.7554/eLife.00471', url = url, key = getOption("elifealmkey"))
+#' alm_ids(doi='10.7554/eLife.00471', url = url, key = getOption("elifealmkey"))
 #' }

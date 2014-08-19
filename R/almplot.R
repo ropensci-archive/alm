@@ -1,5 +1,5 @@
 #' Plot results of a call to the alm function.
-#' 
+#'
 #' @import ggplot2
 #' @importFrom grid grid.newpage pushViewport viewport grid.layout
 #' @importFrom reshape2 melt
@@ -12,19 +12,19 @@
 #' 		you get history and summary data so that either or both can be plotted
 #' 		in this function.
 #' @seealso \code{\link{alm}} which is required to use this function.
-#' @references See a tutorial/vignette for alm at 
+#' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' out <- alm(doi='10.1371/journal.pone.0001543', info='detail')
-#' almplot(out, type='totalmetrics') # just totalmetrics data
-#' almplot(dat=out, type='history') # just historical data
-#' almplot(dat=out) # leaving type as NULL prints both plots
+#' alm_plot(out, type='totalmetrics') # just totalmetrics data
+#' alm_plot(dat=out, type='history') # just historical data
+#' alm_plot(dat=out) # leaving type as NULL prints both plots
 #' }
 #' @export
-almplot <- function(dat, type = NULL, removezero = TRUE)
-{  
+alm_plot <- function(dat, type = NULL, removezero = TRUE)
+{
   .id <- value <- variable <- dates <- totals <- NULL
-  
+
   if(is.null(type)) {
   	dat_m <- melt(dat$totals, id.vars=".id")
   	dat_m <- na.omit(dat_m)
@@ -41,8 +41,8 @@ almplot <- function(dat, type = NULL, removezero = TRUE)
   		dat2 <- ldply(almcompact(lapply(temp, function(x) if(sum(x$totals)==0){NULL} else {x})))
   	} else {dat2 <- dat$history}
   	q <- ggplot(dat2, aes(dates, totals, group=.id, colour=.id)) +
-  		geom_line() + 
-  		theme_bw(base_size=18)	
+  		geom_line() +
+  		theme_bw(base_size=18)
   	grid.newpage()
   	pushViewport(viewport(layout = grid.layout(2, 1)))
   	vplayout <- function(x, y) viewport(layout.pos.row = x, layout.pos.col = y)
@@ -67,7 +67,7 @@ almplot <- function(dat, type = NULL, removezero = TRUE)
       		dat2 <- ldply(almcompact(lapply(temp, function(x) if(sum(x$totals)==0){NULL} else {x})))
       	} else {dat2 <- dat$history}
       	ggplot(dat2, aes(dates, totals, group=.id, colour=.id)) +
-      		geom_line() + 
+      		geom_line() +
       		theme_bw(base_size=18)
       	} else
         stop("'type' must be one of 'totalmetrics' or 'history'")

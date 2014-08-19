@@ -29,7 +29,7 @@
 #' 		If you supply both the days and months parameters, days takes precedence,
 #' 		and months is ignored.
 #'
-#' 		You can get events from many different sources. After calling almevents,
+#' 		You can get events from many different sources. After calling alm_events,
 #' 		then index the output by the data provider you want. The options are:
 #' 		bloglines, citeulike, connotea, crossref, nature, postgenomic, pubmed,
 #' 		scopus, plos, researchblogging, biod, webofscience, pmc, facebook,
@@ -45,7 +45,7 @@
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' # For one article
-#' out <- almevents(doi="10.1371/journal.pone.0029797")
+#' out <- alm_events(doi="10.1371/journal.pone.0029797")
 #' names(out) # names of sources
 #' # remove those with no data
 #' out <- out[!out %in% c("sorry, no events content yet","parser not written yet")]
@@ -54,35 +54,35 @@
 #' out[c("twitter","crossref")] # get the results for two sources
 #'
 #' # Another example
-#' (out <- almevents(doi="10.1371/journal.pone.0001543"))
+#' (out <- alm_events(doi="10.1371/journal.pone.0001543"))
 #' # remove those with no data
 #' out <- out[!out %in% c("sorry, no events content yet","parser not written yet")]
 #' names(out)
 #'
 #' # Two doi's
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117')
-#' out <- almevents(doi=dois)
+#' out <- alm_events(doi=dois)
 #' out[[1]]
 #' out[[2]]
 #' out[[1]][["figshare"]][[2]]
 #'
 #' # Specify a specific source
-#' almevents(doi="10.1371/journal.pone.0035869", source="crossref")
+#' alm_events(doi="10.1371/journal.pone.0035869", source="crossref")
 #'
 #' # Specify two specific sources
-#' almevents(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
+#' alm_events(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
 #'
 #' # Figshare data
-#' almevents(doi="10.1371/journal.pone.0069841", source='figshare')
+#' alm_events(doi="10.1371/journal.pone.0069841", source='figshare')
 #'
 #' # Datacite data
-#' almevents("10.1371/journal.pone.0012090", source='datacite')
+#' alm_events("10.1371/journal.pone.0012090", source='datacite')
 #'
 #' # F1000 Prime data
-#' almevents("10.1371/journal.pbio.1001041", source='f1000')
+#' alm_events("10.1371/journal.pbio.1001041", source='f1000')
 #' dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
 #'            '10.1371/journal.pbio.0040020','10.1371/journal.pmed.1001300')
-#' res <- almevents(doi = dois, source='f1000')
+#' res <- alm_events(doi = dois, source='f1000')
 #' res[[3]]
 #' }
 #'
@@ -92,27 +92,27 @@
 #' url <- "http://alm.labs.crossref.org/api/v3/articles"
 #' key <- getOption("crossrefalmkey")
 #' # With wikipedia data
-#' almevents(doi='10.1371/journal.pone.0086859', url = url, key = key)
+#' alm_events(doi='10.1371/journal.pone.0086859', url = url, key = key)
 #' # With facebook data
 #' alm(doi='10.1080/15459624.2013.816432', url = url, key = key)
-#' almevents(doi='10.1080/15459624.2013.816432', url = url, key = key)
+#' alm_events(doi='10.1080/15459624.2013.816432', url = url, key = key)
 #' # With CrossRef citation data - no events data for citations though...
 #' alme(doi='10.1021/cr400135x', url = url, key = key)
-#' almevents(doi='10.1021/cr400135x', url = url, key = key)
+#' alm_events(doi='10.1021/cr400135x', url = url, key = key)
 #' # With
 #'
 #' # Public Knowledge Project article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- 'http://pkp-alm.lib.sfu.ca/api/v3/articles'
-#' almevents(doi='10.3402/gha.v7.23554', url = url, key = getOption("pkpalmkey"))
+#' alm_events(doi='10.3402/gha.v7.23554', url = url, key = getOption("pkpalmkey"))
 #'
 #' # Copernicus publishers article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- 'http://metricus.copernicus.org/api/v3/articles'
-#' almevents(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
+#' alm_events(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
 #' }
 
-almevents <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
+alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
   url='http://alm.plos.org/api/v3/articles', months = NULL, days = NULL,
   source = NULL, key = NULL, curl = getCurlHandle())
 {

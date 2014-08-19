@@ -34,24 +34,24 @@
 #' @examples \dontrun{
 #' # The default call with either doi, pmid, pmcid, or mendeley without specifying 
 #' # an argument for info
-#' signposts(doi="10.1371/journal.pone.0029797")
+#' alm_signposts(doi="10.1371/journal.pone.0029797")
 #' 
 #' # Many DOIs
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 #' '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-#' signposts(doi=dois)
+#' alm_signposts(doi=dois)
 #' 
 #' # A single PubMed ID (pmid)
-#' signposts(pmid=22590526)
+#' alm_signposts(pmid=22590526)
 #' 
 #' # A single PubMed Central ID (pmcid)
-#' signposts(pmcid=212692)
+#' alm_signposts(pmcid=212692)
 #' 
 #' # A single Mendeley UUID (mendeley)
-#' signposts(mendeley="35791700-6d00-11df-a2b2-0026b95e3eb7")
+#' alm_signposts(mendeley="35791700-6d00-11df-a2b2-0026b95e3eb7")
 #' }
 #' @export
-signposts <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, 
+alm_signposts <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, 
                 url = 'http://alm.plos.org/api/v3/articles',
                 months = NULL, days = NULL, year = NULL, 
                 source = NULL, key = NULL, curl = getCurlHandle())

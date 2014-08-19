@@ -10,7 +10,7 @@
 #' @references See a tutorial/vignette for alm at 
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 
-alm_id <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info = "totals", 
+alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info = "totals", 
   source = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL,
 	url = 'http://alm.plos.org/api/v5/articles', ...)
 {	

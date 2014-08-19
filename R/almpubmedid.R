@@ -1,17 +1,17 @@
 #' Get PubMed article ID by inputting the doi for the article.
-#' 
-#' @import httr 
+#'
+#' @import httr
 #' @param doi digital object identifier for an article in PLoS Journals
 #' @param key your PLoS API key, either enter, or loads from .Rprofile
 #' @return The PubMed article ID.
-#' @references See a tutorial/vignette for alm at 
+#' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
-#' almpubmedid(doi = '10.1371/journal.pbio.0000012')
+#' alm_pubmedid(doi = '10.1371/journal.pbio.0000012')
 #' }
 #' @export
-almpubmedid <- function(doi, key = NULL) 
-{    
+alm_pubmedid <- function(doi, key = NULL)
+{
 	url = 'http://alm.plos.org/api/v3/articles'
 	key <- getkey(key)
 	doi <- paste("doi/", doi, sep="")

@@ -26,16 +26,16 @@
 #' @references See a tutorial/vignette for alm at 
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
-#' alm_source(source='mendeley')
-#' alm_source(source='scopus', info='summary')
-#' alm_source(source=c('mendeley','twitter'))
-#' alm_source(source='mendeley', limit=2)
-#' alm_source(source='mendeley', limit=200)
+#' alm_sources(source='mendeley')
+#' alm_sources(source='scopus', info='summary')
+#' alm_sources(source=c('mendeley','twitter'))
+#' alm_sources(source='mendeley', limit=2)
+#' alm_sources(source='mendeley', limit=200)
 #' 
-#' alm_source(source='mendeley', info='summary')
+#' alm_sources(source='mendeley', info='summary')
 #' }
 
-alm_source <- function(source = 'crossref', info = "totals", key = NULL, total_details = FALSE, 
+alm_sources <- function(source = 'crossref', info = "totals", key = NULL, total_details = FALSE, 
   sum_metrics = NULL, limit=50, page=1, url = 'http://alm.plos.org/api/v5/articles', ...)
 {	
   key <- getkey(key)
