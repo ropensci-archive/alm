@@ -17,23 +17,14 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info = "
 	key <- getkey(key)
   info <- match.arg(info, c("summary","totals","detail"))
   source2 <- if(is.null(source)) NULL else paste(source, collapse=",")
-	
-  if(!is.null(doi))
-		doi <- doi[!grepl("image", doi)] # remove any DOIs of images
+  if(!is.null(doi)) doi <- doi[!grepl("image", doi)] # remove any DOIs of images
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mendeley))
 	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mdid")
 	
 	getalm <- function() {
-		if(info=="totals"){info2 <- NULL} else
-			if(info=="history"|info=="detail"){info2 <- "detail"} else
-				if(info=="summary"){info2 <- "summary"}
-    
-    # set info2 to history if sum_metrics is not NULL
-		if(!is.null(sum_metrics))
-      info <- info2 <- 'history' 
-    
-		args <- almcompact(list(api_key = key, info = info2, months = months, 
-												 days = days, year = year, source = source2, type = names(id)))
+    info2 <- switch(info, totals=NULL, detail='detail', summary='summary')
+		if(!is.null(sum_metrics)) info <- info2 <- 'detail' 
+		args <- almcompact(list(api_key = key, info = info2, source = source2, type = names(id)))
 		if(length(id[[1]])==0){stop("Please provide a DOI or other identifier")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
@@ -64,13 +55,15 @@ alm <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info = "
 				}
 			}
 		if(info=="summary"){ 
-      list(meta=metadf(tt), 
-           info=get_details(tt$data[[1]]),
-           signposts=get_signpost(tt$data[[1]]))
+		  restmp <- if(length(id[[1]]) > 1) lapply(tt$data, getsummary) else getsummary(tt$data[[1]])
+      names(restmp) <- vapply(tt$data, function(x) x$doi, character(1))
+      list(meta=metadf(tt), data=restmp)
     } else {		  
-			if(length(id[[1]])>1){
-        lapply(tt$data, getdata, y=info, z=total_details, w=sum_metrics) 
-			} else { getdata(x=tt$data[[1]], y=info, z=total_details, w=sum_metrics) }
+			if(length(id[[1]]) > 1){
+        restmp <- lapply(tt$data, getdata, y=info, z=total_details, w=sum_metrics)
+        names(restmp) <- vapply(tt$data, function(x) x$doi, character(1))
+			} else { restmp <- getdata(x=tt$data[[1]], y=info, z=total_details, w=sum_metrics) }
+      return( list(meta=metadf(tt), data=restmp) )
 		}
 	}
 	
@@ -87,15 +80,24 @@ alm_GET <- function(x, y, ...){
 
 getdata <- function(x, y, z=FALSE, w=NULL) {
   if(y == "totals"){
-    get_totals(x = x, z)
+    get_totals(x, z)
   } else {
     if(is.null(w)){
-      data_2 <- x$sources
-      totals3 <- get_totals(data_2, z)
+      tots <- get_totals(x, z)
+      summets <- get_sumby(x$sources, w)
+      list(info=get_details(x),
+           signposts=get_signpost(x), 
+           totals=tots, 
+           sum_metrics=summets)
     } else {
       get_sumby(x$sources, w)
     }
   }
+}
+
+getsummary <- function(x) {
+  list(info=get_details(x),
+       signposts=get_signpost(x))
 }
 
 metadf <- function(x){
@@ -150,5 +152,7 @@ get_sumby <- function(x, y){
     z
   })
   names(totals2) <- servs
-  ldply(totals2, function(v) ldply(v, as.data.frame))
+  tmp <- ldply(totals2, function(v) ldply(v, as.data.frame))
+  if(NROW(tmp) == 0) NULL else tmp
 }
+
