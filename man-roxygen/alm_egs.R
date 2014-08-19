@@ -65,6 +65,9 @@
 #' # Get summary metrics by year
 #' alm(doi='10.1371/journal.pone.0036240', sum_metrics='year')
 #' 
+#' # Search by source only, without article identifiers
+#' alm(source='crossref')
+#' 
 #' # Curl debugging
 #' library('httr')
 #' alm(doi="10.1371/journal.pone.0029797", config=verbose())
