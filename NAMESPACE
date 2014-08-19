@@ -2,6 +2,7 @@
 
 export(addmissing)
 export(alm)
+export(alm_source)
 export(almcompact)
 export(almdatepub)
 export(almdateupdated)
