@@ -31,10 +31,10 @@ A data.frame of the signpost numbers for the searched object, and DOIs.
 \description{
 This includes:
 \itemize{
- \item views: counter + pmc (PLOS only)
- \item shares: facebook (+ twitter at PLOS)
- \item bookmarks: mendeley + citeulike
- \item citations: crossref (scopus at PLOS)
+ \item viewed: counter, and pmc (PLOS only)
+ \item saved: mendeley, and citeulike
+ \item discussed: facebook, and twitter at PLOS
+ \item cited: crossref, and scopus at PLOS
 }
 }
 \details{
