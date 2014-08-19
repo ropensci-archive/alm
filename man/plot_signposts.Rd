@@ -34,22 +34,23 @@ part is printed to make plots less ugly.
 \examples{
 \dontrun{
 # Plot data from a single identifier gives a bar chart
-dat <- signposts(doi="10.1371/journal.pone.0029797")
+dat <- alm_signposts(doi="10.1371/journal.pone.0029797")
 plot_signposts(input=dat)
 
 # Plot data from many identifiers gives a line chart
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
    '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-dat <- signposts(doi=dois)
+dat <- alm_signposts(doi=dois)
 plot_signposts(input=dat)
 
 # Or you can make an interactive chart
 plot_signposts(input=dat, type="multiBarChart")
 
-# Lots of DOIs
-library(rplos); library(rCharts)
-dois <- searchplos('ecology', 'id', limit = 30)
-dat <- signposts(doi=do.call(c,dois$id))
+# Many DOIs
+library('rplos'); library('rCharts')
+dois <- searchplos(q='evolution', fl='id',
+   fq=list('-article_type:correction','doc_type:full'), limit = 10)
+dat <- alm_signposts(doi=dois$id)
 ## multiBarChart
 plot_signposts(input=dat, type="multiBarChart")
 ## multiBarHorizontalChart
