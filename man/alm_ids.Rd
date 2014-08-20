@@ -3,7 +3,7 @@
 \alias{alm_ids}
 \title{Retrieve PLoS article-level metrics (ALM).}
 \usage{
-alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
+alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
   info = "totals", source = NULL, key = NULL, total_details = FALSE,
   sum_metrics = NULL, url = "http://alm.plos.org/api/v5/articles", ...)
 }
@@ -14,7 +14,7 @@ alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 
 \item{pmcid}{PubMed Central object identifier (numeric)}
 
-\item{mendeley}{Mendeley object identifier (character)}
+\item{mendeley_uuid}{Mendeley object identifier (character)}
 
 \item{info}{One of totals, summary, or detail (default totals + sum_metrics data in a list).
 Not specifying anything (the default) returns data.frame of totals across
@@ -74,9 +74,7 @@ alm_ids(pmid=22590526)
 alm_ids(pmcid=212692, info='summary')
 
 # A single Mendeley UUID (mendeley)
-alm_ids(mendeley="437b07d9-bc40-4c57-b60e-1f60fefe2300")
-alm_ids(mendeley=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0",
-                   "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
+alm_ids(mendeley_uuid="1d7e7f09-c59b-364b-8c39-a7686f0e9fa0")
 
 # Provide more than one DOI
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',

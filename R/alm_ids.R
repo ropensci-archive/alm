@@ -10,7 +10,7 @@
 #' @references See a tutorial/vignette for alm at 
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 
-alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info = "totals", 
+alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, info = "totals", 
   source = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL,
 	url = 'http://alm.plos.org/api/v5/articles', ...)
 {	
@@ -18,8 +18,8 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info
   info <- match.arg(info, c("summary","totals","detail"))
   source2 <- if(is.null(source)) NULL else paste(source, collapse=",")
   if(!is.null(doi)) doi <- doi[!grepl("image", doi)] # remove any DOIs of images
-	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mendeley))
-	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mdid")
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))
+	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
 	
 	getalm <- function() {
     info2 <- switch(info, totals=NULL, detail='detail', summary='summary')
@@ -64,7 +64,10 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, info
 			if(length(id[[1]]) > 1){
         restmp <- lapply(tt$data, getdata, y=info, z=total_details, w=sum_metrics)
         names(restmp) <- vapply(tt$data, function(x) x$doi, character(1))
-			} else { restmp <- getdata(x=tt$data[[1]], y=info, z=total_details, w=sum_metrics) }
+			} else {
+        checktt <- tryCatch(tt$data[[1]], error=function(e) e)
+        restmp <- if(is(checktt, "simpleError")) list() else getdata(x=tt$data[[1]], y=info, z=total_details, w=sum_metrics) 
+			}
       return( list(meta=metadf(tt), data=restmp) )
 		}
 	}

@@ -27,10 +27,8 @@
 #' alm_ids(pmcid=212692, info='summary')
 #'
 #' # A single Mendeley UUID (mendeley)
-#' alm_ids(mendeley="437b07d9-bc40-4c57-b60e-1f60fefe2300")
-#' alm_ids(mendeley=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0", 
-#'                    "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
-#'
+#' alm_ids(mendeley_uuid="1d7e7f09-c59b-364b-8c39-a7686f0e9fa0")
+#' 
 #' # Provide more than one DOI
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 #'		'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
@@ -52,7 +50,7 @@
 #' # Getting data for a specific source
 #' alm_ids(doi='10.1371/journal.pone.0035869', source='mendeley')
 #' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'))
-#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'), 
+#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'),
 #'    info='history')
 #'
 #' # Get detailed totals output

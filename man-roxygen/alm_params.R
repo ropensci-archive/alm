@@ -1,7 +1,7 @@
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
-#' @param mendeley Mendeley object identifier (character)
+#' @param mendeley_uuid Mendeley object identifier (character)
 #' @param info One of totals, summary, or detail (default totals + sum_metrics data in a list). 
 #' 		Not specifying anything (the default) returns data.frame of totals across 
 #' 		data providers. (character)
