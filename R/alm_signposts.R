@@ -12,7 +12,7 @@
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
-#' @param mendeley Mendeley object identifier (character)
+#' @param mendeley_uuid Mendeley object identifier (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param source Name of source (or list of sources) to get ALM information for 
 #'    (character)
@@ -26,7 +26,7 @@
 #' @references See a tutorial/vignette for alm at 
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
-#' # The default call with either doi, pmid, pmcid, or mendeley without specifying 
+#' # The default call with either doi, pmid, pmcid, or mendeley_uuid without specifying 
 #' # an argument for info
 #' alm_signposts(doi="10.1371/journal.pone.0029797")
 #' 
@@ -46,10 +46,10 @@
 #' alm_signposts(pmid=22590526, config=verbose())
 #' }
 
-alm_signposts <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL, 
+alm_signposts <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, 
   source = NULL, key = NULL, url = 'http://alm.plos.org/api/v5/articles', ...)
 {	
-  temp <- alm_ids(doi = doi, pmid = pmid, pmcid = pmcid, mendeley = mendeley, url = url, 
+  temp <- alm_ids(doi = doi, pmid = pmid, pmcid = pmcid, mendeley_uuid = mendeley_uuid, url = url, 
       info = "summary", source = source, key = key, ...)
   if( !is.null(temp$data[['signposts']]) ){
     temp$data[['signposts']]
