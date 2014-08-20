@@ -4,7 +4,7 @@ _____  |  |   _____
 \__  \ |  |  /     \
  / __ \|  |_|  Y Y  \
 (____  /____/__|_|  /
-     \/           \/ 
+     \/           \/
 </pre>
 
 |Platform|master|dev|
@@ -12,16 +12,16 @@ _____  |  |   _____
 |Linux|[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=master)](https://travis-ci.org/ropensci/alm?branch=master)|[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=dev)](https://travis-ci.org/ropensci/alm?branch=dev)|
 |Windows|[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/master)](https://ci.appveyor.com/project/sckott/alm/branch/master)|[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/dev)](https://ci.appveyor.com/project/sckott/alm/branch/dev)|
 
-### What it is!?
+## What it is!?
 
 `alm` is a set of functions to access article level metrics from the Public Library of Science journals using their ALM API.
 
 
-### What is an article level metric?
+## What is an article level metric?
 
 Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the Journal Impact Factor.
 
-### Are there other altmetrics data providers?
+## Are there other altmetrics data providers?
 
 Yes indeedy.
 
@@ -29,7 +29,7 @@ Yes indeedy.
 + [Altmetric.com](http://altmetric.com/)
 + [PlumAnalytics](http://www.plumanalytics.com/)
 
-### Authentication
+## Authentication
 
 You aren't currently not required to use an API key to access the PLoS ALM API, but soon will need to.
 
@@ -39,9 +39,9 @@ Put your API key in your .Rprofile file using exactly this:
 options(PlosApiKey = "YOUalmAPIKEY"),
 and the functions within this package will be able to use your API key without you having to enter it every time you run a search.
 
-### Quick start
+## Quick start
 
-#### Install
+### Install
 
 You can get this package by installing via `install_github()` within Hadley Wickham's devtools package.
 
@@ -52,7 +52,7 @@ install_github("alm", "rOpenSci")
 require(alm)
 ```
 
-#### Get altmetrics data for a single paper
+### Get altmetrics data for a single paper
 
 ```coffee
 alm(doi = "10.1371/journal.pone.0029797")[, -c(6:8)]
@@ -91,7 +91,7 @@ alm(doi = "10.1371/journal.pone.0029797")[, -c(6:8)]
 
 
 
-#### Details for a single DOI
+### Details for a single DOI
 
 
 ```coffee
@@ -146,7 +146,7 @@ head(out[["history"]])
 ```
 
 
-#### Search on many identifiers
+### Search on many identifiers
 
 
 ```coffee
@@ -194,7 +194,7 @@ lapply(out, head)
 6   counter 426 2580     NA     NA       NA    NA        NA  3046
 ```
 
-#### Output an-easy-to-combine-with-other-results data.frame
+### Output an-easy-to-combine-with-other-results data.frame
 
 
 ```coffee
@@ -208,7 +208,7 @@ alm(doi = "10.1371/journal.pone.0035869", total_details = TRUE)[, 3:10]
 1               NA                 NA              NA                  NA
 ```
 
-#### Get detailed data for altmetrics using `almevents`
+### Get detailed data for altmetrics using `almevents`
 
 
 ```coffee
@@ -292,7 +292,7 @@ out[["pmc"]]  # get the results for PubMed Central
 25               0         0        16 2014
 ```
 
-#### Retrieve and plot PLOS article-level metrics signposts.
+### Retrieve and plot PLOS article-level metrics signposts.
 
 
 ```coffee
@@ -371,6 +371,36 @@ plot_density(input = alm, source = c("counter_total", "crossref_citations",
 
 ![plot of chunk plot_densityplot5](inst/vign/figure/plot_densityplot5.png)
 
+
+## Meta
+
+Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
+
+License: MIT
+
+This package is part of the [rOpenSci](http://ropensci.org/packages) project.
+
+To cite package `alm` in publications use:
+
+```coffee
+To cite package ‘alm’ in publications use:
+
+  Scott Chamberlain, Carl Boettiger, Karthik Ram and Fenner Martin (2014). alm: R wrapper to
+  the almetrics API platform developed by PLoS. R package version 0.1.9.99.
+  https://github.com/ropensci/alm
+
+A BibTeX entry for LaTeX users is
+
+  @Manual{,
+    title = {alm: R wrapper to the almetrics API platform developed by PLoS},
+    author = {Scott Chamberlain and Carl Boettiger and Karthik Ram and Fenner Martin},
+    year = {2014},
+    note = {R package version 0.1.9.99},
+    url = {https://github.com/ropensci/alm},
+  }
+```
+
+Get citation information for `taxize` in R doing `citation(package = 'alm')`
 
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
