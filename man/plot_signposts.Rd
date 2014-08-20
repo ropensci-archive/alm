@@ -6,7 +6,7 @@
 plot_signposts(input, type = "bar", width = 800, height = 500)
 }
 \arguments{
-\item{input}{A data.frame from a search from the \code{\link{signposts}} function}
+\item{input}{A data.frame from a search from the \code{\link{alm_signposts}} function}
 
 \item{type}{Type of chart, one of bar (default), multiBarChart, or
 multiBarHorizontalChart. multiBarChart or multiBarHorizontalChart
@@ -24,7 +24,7 @@ the plotting area.}
 A data.frame of the signpost numbers for the searched object.
 }
 \description{
-This can be used in conjuction with the function \code{\link{signposts}}.
+This can be used in conjuction with the function \code{\link{alm_signposts}}.
 }
 \details{
 Note that DOIs are the unit of replication of each study. When plotting,
@@ -62,6 +62,6 @@ See a tutorial/vignette for alm at
 \url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 \seealso{
-\code{\link{alm}}, \code{\link{plot_signposts}}
+\code{\link{alm_ids}}, \code{\link{plot_signposts}}
 }
 

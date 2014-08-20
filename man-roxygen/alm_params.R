@@ -10,7 +10,7 @@
 #' @param total_details If FALSE (the default) the standard totals data.frame is
 #'    returned; if TRUE, the totals data is in a wide format with more details
 #'    about the paper, including publication date, title, etc. If you set this 
-#'    to TRUE, the output should no longer with with \code{\link{almplot}}.
+#'    to TRUE, the output should no longer with with \code{\link{alm_plot}}.
 #' @param sum_metrics Just like the output you get from setting info='totals', you can 
 #'    get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'), 
 #'    or year (sum_metrics='year').

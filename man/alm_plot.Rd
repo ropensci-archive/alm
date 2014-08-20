@@ -6,7 +6,7 @@
 alm_plot(dat, type = NULL, removezero = TRUE)
 }
 \arguments{
-\item{dat}{Output from \code{alm} (character)}
+\item{dat}{Output from \code{alm_ids} (character)}
 
 \item{type}{One of totalmetrics or history}
 
@@ -19,7 +19,7 @@ A ggplot2 bar plot for `totalmetrics` or line plot for `history`.
 Plot results of a call to the alm function.
 }
 \details{
-You have to specify info='detail' in your call to \code{alm} so that
+You have to specify info='detail' in your call to \code{alm_ids} so that
 		you get history and summary data so that either or both can be plotted
 		in this function.
 }
@@ -36,6 +36,6 @@ See a tutorial/vignette for alm at
 \url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 \seealso{
-\code{\link{alm}} which is required to use this function.
+\code{\link{alm_ids}} which is required to use this function.
 }
 

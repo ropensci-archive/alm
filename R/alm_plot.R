@@ -4,14 +4,14 @@
 #' @importFrom grid grid.newpage pushViewport viewport grid.layout
 #' @importFrom reshape2 melt
 #' @importFrom plyr ldply
-#' @param dat Output from \code{alm} (character)
+#' @param dat Output from \code{alm_ids} (character)
 #' @param type One of totalmetrics or history
 #' @param removezero Remove data sources with all zeros prior to plotting.
 #' @return A ggplot2 bar plot for `totalmetrics` or line plot for `history`.
-#' @details You have to specify info='detail' in your call to \code{alm} so that
+#' @details You have to specify info='detail' in your call to \code{alm_ids} so that
 #' 		you get history and summary data so that either or both can be plotted
 #' 		in this function.
-#' @seealso \code{\link{alm}} which is required to use this function.
+#' @seealso \code{\link{alm_ids}} which is required to use this function.
 #' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{

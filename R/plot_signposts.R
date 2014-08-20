@@ -1,12 +1,12 @@
 #' Plot PLOS article-level metrics data.
 #'
-#' This can be used in conjuction with the function \code{\link{signposts}}.
+#' This can be used in conjuction with the function \code{\link{alm_signposts}}.
 #'
 #' @import ggplot2
 #' @importFrom reshape2 melt
 #' @export
 #' 
-#' @param input A data.frame from a search from the \code{\link{signposts}} function
+#' @param input A data.frame from a search from the \code{\link{alm_signposts}} function
 #' @param type Type of chart, one of bar (default), multiBarChart, or
 #'    multiBarHorizontalChart. multiBarChart or multiBarHorizontalChart
 #'    options use the library rCharts, specifically the NVD3 javascript library.
@@ -19,7 +19,7 @@
 #' @details Note that DOIs are the unit of replication of each study. When plotting,
 #' if the prefix is common among all DOIs, then just the end of the DOI, the numeric
 #' part is printed to make plots less ugly.
-#' @seealso \code{\link{alm}}, \code{\link{plot_signposts}}
+#' @seealso \code{\link{alm_ids}}, \code{\link{plot_signposts}}
 #' @return A data.frame of the signpost numbers for the searched object.
 #' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}

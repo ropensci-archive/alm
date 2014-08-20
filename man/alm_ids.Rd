@@ -27,7 +27,7 @@ data providers. (character)}
 \item{total_details}{If FALSE (the default) the standard totals data.frame is
 returned; if TRUE, the totals data is in a wide format with more details
 about the paper, including publication date, title, etc. If you set this
-to TRUE, the output should no longer with with \code{\link{almplot}}.}
+to TRUE, the output should no longer with with \code{\link{alm_plot}}.}
 
 \item{sum_metrics}{Just like the output you get from setting info='totals', you can
 get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'),
@@ -75,7 +75,8 @@ alm_ids(pmcid=212692, info='summary')
 
 # A single Mendeley UUID (mendeley)
 alm_ids(mendeley="437b07d9-bc40-4c57-b60e-1f60fefe2300")
-alm_ids(mendeley=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0", "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
+alm_ids(mendeley=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0",
+                   "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
 
 # Provide more than one DOI
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
@@ -98,7 +99,8 @@ out[[3]] # get data for the third pmid
 # Getting data for a specific source
 alm_ids(doi='10.1371/journal.pone.0035869', source='mendeley')
 alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'))
-alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'), info='history')
+alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'),
+   info='history')
 
 # Get detailed totals output
 alm_ids(doi='10.1371/journal.pone.0035869', total_details=TRUE)
@@ -128,6 +130,6 @@ See a tutorial/vignette for alm at
 \url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 \seealso{
-\code{\link{almplot}}
+\code{\link{alm_plot}}
 }
 

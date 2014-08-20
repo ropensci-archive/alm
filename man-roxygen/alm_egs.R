@@ -1,4 +1,4 @@
-#' @seealso \code{\link{almplot}}
+#' @seealso \code{\link{alm_plot}}
 #' @details You can only supply one of the parmeters doi, pmid, pmcid, and mendeley.
 #'
 #' 		Query for as many articles at a time as you like. Though queries are broken
@@ -28,7 +28,8 @@
 #'
 #' # A single Mendeley UUID (mendeley)
 #' alm_ids(mendeley="437b07d9-bc40-4c57-b60e-1f60fefe2300")
-#' alm_ids(mendeley=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0", "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
+#' alm_ids(mendeley=c("edc2e519-cc10-36fc-a68d-12e0116c6ac0", 
+#'                    "62128d98-b63d-3f26-9bb4-0bda3913f01e"))
 #'
 #' # Provide more than one DOI
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
@@ -51,7 +52,8 @@
 #' # Getting data for a specific source
 #' alm_ids(doi='10.1371/journal.pone.0035869', source='mendeley')
 #' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'))
-#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'), info='history')
+#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'), 
+#'    info='history')
 #'
 #' # Get detailed totals output
 #' alm_ids(doi='10.1371/journal.pone.0035869', total_details=TRUE)
