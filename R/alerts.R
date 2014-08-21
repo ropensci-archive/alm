@@ -1,4 +1,4 @@
-#' Retrieve alerts data for PLoS article-level metrics (ALM).
+#' Retrieve alerts data for article-level metrics (ALM).
 #' 
 #' @import httr jsonlite
 #' @export
