@@ -54,7 +54,7 @@ alm_alerts <- function(source=NULL, ids=NULL, class_name=NULL, level=NULL, q=NUL
 }
 
 getuserinfo <- function(x=NULL, y=NULL){
-  c(if(is.null(x)) getOption("almv4_user") else x, if(is.null(y)) getOption("almv4_pwd") else x)
+  c(if(is.null(x)) getOption("almv4_user") else x, if(is.null(y)) getOption("almv4_pwd") else y)
 }
 
 alm_compact <- function(l) Filter(Negate(is.null), l)
