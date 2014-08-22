@@ -5,7 +5,7 @@
 \usage{
 alm_alerts(source = NULL, ids = NULL, class_name = NULL, level = NULL,
   q = NULL, unresolved = FALSE, per_page = 50, page = 1, user = NULL,
-  pwd = NULL, url = "http://labs.crowdometer.org/api/v4/alerts", ...)
+  pwd = NULL, url = "http://alm.plos.org/api/v4/alerts", ...)
 }
 \arguments{
 \item{source}{(character) Source to limtit alert search to.}
@@ -36,6 +36,11 @@ Default: all.}
 \description{
 Retrieve alerts data for article-level metrics (ALM).
 }
+\details{
+This function uses the alm.plos.org API by default. You can change which ALM app you use by
+specifying the url in the url parameter. It will likely be the same as the default
+http://alm.plos.org/api/v4/alerts, but just the alm.plos.org part will be different.
+}
 \examples{
 \dontrun{
 alm_alerts()
@@ -54,6 +59,9 @@ alm_alerts(per_page=2)
 
 out <- alm_alerts(level = "error")
 head(out$data)
+
+# Using different ALM apps, e.g, labs.crowdometer.org
+alm_alerts(url='http://labs.crowdometer.org/api/v4/alerts')
 }
 }
 
