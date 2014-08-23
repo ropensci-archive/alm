@@ -2,25 +2,18 @@
 #'
 #' Events are the details of the metrics that are counted related to PLoS papers.
 #'
-#' @importFrom RCurl getCurlHandle getForm
-#' @importFrom RJSONIO fromJSON
 #' @importFrom reshape sort_df
 #' @importFrom plyr rbind.fill
 #' @export
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
-#' @param mendeley Mendeley object identifier (character)
-#' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
-#' @param months Number of months since publication to request historical data for.
-#' 		See details for a note. (numeric)
-#' @param days Number of days since publication to request historical data for.
-#' 		See details for a note. (numeric)
+#' @param mendeley_uuid Mendeley object identifier (character)
 #' @param source The source to get events data from. You can pass in a character
 #' 		vector, like: \code{c("mendeley","crossref")}
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
-#' @param curl If using in a loop, call getCurlHandle() first and pass
-#'  the returned value in here (avoids unnecessary footprint)
+#' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
+#' @param ... optional additional curl options (debugging tools mostly)
 #' @details You can only supply one of the parmeters doi, pmid, pmcid, and mendeley.
 #'
 #' 		Query for as many articles at a time as you like. Though queries are broken
@@ -112,62 +105,39 @@
 #' alm_events(doi='10.5194/acpd-14-8287-2014', url = url, key = getOption("copernicusalmkey"))
 #' }
 
-alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
-  url='http://alm.plos.org/api/v3/articles', months = NULL, days = NULL,
-  source = NULL, key = NULL, curl = getCurlHandle())
+alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
+  source = NULL, key = NULL, url='http://alm.plos.org/api/v5/articles', ...)
 {
-	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley=mendeley))
-	if(length(id)>1){ stop("Only supply one of: doi, pmid, pmcid, mendeley") } else { NULL }
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))
+	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
 	key <- getkey(key)
-	if(is.null(source)){source2 <- NULL} else{ source2 <- paste(source,collapse=",") }
+	source2 <- if(is.null(source)) NULL else paste(source, collapse=",")
 
 	parse_events <- function() {
-	  args <- almcompact(
-	    list(
-	      api_key = key, info = 'event', months = months,
-	      days = days, source = source2, type = names(id)
-	    )
-	  )
+	  args <- almcompact(list(api_key = key, info = 'detail', source = source2, type = names(id)))
 		if(length(id[[1]])==0){stop("Please provide a DOI")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
-				args2 <- c(args, ids = id[[1]])
-				out <- getForm(url, .params = args2, curl = curl)
-				ttt <- RJSONIO::fromJSON(out)
-# 				ttt <- jsonlite::fromJSON(out, FALSE)
+				ttt <- alm_GET(url, c(args, ids = id[[1]]), ...)
 			} else
 				if(length(id[[1]])>1){
 					if(length(id[[1]])>50){
 						slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
 						idsplit <- slice(id[[1]], 50)
 						repeatit <- function(y) {
-							if(names(id) == "doi"){
-								id2 <- paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",")
-							} else
-							{
-								id2 <- paste(id[[1]], collapse=",")
-							}
-							args2 <- c(args, ids = id2)
-							out <- getForm(url, .params = args2, curl = curl)
-							ttt <- RJSONIO::fromJSON(out)
+							id2 <- if(names(id) == "doi") paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",") else paste(id[[1]], collapse=",")
+              alm_GET(url, c(args, ids = id2), ...)
 						}
 						temp <- lapply(idsplit, repeatit)
 						ttt <- do.call(c, temp)
 					} else {
-						if(names(id) == "doi") {
-							id2 <- paste(sapply(id, function(x) gsub("/", "%2F", x)), collapse=",")
-						} else
-						{
-							id2 <- paste(id[[1]], collapse=",")
-						}
-						args2 <- c(args, ids = id2)
-						out <- getForm(url, .params = args2, curl = curl)
-						ttt <- RJSONIO::fromJSON(out)
+						id2 <- concat_ids(id)
+						ttt <- alm_GET(url, c(args, ids = id2), ...)
 					}
 				}
 
 		# get juse the events data
-		events <- lapply(ttt, function(x) x$sources)
+		events <- lapply(ttt$data, function(x) x$sources)
 
 		# Function to extract and parse events data for each source
 		getevents <- function(x, label=NULL){
@@ -185,12 +155,15 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 						pdf_views <- as.numeric(sapply(y$events, `[[`, "pdf_views"))
 						html_views <- as.numeric(sapply(y$events, `[[`, "html_views"))
 						xml_views <- as.numeric(sapply(y$events, `[[`, "xml_views"))
-						data.frame(year, month, pdf_views, html_views, xml_views)
+						df <- data.frame(year, month, pdf_views, html_views, xml_views, stringsAsFactors = FALSE)
+						list(events_url=y$events_url, events=df, csl=y$events_csl)
 					}
 				} else if(y$name == "citeulike"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
-            y$events
+            eventspar <- lapply(y$events, data.frame, stringsAsFactors = FALSE)
+            csl <- y$events_csl
+            list(events_url=y$events_url, events=eventspar, csl=csl)
 					}
 				} else if(y$name == "crossref"){
 					if(length(y$events)==0){paste(sorry)} else
@@ -216,27 +189,31 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 								data.frame(x[[1]])
 							}
 						}
-						ldply(y$events, parsecrossref)
+						eventspar <- ldply(y$events, parsecrossref)
+            csl <- ldply(y$events_csl, parse_csl)
+            list(events_url=y$events_url, events=eventspar, events_csl=csl)
 					}
 				} else if(y$name == "nature"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
 						parsenature <- function(x){
 							temp <- x$event
-							blog_ <- data.frame(temp$blog[names(temp$blog) %in% c('title','url')])
+							blog_ <- data.frame(temp$blog[names(temp$blog) %in% c('title','url')], stringsAsFactors = FALSE)
 							names(blog_) <- c('blog_title','blog_url')
-							post_ <- data.frame(temp[names(temp) %in% c('title','num_words','url','percent_complex_words','created_at')])
+							post_ <- data.frame(temp[names(temp) %in% c('title','num_words','url','percent_complex_words','created_at')], stringsAsFactors = FALSE)
 							names(post_) <- c('post_percent_complex_words','post_created_at','post_title','post_url','post_num_words')
 							cbind(blog_, post_)
 						}
-						ldply(y$events, parsenature)
+						eventspar <- ldply(y$events, parsenature)
+						csl <- ldply(y$events_csl, parse_csl)
+						list(events_url=y$events_url, events=eventspar, events_csl=csl)
 					}
 				} else if(y$name == "researchblogging"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
 						parserblogging <- function(w){
 							temp <- w$event
-							bloginfo <- data.frame(temp[names(temp) %in% c('post_title','blog_name','blogger_name','published_date','post_url')])
+							bloginfo <- data.frame(temp[names(temp) %in% c('post_title','blog_name','blogger_name','published_date','post_url')], stringsAsFactors = FALSE)
 							if(length(temp$citations$citation[[1]])>1){
 								citations <- paste(sapply(temp$citations$citation, function(z) z$doi), sep="", collapse=",")
 							} else
@@ -245,12 +222,8 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 							}
 							cbind(bloginfo, citations)
 						}
-            if(length(y$events)==1){
-              parserblogging(y$events)
-            } else
-            {
-              do.call(rbind, lapply(y$events, parserblogging))
-            }
+            df <- do.call(rbind, lapply(y$events, parserblogging))
+						list(events_url=y$events_url, events=df, csl=y$events_csl)
 					}
 				} else if(y$name == "biod"){
 					if(length(y$events)==0){paste(sorry)} else
@@ -263,49 +236,51 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 						}
 					}
 				} else if(y$name == "pubmed"){
-					if(length(y$events)==0){paste(sorry)} else
-						{ sapply(y$events, function(x) x[c("event","event_url")]) }
+					if(length(y$events)==0){paste(sorry)} else { 
+					  eventspar <- ldply(y$events, function(x) data.frame(x[c("event","event_url")])) 
+            list(events_url=y$events_url, events=eventspar, events_csl=y$events_csl)
+				  }
 				} else if(y$name == "facebook"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
 						parsefb <- function(x){
               x[sapply(x, is.null)] <- "none"
-              data.frame(x)
+              data.frame(x, stringsAsFactors = FALSE)
 						}
-            lapply(y$events, parsefb)
+            df <- ldply(y$events, parsefb)
+						list(events_url=y$events_url, events=df, csl=y$events_csl)
 					}
 				} else if(y$name == "mendeley"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
-# 						parsemendeley <- function(mm){
-# 							readers <- data.frame(name="readers", value=mm$readers, stringsAsFactors = FALSE)
-# 							disc <- if(length(mm$discipline) > 1){
-#                 ldply(mm$discipline, function(x) data.frame(x, stringsAsFactors = FALSE))[,-1]
-# 							} else { data.frame(mm$discipline, stringsAsFactors = FALSE)[,-1] }
-# 							country <- ldply(mm$country, function(x) data.frame(x, stringsAsFactors = FALSE))
-# 							status <- ldply(mm$status, function(x) data.frame(x, stringsAsFactors = FALSE))
-# 							dfs <- list(readers = readers, discipline = disc, country = country, status = status)
-# 							ldply(dfs)
-# 						}
-# 						parsemendeley(y$events)
-					  y$events
+						parsemendeley <- function(mm){
+							readers <- data.frame(name="readers", value=mm$readers, stringsAsFactors = FALSE)
+							disc <- if(length(mm$discipline) > 1){
+                ldply(mm$discipline, function(x) data.frame(x, stringsAsFactors = FALSE))[,-1]
+							} else { data.frame(mm$discipline, stringsAsFactors = FALSE)[,-1] }
+							country <- ldply(mm$country, function(x) data.frame(x, stringsAsFactors = FALSE))
+							status <- ldply(mm$status, function(x) data.frame(x, stringsAsFactors = FALSE))
+							dfs <- list(readers = readers, discipline = disc, country = country, status = status)
+							ldply(dfs)
+						}
+						df <- parsemendeley(y$events)
+					  list(events_url=y$events_url, events=df, csl=y$events_csl)
 					}
 				} else if(y$name == "twitter"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
-					  temp <- lapply(y$events, function(x) data.frame(t(data.frame(x[[1]]))))
-					  tempdf <- do.call(rbind, temp)
-            row.names(tempdf) <- NULL
-            tempdf
+					  temp <- ldply(y$events, function(f){
+                data.frame(f$event, event_url=f$event_url, event_time=f$event_time, stringsAsFactors = FALSE)
+            })
+            csl <- ldply(y$events_csl, parse_csl)
+					  list(events_url=y$events_url, events=temp, csl=csl)
 					}
 				} else if(y$name == "wikipedia"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
-					  df <- data.frame(y$events)
-					  df$lang <- row.names(df)
-					  names(df) <- c("values","lang")
-					  row.names(df) <- NULL
-					  df
+					  df <- ldply(y$events)
+					  names(df) <- c("language","values")
+					  list(events_url=y$events_url, events=df, csl=y$events_csl)
 					}
 				} else if(y$name == "bloglines"){
 					if(length(y$events)==0){paste(sorry)} else
@@ -335,7 +310,8 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 				} else if(y$name == "scopus"){
 					if(length(y$events)==0){paste(sorry)} else
 						{
-              y$events
+						  csl <- ldply(y$events_csl, parse_csl)
+						  list(events_url=y$events_url, events=y$events, events_csl=csl) 
 						}
 				} else if(y$name == "wos"){
 					if(length(y$events)==0){paste(sorry)} else
@@ -350,15 +326,8 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 				} else if(y$name == "pmc"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
-						parsepmc <- function(x, names_){
-							gg <- data.frame(x)
-							gg$it <- row.names(gg)
-							if(!names_){as.numeric(as.character(t(sort_df(gg, "it")[,-2])))} else
-							{ sort_df(gg, "it")[,-1] }
-						}
-						df <- data.frame(do.call(rbind, lapply(y$events, parsepmc, names_=FALSE)))
-						names(df) <- parsepmc(y$events[[1]], TRUE)
-						df
+						df <- ldply(y$events, data.frame, stringsAsFactors=FALSE)
+						list(events_url=y$events_url, events=df, csl=y$events_csl)
 					}
 				} else if(y$name == "connotea"){
 					if(length(y$events)==0){paste(sorry)} else
@@ -366,16 +335,17 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 				} else if(y$name == "scienceseeker"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
-						 parsesciseeker <- function(x){
-						 	temp <- x$event
+						 parsesciseeker <- function(xx){
+						 	temp <- xx$event
 						 	info <- temp[c('title','author')]
 						 	recommendations <- data.frame(t(sapply(temp$`ss:community`$`ss:recommendations`, function(x) x[[2]])))
 						 	names(recommendations) <- c("user","editor")
 						 	categories <- paste(sapply(temp$category, function(x) x[[1]]), collapse=",")
 
-						 	cbind(info, recommendations, categories=categories, event_url=x$event_url)
+						 	cbind(info, recommendations, categories=categories, event_url=xx$event_url)
 						 }
-						 ldply(y$events, parsesciseeker)
+						 df <- ldply(y$events, parsesciseeker)
+						 list(events_url=y$events_url, events=df, csl=y$events_csl)
 					}
 				} else if(y$name == "relativemetric"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -383,11 +353,10 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 				    meta <- y$events[names(y$events) %in% c("start_date","end_date")]
 				    data <- do.call(rbind.fill,
 				                    lapply(y$events$subject_areas, function(x)
-				                      data.frame(x[[1]], t(data.frame(x[[2]])))
+				                      data.frame(subject_area=x[[1]], average_usage=t(data.frame(x[[2]])), stringsAsFactors = FALSE)
 				                    )
 				    )
-            row.names(data) <- NULL
-				    list(meta=meta, data=data)
+				    list(events_url=y$events_url, events=list(meta=meta, data=data), csl=y$events_csl)
 				  }
 				} else if(y$name == "f1000"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -398,7 +367,13 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 				} else if(y$name == "figshare"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-            y$events
+            eventsdat <- lapply(y$events, function(b){
+                sapply(b, function(bb){
+                  tmp <- if(length(bb) > 1) do.call(c, bb) else bb
+                  if(length(tmp) == 1) unlist(tmp) else tmp
+                })
+              })
+				    list(events_url=y$events_url, events=eventsdat, csl=y$events_csl)
 				  }
 				} else if(y$name == "wordpress"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -413,7 +388,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 				} else if(y$name == "pmceuropedata"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-				    y$events
+				    list(events_url=y$events_url, events=y$events, csl=y$events_csl)
 				  }
 				} else if(y$name == "openedition"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -448,7 +423,17 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 				}  else if(y$name == "plos_comments"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-				    y$events
+            eventsdat <- lapply(y$events, function(b){
+                tmp <- b$event
+                tmp[sapply(tmp, length)==0] <- NA
+                tmp$replies <- NULL
+                list(comment=data.frame(tmp, 
+                           event_time=b$event_time, 
+                           event_url=if(!is.null(b$event_url)) b$event_url else NA, stringsAsFactors = FALSE),
+                     replies=b$event$replies)
+              })
+            csl <- ldply(y$events_csl, parse_csl)
+				    list(events_url=y$events_url, events=y$events, csl=csl)
 				  }
 				}  else if(y$name == "twitter_search"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -489,4 +474,21 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 	safe_parse_events <- plyr::failwith(NULL, parse_events)
 	finaldata <- safe_parse_events()
 	if(length(finaldata)>1){ return( finaldata )} else { finaldata[[1]] }
+}
+
+
+try_date_parts <- function(w){
+  tmp <- if(is.null(w[['date-parts']])) w[['date_parts']] else res
+  paste(unlist(tmp), collapse="-")
+}
+
+parse_csl <- function(z){
+  aut <- paste(sapply(z$author, function(zz) paste(zz, collapse = " ")), collapse = "; ")
+  data.frame(authors=aut,
+             title=z$title,
+             container_title=z$`container-title`,
+             issued=try_date_parts(z$issued), 
+             url=z$url,
+             type=z$type,
+             stringsAsFactors = FALSE)
 }

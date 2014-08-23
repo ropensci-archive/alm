@@ -3,9 +3,9 @@
 \alias{alm_events}
 \title{Retrieve PLoS article-level metrics (ALM) events.}
 \usage{
-alm_events(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
-  url = "http://alm.plos.org/api/v3/articles", months = NULL, days = NULL,
-  source = NULL, key = NULL, curl = getCurlHandle())
+alm_events(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
+  source = NULL, key = NULL, url = "http://alm.plos.org/api/v5/articles",
+  ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}
@@ -14,23 +14,16 @@ alm_events(doi = NULL, pmid = NULL, pmcid = NULL, mendeley = NULL,
 
 \item{pmcid}{PubMed Central object identifier (numeric)}
 
-\item{mendeley}{Mendeley object identifier (character)}
-
-\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
-
-\item{months}{Number of months since publication to request historical data for.
-See details for a note. (numeric)}
-
-\item{days}{Number of days since publication to request historical data for.
-See details for a note. (numeric)}
+\item{mendeley_uuid}{Mendeley object identifier (character)}
 
 \item{source}{The source to get events data from. You can pass in a character
 vector, like: \code{c("mendeley","crossref")}}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
-\item{curl}{If using in a loop, call getCurlHandle() first and pass
-the returned value in here (avoids unnecessary footprint)}
+\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
+
+\item{...}{optional additional curl options (debugging tools mostly)}
 }
 \value{
 PLoS altmetrics as data.frame's.

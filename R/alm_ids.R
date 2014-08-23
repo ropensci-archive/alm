@@ -47,9 +47,7 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 						temp <- lapply(idsplit, repeatit)
 						tt <- do.call(c, temp)
 					} else {
-					  id2 <- if(names(id) == "doi") { 
-					    paste(sapply(id, function(x) gsub("/", "%2F", x)), collapse=",")
-					  } else { paste(id[[1]], collapse=",") }
+					  id2 <- id2 <- concat_ids(id)
 						tt <- alm_GET(url, c(args, ids = id2), ...)
 					}
 				}
@@ -74,6 +72,12 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 	
 	safe_getalm <- plyr::failwith(NULL, getalm)
 	safe_getalm()
+}
+
+concat_ids <- function(x){
+  if(names(x) == "doi") { 
+    paste(sapply(x, function(y) gsub("/", "%2F", y)), collapse=",")
+  } else { paste(x[[1]], collapse=",") }
 }
 
 alm_GET <- function(x, y, ...){
