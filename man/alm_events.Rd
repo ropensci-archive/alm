@@ -96,6 +96,9 @@ alm_events("10.1371/journal.pone.0012090", source='datacite')
 # Reddit data
 alm_events("10.1371/journal.pone.0015552", source='reddit')
 
+# Wordpress data
+alm_events("10.1371/journal.pcbi.1000361", source='wordpress')
+
 # F1000 Prime data
 alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
 dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',

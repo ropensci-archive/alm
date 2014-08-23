@@ -78,6 +78,9 @@
 #' 
 #' # Reddit data
 #' alm_events("10.1371/journal.pone.0015552", source='reddit')
+#' 
+#' # Wordpress data
+#' alm_events("10.1371/journal.pcbi.1000361", source='wordpress')
 #'
 #' # F1000 Prime data
 #' alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
@@ -391,7 +394,11 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 				} else if(y$name == "wordpress"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-				    lapply(y$events, function(x) do.call(c, x))
+				    eventsdat <- ldply(y$events, function(b){
+                data.frame(b$event, event_time=b$event_time, event_url=b$event_url, stringsAsFactors = FALSE)
+            })
+				    csl <- ldply(y$events_csl, parse_csl)
+				    list(events_url=y$events_url, events=eventsdat, csl=csl)
 				  }
 				} else if(y$name == "pmceurope"){
 				  if(length(y$events)==0){paste(sorry)} else
