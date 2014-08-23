@@ -60,7 +60,8 @@ names(out) # names of sources
 # remove those with no data
 out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")]
 out[["pmc"]] # get the results for PubMed Central
-out[["twitter"]] # get the results for twitter (boo, there aren't any)
+out[["twitter"]] # get the results for twitter
+out[["plos_comments"]] # get the results for PLOS comments, sorta messy
 out[c("twitter","crossref")] # get the results for two sources
 
 # Another example
@@ -68,13 +69,17 @@ out[c("twitter","crossref")] # get the results for two sources
 # remove those with no data
 out <- out[!out \%in\% c("sorry, no events content yet","parser not written yet")]
 names(out)
+out[['scopus']]
+out[['mendeley']]
+out[['figshare']]
+out[['pubmed']]
 
 # Two doi's
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117')
 out <- alm_events(doi=dois)
 out[[1]]
 out[[2]]
-out[[1]][["figshare"]][[2]]
+out[[1]][["figshare"]]$events
 
 # Specify a specific source
 alm_events(doi="10.1371/journal.pone.0035869", source="crossref")
@@ -88,8 +93,11 @@ alm_events(doi="10.1371/journal.pone.0069841", source='figshare')
 # Datacite data
 alm_events("10.1371/journal.pone.0012090", source='datacite')
 
+# Reddit data
+alm_events("10.1371/journal.pone.0015552", source='reddit')
+
 # F1000 Prime data
-alm_events("10.1371/journal.pbio.1001041", source='f1000')
+alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
 dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
            '10.1371/journal.pbio.0040020','10.1371/journal.pmed.1001300')
 res <- alm_events(doi = dois, source='f1000')

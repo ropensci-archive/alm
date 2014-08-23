@@ -43,7 +43,8 @@
 #' # remove those with no data
 #' out <- out[!out %in% c("sorry, no events content yet","parser not written yet")]
 #' out[["pmc"]] # get the results for PubMed Central
-#' out[["twitter"]] # get the results for twitter (boo, there aren't any)
+#' out[["twitter"]] # get the results for twitter
+#' out[["plos_comments"]] # get the results for PLOS comments, sorta messy
 #' out[c("twitter","crossref")] # get the results for two sources
 #'
 #' # Another example
@@ -51,13 +52,17 @@
 #' # remove those with no data
 #' out <- out[!out %in% c("sorry, no events content yet","parser not written yet")]
 #' names(out)
+#' out[['scopus']]
+#' out[['mendeley']]
+#' out[['figshare']]
+#' out[['pubmed']]
 #'
 #' # Two doi's
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117')
 #' out <- alm_events(doi=dois)
 #' out[[1]]
 #' out[[2]]
-#' out[[1]][["figshare"]][[2]]
+#' out[[1]][["figshare"]]$events
 #'
 #' # Specify a specific source
 #' alm_events(doi="10.1371/journal.pone.0035869", source="crossref")
@@ -70,9 +75,12 @@
 #'
 #' # Datacite data
 #' alm_events("10.1371/journal.pone.0012090", source='datacite')
+#' 
+#' # Reddit data
+#' alm_events("10.1371/journal.pone.0015552", source='reddit')
 #'
 #' # F1000 Prime data
-#' alm_events("10.1371/journal.pbio.1001041", source='f1000')
+#' alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
 #' dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
 #'            '10.1371/journal.pbio.0040020','10.1371/journal.pmed.1001300')
 #' res <- alm_events(doi = dois, source='f1000')
@@ -361,8 +369,13 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 				} else if(y$name == "f1000"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-# 				    data.frame(rbind(y$events), stringsAsFactors=FALSE)
-            y$events
+				    eventsdat <- ldply(y$events, function(b){
+				      data.frame(lapply(b$event, function(bb){
+				        tmp <- if(length(bb) > 1) paste(do.call(c, bb), collapse = "; ") else bb
+				        if(length(tmp) == 1) unlist(tmp) else tmp
+				      }), stringsAsFactors=FALSE)
+				    })
+				    list(events_url=y$events_url, events=eventsdat, csl=y$events_csl)
 				  }
 				} else if(y$name == "figshare"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -398,12 +411,24 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 				} else if(y$name == "reddit"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-				    y$events
+            eventsdat <- 
+              lapply(y$events, function(b){
+                tmp <- b$event[ !names(b$event) %in% c('selftext_html','selftext') ]
+                tmp[sapply(tmp, length)==0] <- NA
+                list(data=data.frame(tmp, stringsAsFactors = FALSE),
+                     details=list(selftext_html=b$event$selftext_html, selftext=b$event$selftext))
+              })
+            csl <- ldply(y$events_csl, parse_csl)
+				    list(events_url=y$events_url, events=eventsdat, csl=csl)
 				  }
 				}  else if(y$name == "datacite"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-				    y$events
+            eventsdat <- ldply(y$events, function(b){
+              b$event <- sapply(b$event, function(v) if(length(v) > 1) paste(v, collapse = "; ") else v)
+              data.frame(b$event, event_url=b$event_url, stringsAsFactors = FALSE)
+            })
+				    list(events_url=y$events_url, events=eventsdat, csl=y$events_csl)
 				  }
 				}  else if(y$name == "copernicus"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -478,7 +503,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 
 
 try_date_parts <- function(w){
-  tmp <- if(is.null(w[['date-parts']])) w[['date_parts']] else res
+  tmp <- if(is.null(w[['date-parts']])) w[['date_parts']] else w[['date-parts']]
   paste(unlist(tmp), collapse="-")
 }
 
