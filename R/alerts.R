@@ -58,7 +58,10 @@ alm_alerts <- function(source=NULL, ids=NULL, class_name=NULL, level=NULL, q=NUL
             config=c(authenticate(user[1], user[2]), furtherargs[['config']]))
   stop_for_status(tt)
   res <- content(tt, as = "text")
-  jsonlite::fromJSON(res)
+  tmp <- jsonlite::fromJSON(res)
+  list(meta=data.frame(tmp[names(tmp) %in% c("total","total_pages","page") ], stringsAsFactors = FALSE),
+       error=tmp$error,
+       data=tmp$data)
 }
 
 getuserinfo <- function(x=NULL, y=NULL){
