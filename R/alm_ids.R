@@ -140,10 +140,10 @@ get_totals <- function(x, total_details=FALSE){
 # get_signpost(data_)
 get_details <- function(x){
   date_parts <- x$issued$`date-parts`[[1]]
-  date_parts[[2]] <- if(nchar(date_parts[[2]]) == 1) paste0("0", date_parts[[2]])
+  date_parts[[2]] <- if(nchar(date_parts[[2]]) == 1) paste0("0", date_parts[[2]]) else date_parts[[2]]
   date_parts <- paste(date_parts, collapse = "-")
   tmp <- x[ !names(x) %in% c('sources','issued','viewed','saved','discussed','cited') ]
-  data.frame(tmp, date=date_parts, stringsAsFactors = FALSE)
+  data.frame(tmp, issued=date_parts, stringsAsFactors = FALSE)
 }
 
 get_signpost <- function(x){
