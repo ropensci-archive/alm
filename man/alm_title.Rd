@@ -3,7 +3,8 @@
 \alias{alm_title}
 \title{Get title of article by inputting the doi for the article.}
 \usage{
-alm_title(doi, key = NULL)
+alm_title(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
+  key = NULL, url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
 \item{doi}{digital object identifier for an article in PLoS Journals}
@@ -19,6 +20,9 @@ Get title of article by inputting the doi for the article.
 \examples{
 \dontrun{
 alm_title(doi='10.1371/journal.pbio.0000012')
+dois <- c('10.1371/journal.pone.0026871','10.1371/journal.pone.0048868',
+  	'10.1371/journal.pone.0048705','10.1371/journal.pone.0048731')
+alm_title(doi=dois)
 }
 }
 \references{

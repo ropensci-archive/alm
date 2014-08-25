@@ -26,7 +26,7 @@ alm_datepub <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = N
   get = NULL, key = NULL, url = 'http://alm.plos.org/api/v5/articles', ...)
 {
   temp <- alm_ids(doi = doi, pmid = pmid, pmcid = pmcid, mendeley_uuid = mendeley_uuid, url = url, 
-                  info = "summary", source = source, key = key, ...)
+                  info = "summary", key = key, ...)
   if(length(doi) == 1) getdate(temp$data, get) else lapply(temp$data, getdate, get=get)
 }
 
