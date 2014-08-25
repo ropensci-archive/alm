@@ -22,7 +22,7 @@ NULL
 #'  \item \code{\link{alm_pubmedid}}: Function removed, you can get this info using alm_ids
 #'  \item \code{\link{alm_pubmedcentid}}: Function removed, you can get this info using alm_ids
 #'  \item \code{\link{almupdated}}: Function removed, you can get this info using alm_ids
-#'  \item \code{\link{alm_dateupdated}}: Function removed, you can get this info using alm_ids
+#'  \item \code{\link{almdateupdated}}: Function removed, you can get this info using alm_ids
 #'  \item \code{\link{alm_totals}}: Function removed, you can get this info using alm_ids
 #' }
 #'

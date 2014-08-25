@@ -7,7 +7,6 @@
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
 #' @param mendeley_uuid Mendeley object identifier (character)
-#' @param get Get year, month, or day; if unspecified, whole date returned.
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param ... optional additional curl options (debugging tools mostly)

@@ -15,8 +15,6 @@ alm_title(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 
 \item{mendeley_uuid}{Mendeley object identifier (character)}
 
-\item{get}{Get year, month, or day; if unspecified, whole date returned.}
-
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
 \item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
