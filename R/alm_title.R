@@ -2,26 +2,28 @@
 #'
 #' @import httr
 #' @importFrom stringr str_replace_all
-#' @param doi digital object identifier for an article in PLoS Journals
-#' @param key your PLoS API key, either enter, or loads from .Rprofile
+#' @export
+#' @param doi Digital object identifier for an article in PLoS Journals (character)
+#' @param pmid PubMed object identifier (numeric)
+#' @param pmcid PubMed Central object identifier (numeric)
+#' @param mendeley_uuid Mendeley object identifier (character)
+#' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
+#' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
+#' @param ... optional additional curl options (debugging tools mostly)
 #' @return Title of article, in xml format.
 #' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' alm_title(doi='10.1371/journal.pbio.0000012')
+#' dois <- c('10.1371/journal.pone.0026871','10.1371/journal.pone.0048868',
+#'   	'10.1371/journal.pone.0048705','10.1371/journal.pone.0048731')
+#' alm_title(doi=dois)
 #' }
-#' @export
-alm_title <- function(doi, key = NULL)
+
+alm_title <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, 
+  key = NULL, url = 'http://alm.plos.org/api/v5/articles', ...)
 {
-	url = 'http://alm.plos.org/api/v3/articles'
-	key <- getkey(key)
-	doi <- paste("doi/", doi, sep="")
-	doi2 <- gsub("/", "%2F", doi)
-	url2 <- paste(url, "/info%3A", doi2, sep='')
-	args <- almcompact(list(api_key = key, info = 'summary'))
-	tt <- GET(url2, query=args)
-	stop_for_status(tt)
-	res <- content(tt, as = "text")
-	out <- RJSONIO::fromJSON(res, simplifyVector = FALSE)
-	str_replace_all(unlist(out[[1]])["title"], "<(.|\n)*?>", "")[[1]]
+  temp <- alm_ids(doi = doi, pmid = pmid, pmcid = pmcid, mendeley_uuid = mendeley_uuid, url = url, 
+                  info = "summary", key = key, ...)
+  if(length(doi) == 1) temp$data$info$title else lapply(temp$data, function(x) x$info$title)  
 }

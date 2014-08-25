@@ -1,0 +1,186 @@
+```{r, eval=TRUE, echo=FALSE}
+knitr::opts_chunk$set(fig.path="inst/assets/img/")
+```
+
+<pre>
+       .__
+_____  |  |   _____
+\__  \ |  |  /     \
+ / __ \|  |_|  Y Y  \
+(____  /____/__|_|  /
+     \/           \/
+</pre>
+
+|Platform|master|dev|
+|----|----|----|
+|Linux|[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=master)](https://travis-ci.org/ropensci/alm?branch=master)|[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=dev)](https://travis-ci.org/ropensci/alm?branch=dev)|
+|Windows|[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/master)](https://ci.appveyor.com/project/sckott/alm/branch/master)|[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/dev)](https://ci.appveyor.com/project/sckott/alm/branch/dev)|
+
+## What it is!?
+
+`alm` is a set of functions to access article level metrics from the Public Library of Science journals using their ALM API.
+
+
+## What is an article level metric?
+
+Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the Journal Impact Factor.
+
+## Are there other altmetrics data providers?
+
+Yes indeedy.
+
++ [ImpactStory](http://impactstory.it/)
++ [Altmetric.com](http://altmetric.com/)
++ [PlumAnalytics](http://www.plumanalytics.com/)
+
+## Authentication
+
+You aren't currently not required to use an API key to access the PLoS ALM API, but soon will need to.
+
+Get your PLoS API key [here](http://api.plos.org/)
+
+Put your API key in your .Rprofile file using exactly this:
+options(PlosApiKey = "YOUalmAPIKEY"),
+and the functions within this package will be able to use your API key without you having to enter it every time you run a search.
+
+## Quick start
+
+### Install
+
+You can get this package from CRAN by:
+
+```{r eval=FALSE}
+install.packages("alm")
+```
+
+
+Or the development version by installing with `install_github()`
+
+```{r eval=FALSE}
+install.packages("devtools")
+library('devtools')
+install_github("ropensci/alm")
+```
+
+Load the package
+
+```{r}
+library('alm')
+```
+
+The first function we'll look at is `alm_ids()`, named with `ids` since we search for data by one of four different choices of identifier.
+
+### Get altmetrics data for a single paper
+
+```{r}
+alm_ids(doi = "10.1371/journal.pone.0029797")
+```
+
+### Details for a single DOI
+
+
+```{r}
+alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
+```
+
+### Search on many identifiers
+
+```{r}
+dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", "10.1371/journal.pone.0039395")
+out <- alm_ids(doi = dois)
+lapply(out$data, head)
+```
+
+### Output an-easy-to-combine-with-other-results data.frame
+
+```{r}
+res <- alm_ids(doi = "10.1371/journal.pone.0035869", total_details = TRUE)
+res$data[, 3:10]
+```
+
+### Get detailed data for altmetrics using `almevents`
+
+```{r}
+out <- alm_events(doi = "10.1371/journal.pone.0029797")
+names(out)  # names of sources
+```
+
+```{r}
+out <- out[!out %in% c("sorry, no events content yet", "parser not written yet")]  # remove those with no data
+out[["pmc"]]  # get the results for PubMed Central
+```
+
+### Retrieve and plot PLOS article-level metrics signposts.
+
+```{r fig.height=4}
+dat <- alm_signposts(doi = "10.1371/journal.pone.0029797")
+plot_signposts(dat)
+```
+
+Or plot many identifiers get a faceted bar chart, note the tick labels have just the last part of the DOI in this case to help you identify each DOI - printing the entire DOI would make lables overlap one another.
+
+```{r fig.width=8}
+dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", "10.1371/journal.pone.0039395")
+dat <- alm_signposts(doi = dois)
+plot_signposts(input = dat)
+```
+
+Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
+
+#### Density and histogram plots from PLOS Article Level Metrics data
+
+Note: Do you the key below in the `searchplos` call in this example, but if you plan to use rplos more, get your own API key [here](http://api.plos.org/).
+
+```{r}
+library('rplos')
+library('plyr')
+dois <- searchplos(q = "science", fl = "id", fq = list("-article_type:correction", "cross_published_journal_key:PLoSONE", "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), limit = 50)
+dois <- dois$id
+```
+
+
+Collect altmetrics data and combine to a `data.frame` with `ldply`
+
+
+```{r}
+alm <- alm_ids(doi = dois, total_details = TRUE)
+alm <- ldply(alm$data)
+```
+
+
+The default plot
+
+
+```{r fig.height=4}
+plot_density(alm)
+```
+
+
+Plot many sources in different panels in the same plot, and pass in colors just for fun
+
+
+```{r}
+plot_density(input = alm, source = c("counter_total", "crossref_total",
+    "twitter_total", "wos_total"), color = c("#83DFB4", "#EFA5A5", "#CFD470",
+    "#B2C9E4"))
+```
+
+
+## Meta
+
+Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
+
+License: MIT
+
+This package is part of the [rOpenSci](http://ropensci.org/packages) project.
+
+To cite package `alm` in publications use:
+
+```{r}
+citation(package = 'alm')
+```
+
+Get citation information for `alm` in R doing `citation(package = 'alm')`
+
+
+[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

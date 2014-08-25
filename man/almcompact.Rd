@@ -11,4 +11,5 @@ almcompact(x)
 \description{
 Remove null elements in a list
 }
+\keyword{internal}
 

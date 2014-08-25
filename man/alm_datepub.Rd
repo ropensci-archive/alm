@@ -3,18 +3,26 @@
 \alias{alm_datepub}
 \title{Get the date when the article was published.}
 \usage{
-alm_datepub(doi, get = NA, sleep = 0, key = NULL)
+alm_datepub(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
+  get = NULL, key = NULL, url = "http://alm.plos.org/api/v5/articles",
+  ...)
 }
 \arguments{
-\item{doi}{Digital object identifier for an article in PLoS Journals}
+\item{doi}{Digital object identifier for an article in PLoS Journals (character)}
+
+\item{pmid}{PubMed object identifier (numeric)}
+
+\item{pmcid}{PubMed Central object identifier (numeric)}
+
+\item{mendeley_uuid}{Mendeley object identifier (character)}
 
 \item{get}{Get year, month, or day; if unspecified, whole date returned.}
 
-\item{sleep}{Time (in seconds) before function sends API call - defaults to
-zero.  Set to higher number if you are using this function in a loop with
-many API calls.}
+\item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
-\item{key}{your PLoS API key, either enter, or loads from .Rprofile}
+\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
+
+\item{...}{optional additional curl options (debugging tools mostly)}
 }
 \value{
 Date when article was published.
@@ -25,7 +33,7 @@ Get the date when the article was published.
 \examples{
 \dontrun{
 alm_datepub(doi='10.1371/journal.pone.0026871')
-alm_datepub('10.1371/journal.pone.0026871', 'year')
+alm_datepub('10.1371/journal.pone.0026871', get='year')
 
 # Provide more than one DOI
 dois <- c('10.1371/journal.pone.0026871','10.1371/journal.pone.0048868',
