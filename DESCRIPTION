@@ -25,7 +25,6 @@ VignetteBuilder: knitr
 Roxygen: list(wrap = FALSE)
 Imports:
     ggplot2,
-    RCurl,
     plyr,
     stringr,
     reshape,
