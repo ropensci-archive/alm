@@ -1,5 +1,6 @@
 #' Get PubMed article ID by inputting the doi for the article.
 #' @export
+#' @param ... Args
 #' @rdname alm-defunct
 alm_pubmedid <- function(...)
 {

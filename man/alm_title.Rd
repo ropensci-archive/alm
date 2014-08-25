@@ -7,9 +7,21 @@ alm_title(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
   key = NULL, url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
-\item{doi}{digital object identifier for an article in PLoS Journals}
+\item{doi}{Digital object identifier for an article in PLoS Journals (character)}
 
-\item{key}{your PLoS API key, either enter, or loads from .Rprofile}
+\item{pmid}{PubMed object identifier (numeric)}
+
+\item{pmcid}{PubMed Central object identifier (numeric)}
+
+\item{mendeley_uuid}{Mendeley object identifier (character)}
+
+\item{get}{Get year, month, or day; if unspecified, whole date returned.}
+
+\item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
+
+\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
+
+\item{...}{optional additional curl options (debugging tools mostly)}
 }
 \value{
 Title of article, in xml format.

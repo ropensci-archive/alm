@@ -3,12 +3,14 @@
 #' @import httr
 #' @importFrom stringr str_split
 #' @export
-#' @param doi Digital object identifier for an article in PLoS Journals
+#' @param doi Digital object identifier for an article in PLoS Journals (character)
+#' @param pmid PubMed object identifier (numeric)
+#' @param pmcid PubMed Central object identifier (numeric)
+#' @param mendeley_uuid Mendeley object identifier (character)
 #' @param get Get year, month, or day; if unspecified, whole date returned.
-#' @param sleep Time (in seconds) before function sends API call - defaults to
-#'    zero.  Set to higher number if you are using this function in a loop with
-#'    many API calls.
-#' @param key your PLoS API key, either enter, or loads from .Rprofile
+#' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
+#' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
+#' @param ... optional additional curl options (debugging tools mostly)
 #' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @return Date when article was published.

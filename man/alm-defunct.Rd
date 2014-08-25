@@ -18,6 +18,9 @@ almdateupdated(...)
 
 alm_totals(...)
 }
+\arguments{
+\item{...}{Args}
+}
 \description{
 \itemize{
  \item \code{\link{alm_pubmedid}}: Function removed, you can get this info using alm_ids
