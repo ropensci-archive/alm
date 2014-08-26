@@ -80,7 +80,11 @@
 #' # Crossref article data
 #' # You need to get an API key first, and pass in a different URL
 #' url <- "http://alm.labs.crossref.org/api/v5/articles"
-#' alm_ids(doi='10.1371/journal.pone.0086859', url = url, key = getOption("crossrefalmkey"))
+#' key <- getOption("crossrefalmkey")
+#' alm_ids(doi='10.1371/journal.pone.0086859', url = url, key = key)
+#' alm_ids(doi='10.11646/zootaxa.3618.1.1', url = url, key = key)
+#' alm_ids(doi='10.1016/j.jep.2013.06.007', url = url, key = key)
+#' alm_ids(doi='10.1111/j.1756-1051.2012.00099.x', url = url, key = key)
 #'
 #' # Public Knowledge Project article data
 #' # You need to get an API key first, and pass in a different URL
