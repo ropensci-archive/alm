@@ -99,6 +99,14 @@ alm_events("10.1371/journal.pone.0015552", source='reddit')
 # Wordpress data
 alm_events("10.1371/journal.pcbi.1000361", source='wordpress')
 
+# Articlecoverage data
+alm_events(doi="10.1371/journal.pmed.0020124", source='articlecoverage')
+
+# Articlecoveragecurated data
+headfoo <- function(x) head(x$articlecoveragecurated$events)
+headfoo(alm_events(doi="10.1371/journal.pone.0088278", source='articlecoveragecurated'))
+headfoo(alm_events(doi="10.1371/journal.pmed.1001587", source='articlecoveragecurated'))
+
 # F1000 Prime data
 alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
 dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',

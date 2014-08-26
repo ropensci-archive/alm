@@ -81,6 +81,14 @@
 #' 
 #' # Wordpress data
 #' alm_events("10.1371/journal.pcbi.1000361", source='wordpress')
+#' 
+#' # Articlecoverage data
+#' alm_events(doi="10.1371/journal.pmed.0020124", source='articlecoverage')
+#' 
+#' # Articlecoveragecurated data
+#' headfoo <- function(x) head(x$articlecoveragecurated$events)
+#' headfoo(alm_events(doi="10.1371/journal.pone.0088278", source='articlecoveragecurated'))
+#' headfoo(alm_events(doi="10.1371/journal.pmed.1001587", source='articlecoveragecurated'))
 #'
 #' # F1000 Prime data
 #' alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
@@ -445,12 +453,26 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 				}  else if(y$name == "articlecoverage"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-				    y$events
+				    ev <- do.call(rbind.fill, lapply(y$events, function(y){
+              y[sapply(y, is.null)] <- NA
+              data.frame(y, stringsAsFactors = FALSE)
+            }))
+				    csl <- ldply(y$events_csl, parse_csl)
+				    list(events_url=y$events_url, events=ev, csl=y$events_csl)
 				  }
 				}  else if(y$name == "articlecoveragecurated"){
 				  if(length(y$events)==0){paste(sorry)} else
 				  {
-				    y$events
+				    ev <- do.call(rbind.fill, lapply(y$events, function(b){
+				      tmp <- b$event
+				      tmp[sapply(tmp, length)==0|sapply(tmp, is.null)] <- NA
+				      data.frame(tmp, 
+				                 event_time=b$event_time, 
+				                 event_url=if(!is.null(b$event_url)) b$event_url else NA, 
+                         stringsAsFactors = FALSE)
+				    }))
+				    csl <- ldply(y$events_csl, parse_csl)
+				    list(events_url=y$events_url, events=ev, csl=csl)
 				  }
 				}  else if(y$name == "plos_comments"){
 				  if(length(y$events)==0){paste(sorry)} else
@@ -482,26 +504,13 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 
 			# Run the parsers on each element
 			datout <- lapply(x, parsers)
-
 			# Assign names to each list element
-			if(is.null(label)){
-# 				names(datout) <- c("bloglines","citeulike","connotea","crossref","nature",
-# 													 "postgenomic","pubmed","scopus","plos","researchblogging",
-# 													 "biod","webofscience","pmc","facebook","mendeley","twitter",
-# 													 "wikipedia","scienceseeker","relativemetric","f1000","figshare")
-        names(datout) <- sapply(events[[1]], "[[", "name")
-			} else
-			{
-				names(datout) <- label
-			}
+			names(datout) <- if(is.null(label)) sapply(events[[1]], "[[", "name") else label
 			return( datout )
 		}
 
 		# Actually get the events data
-		temp <- lapply(events, getevents, label=source)
-
-		# Return the data
-		return( temp )
+		lapply(events, getevents, label=source)
 	}
 	safe_parse_events <- plyr::failwith(NULL, parse_events)
 	finaldata <- safe_parse_events()
@@ -515,6 +524,7 @@ try_date_parts <- function(w){
 }
 
 parse_csl <- function(z){
+  z[sapply(z, is.null)] <- NA
   aut <- paste(sapply(z$author, function(zz) paste(zz, collapse = " ")), collapse = "; ")
   data.frame(authors=aut,
              title=z$title,
