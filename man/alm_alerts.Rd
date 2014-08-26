@@ -40,6 +40,9 @@ Retrieve alerts data for article-level metrics (ALM).
 This function uses the alm.plos.org API by default. You can change which ALM app you use by
 specifying the url in the url parameter. It will likely be the same as the default
 http://alm.plos.org/api/v4/alerts, but just the alm.plos.org part will be different.
+
+ALM installations on the most current version (3.4.7) can be used in this function, as of
+2014-08-26 those are PLOS, ALM Labs, and Crossref Labs.
 }
 \examples{
 \dontrun{
