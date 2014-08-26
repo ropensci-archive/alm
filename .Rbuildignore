@@ -8,3 +8,4 @@ inst/stuff
 vignettes/margins.sty
 .Rhistory
 ^appveyor\.yml$
+README.Rmd
