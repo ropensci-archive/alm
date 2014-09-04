@@ -14,8 +14,8 @@ alm_alerts(source = NULL, ids = NULL, class_name = NULL, level = NULL,
 
 \item{class_name}{(character) Which error to get}
 
-\item{level}{(character) Alert level to limit search to. One of ERROR, WARN, or INFO.
-Default: all.}
+\item{level}{(character) Alert level to limit search to. One of ERROR, WARN, INFO,
+or FATAL. Default: all.}
 
 \item{q}{(character) Query terms}
 

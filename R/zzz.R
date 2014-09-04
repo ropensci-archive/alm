@@ -99,8 +99,8 @@ alm_capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
 #' @keywords internal
 almcompact <- function (x) Filter(Negate(is.null), x)
 
-#' List the possible alert types
+#' List the possible alert classes
 #' @export
-alert_types <- function() alert_type_strings
+alert_classes <- function() alert_classes_strings
 
-alert_type_strings <- c('Net::HTTPUnauthorized','Net::HTTPRequestTimeOut','Delayed::WorkerTimeout','DelayedJobError','Net::HTTPConflict','Net::HTTPServiceUnavailable','Faraday::ResourceNotFound','ActiveRecord::RecordInvalid','TooManyErrorsBySourceError','SourceInactiveError','TooManyWorkersError','EventCountDecreasingError','EventCountIncreasingTooFastError','ApiResponseTooSlowError','HtmlRatioTooHighError','ArticleNotUpdatedError','SourceNotUpdatedError','CitationMilestoneAlert')
+alert_classes_strings <- c('Net::HTTPUnauthorized','Net::HTTPRequestTimeOut','Delayed::WorkerTimeout','DelayedJobError','Net::HTTPConflict','Net::HTTPServiceUnavailable','Faraday::ResourceNotFound','ActiveRecord::RecordInvalid','TooManyErrorsBySourceError','SourceInactiveError','TooManyWorkersError','EventCountDecreasingError','EventCountIncreasingTooFastError','ApiResponseTooSlowError','HtmlRatioTooHighError','ArticleNotUpdatedError','SourceNotUpdatedError','CitationMilestoneAlert')
