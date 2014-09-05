@@ -17,8 +17,11 @@ alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 \item{mendeley_uuid}{Mendeley object identifier (character)}
 
 \item{info}{One of totals, summary, or detail (default totals + sum_metrics data in a list).
-Not specifying anything (the default) returns data.frame of totals across
-data providers. (character)}
+     Not specifying anything (the default) returns data.frame of totals across
+     data providers. (character). \code{info='detail'} returns all possible data, including slots
+   for info, signposts, totals, and sum_metrics (see the sum_metrics parameter below).
+IMPORTANT: note, however, that you can only get by day metrics for articles published since
+May 2014.}
 
 \item{source}{Name of source (or list of sources) to get ALM information for (character)}
 
@@ -31,7 +34,8 @@ to TRUE, the output should no longer with with \code{\link{alm_plot}}.}
 
 \item{sum_metrics}{Just like the output you get from setting info='totals', you can
 get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'),
-or year (sum_metrics='year').}
+or year (sum_metrics='year'). IMPORTANT: note that you can only get by day metrics for
+articles published since May 2014.}
 
 \item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
 
