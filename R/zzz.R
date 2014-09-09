@@ -104,3 +104,11 @@ almcompact <- function (x) Filter(Negate(is.null), x)
 alert_classes <- function() alert_classes_strings
 
 alert_classes_strings <- c('Net::HTTPUnauthorized','Net::HTTPRequestTimeOut','Delayed::WorkerTimeout','DelayedJobError','Net::HTTPConflict','Net::HTTPServiceUnavailable','Faraday::ResourceNotFound','ActiveRecord::RecordInvalid','TooManyErrorsBySourceError','SourceInactiveError','TooManyWorkersError','EventCountDecreasingError','EventCountIncreasingTooFastError','ApiResponseTooSlowError','HtmlRatioTooHighError','ArticleNotUpdatedError','SourceNotUpdatedError','CitationMilestoneAlert')
+
+
+alm_GET <- function(x, y, ...){
+  out <- GET(x, query=y, ...)
+  stop_for_status(out)
+  tt <- content(out, as = "text")
+  jsonlite::fromJSON(tt, FALSE)
+}

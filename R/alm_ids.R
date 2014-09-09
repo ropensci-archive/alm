@@ -80,13 +80,6 @@ concat_ids <- function(x){
   } else { paste(x[[1]], collapse=",") }
 }
 
-alm_GET <- function(x, y, ...){
-  out <- GET(x, query=y, ...)
-  stop_for_status(out)
-  tt <- content(out, as = "text")
-  jsonlite::fromJSON(tt, FALSE)
-}
-
 getdata <- function(x, y, z=FALSE, w=NULL) {
   if(y == "totals"){
     get_totals(x, z)

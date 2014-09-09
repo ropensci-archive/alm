@@ -151,7 +151,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 						ttt <- do.call(c, temp)
 					} else {
 						id2 <- concat_ids(id)
-						ttt <- alm_GET(url, c(args, ids = id2), ...)
+						ttt <- alm_GET(x = url, y = c(args, ids = id2), ...)
 					}
 				}
 
@@ -510,7 +510,9 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 		}
 
 		# Actually get the events data
-		lapply(events, getevents, label=source)
+		tmpout <- lapply(events, getevents, label=source)
+    names(tmpout) <- vapply(ttt$data, "[[", character(1), "doi")
+    tmpout
 	}
 	safe_parse_events <- plyr::failwith(NULL, parse_events)
 	finaldata <- safe_parse_events()
