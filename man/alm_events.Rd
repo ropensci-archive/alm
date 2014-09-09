@@ -81,6 +81,16 @@ out[[1]]
 out[[2]]
 out[[1]][["figshare"]]$events
 
+# Many pmcid's
+out <- alm_events(pmcid=c(212692,2082661))
+names(out)
+out['212692']
+
+# Many pmid's
+out <- alm_events(pmid = c(19300479, 19390606, 19343216))
+names(out)
+out['19390606']
+
 # Specify a specific source
 alm_events(doi="10.1371/journal.pone.0035869", source="crossref")
 

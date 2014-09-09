@@ -63,6 +63,16 @@
 #' out[[1]]
 #' out[[2]]
 #' out[[1]][["figshare"]]$events
+#' 
+#' # Many pmcid's 
+#' out <- alm_events(pmcid=c(212692,2082661))
+#' names(out)
+#' out['212692']
+#' 
+#' # Many pmid's
+#' out <- alm_events(pmid = c(19300479, 19390606, 19343216)) 
+#' names(out)
+#' out['19390606']
 #'
 #' # Specify a specific source
 #' alm_events(doi="10.1371/journal.pone.0035869", source="crossref")
@@ -511,7 +521,9 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 
 		# Actually get the events data
 		tmpout <- lapply(events, getevents, label=source)
-    names(tmpout) <- vapply(ttt$data, "[[", character(1), "doi")
+		names(tmpout) <- if(!names(id) == 'doi') { id[[1]] } else {
+		  vapply(ttt$data, "[[", character(1), "doi")
+		}
     tmpout
 	}
 	safe_parse_events <- plyr::failwith(NULL, parse_events)
