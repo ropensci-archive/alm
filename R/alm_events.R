@@ -521,7 +521,8 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 
 		# Actually get the events data
 		tmpout <- lapply(events, getevents, label=source)
-		names(tmpout) <- if(!names(id) == 'doi') { id[[1]] } else {
+		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid)))
+		names(tmpout) <- if(!byid == 'doi') { id[[1]] } else {
 		  vapply(ttt$data, "[[", character(1), "doi")
 		}
     tmpout
