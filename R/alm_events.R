@@ -148,6 +148,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
 				ttt <- alm_GET(url, c(args, ids = id[[1]]), ...)
+				events <- lapply(ttt$data, function(x) x$sources)
 			} else
 				if(length(id[[1]])>1){
 					if(length(id[[1]])>50){
@@ -158,15 +159,17 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
               alm_GET(url, c(args, ids = id2), ...)
 						}
 						temp <- lapply(idsplit, repeatit)
-						ttt <- do.call(c, temp)
+						ttt <- do.call(c, lapply(temp, "[[", "data"))
+						events <- unname(lapply(ttt, function(x) x$sources))
 					} else {
 						id2 <- concat_ids(id)
 						ttt <- alm_GET(x = url, y = c(args, ids = id2), ...)
+						events <- lapply(ttt$data, function(x) x$sources)
 					}
 				}
 
 		# get juse the events data
-		events <- lapply(ttt$data, function(x) x$sources)
+# 		events <- lapply(ttt$data, function(x) x$sources)
 
 		# Function to extract and parse events data for each source
 		getevents <- function(x, label=NULL){
@@ -523,7 +526,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 		tmpout <- lapply(events, getevents, label=source)
 		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid)))
 		names(tmpout) <- if(!byid == 'doi') { id[[1]] } else {
-		  vapply(ttt$data, "[[", character(1), "doi")
+		  if(length(id[[1]])>50) vapply(ttt, "[[", character(1), "doi") else vapply(ttt$data, "[[", character(1), "doi")
 		}
     tmpout
 	}
