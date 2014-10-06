@@ -7,6 +7,8 @@
 #' @export
 #' @template alm_params
 #' @template alm_egs
+#' @param sleep Set a sleep time (in seconds). Only used for large calls where you may be in danger
+#' of upsetting the server gods, can you say 504 error?
 #' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 

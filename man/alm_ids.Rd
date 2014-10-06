@@ -38,6 +38,9 @@ get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'),
 or year (sum_metrics='year'). IMPORTANT: note that you can only get by day metrics for
 articles published since May 2014.}
 
+\item{sleep}{Set a sleep time (in seconds). Only used for large calls where you may be in danger
+of upsetting the server gods, can you say 504 error?}
+
 \item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
 
 \item{...}{optional additional curl options (debugging tools mostly)}
