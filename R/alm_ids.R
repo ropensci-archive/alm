@@ -11,7 +11,7 @@
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 
 alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, info = "totals",
-  source = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL,
+  source = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL, sleep = 0,
 	url = 'http://alm.plos.org/api/v5/articles', ...)
 {
 	key <- getkey(key)
@@ -42,10 +42,12 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 							{
 								id2 <- paste(id[[1]], collapse=",")
 							}
-							tt <- alm_GET(url, c(args, ids = id2), ...)
+							tt <- alm_GET(url, c(args, ids = id2), sleep=sleep, ...)
 						}
 						temp <- lapply(idsplit, repeatit)
-						tt <- do.call(c, temp)
+# 						tt <- do.call(c, temp)
+            justdat <- do.call(c, unname(lapply(temp, "[[", "data")))
+            tt <- c(temp[[1]][ !names(temp[[1]]) == "data" ], data=list(justdat))
 					} else {
 					  id2 <- id2 <- concat_ids(id)
 						tt <- alm_GET(url, c(args, ids = id2), ...)
@@ -132,6 +134,7 @@ get_details <- function(x){
   date_parts[[2]] <- if(nchar(date_parts[[2]]) == 1) paste0("0", date_parts[[2]]) else date_parts[[2]]
   date_parts <- paste(date_parts, collapse = "-")
   tmp <- x[ !names(x) %in% c('sources','issued','viewed','saved','discussed','cited') ]
+  tmp[sapply(tmp, is.null)] <- ""
   data.frame(tmp, issued=date_parts, stringsAsFactors = FALSE)
 }
 

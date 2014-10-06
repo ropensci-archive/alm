@@ -16,9 +16,9 @@
 #' out <- alm_ids(doi='10.1371/journal.pone.0029797', info='detail')
 #' out
 #' ## totals
-#' out[["info"]]
+#' out$data$info
 #' ## history
-#' out[["sum_metrics"]]
+#' out$data$sum_metrics
 #'
 #' # A single PubMed ID (pmid)
 #' alm_ids(pmid=22590526)
@@ -39,7 +39,7 @@
 #' library('rplos')
 #' dois <- searchplos(q='evolution', fl='id',
 #'    fq=list('-article_type:correction','doc_type:full'), limit = 52)
-#' out <- alm_ids(doi=as.character(dois[,1]))
+#' out <- alm_ids(doi=dois$data$id)
 #' lapply(out, head)
 #'
 #' # Provide more than one pmid

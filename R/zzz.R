@@ -105,8 +105,8 @@ alert_classes <- function() alert_classes_strings
 
 alert_classes_strings <- c('Net::HTTPUnauthorized','Net::HTTPRequestTimeOut','Delayed::WorkerTimeout','DelayedJobError','Net::HTTPConflict','Net::HTTPServiceUnavailable','Faraday::ResourceNotFound','ActiveRecord::RecordInvalid','TooManyErrorsBySourceError','SourceInactiveError','TooManyWorkersError','EventCountDecreasingError','EventCountIncreasingTooFastError','ApiResponseTooSlowError','HtmlRatioTooHighError','ArticleNotUpdatedError','SourceNotUpdatedError','CitationMilestoneAlert')
 
-
-alm_GET <- function(x, y, ...){
+alm_GET <- function(x, y, sleep=0, ...){
+  Sys.sleep(time = sleep)
   out <- GET(x, query=y, ...)
   stop_for_status(out)
   tt <- content(out, as = "text")
