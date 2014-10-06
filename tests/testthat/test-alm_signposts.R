@@ -11,8 +11,8 @@ dat2 <- alm_signposts(doi=dois, key=key)
 test_that("alm_signposts returns the correct class", {
   expect_that(dat1, is_a("data.frame"))
   expect_that(dat2, is_a("data.frame"))
-  expect_that(dat1$viewed, is_a("numeric"))
-  expect_that(dat2$cited, is_a("numeric"))
+  expect_that(dat1$viewed, is_a("integer"))
+  expect_that(dat2$cited, is_a("integer"))
   expect_that(dat2$doi, is_a("character"))
 })
 
