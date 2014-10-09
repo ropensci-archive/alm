@@ -38,9 +38,12 @@
 #' # Search for DOI's, then feed into alm
 #' library('rplos')
 #' dois <- searchplos(q='evolution', fl='id',
-#'    fq=list('-article_type:correction','doc_type:full'), limit = 52)
+#'    fq=list('-article_type:correction','doc_type:full'), limit = 150)
 #' out <- alm_ids(doi=dois$data$id)
 #' lapply(out, head)
+#' 
+#' alm_ids(dois$data$id[1:5], 
+#'  source = c("facebook","twitter","mendeley","reddit","scopus","wikipedia"))
 #'
 #' # Provide more than one pmid
 #' pmids <- c(19300479, 19390606, 19343216)
