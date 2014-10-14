@@ -1,6 +1,6 @@
 Package: alm
-Version: 0.1.9
-Date: 2014-06-18
+Version: 0.1.9.99
+Date: 2014-10-13
 Description: An R interface to the open source article level metrics API
     created by the Public Library of Science (PLOS). A number of publishers are
     using the open source app created by PLOS, so you can drop in a different
@@ -8,7 +8,7 @@ Description: An R interface to the open source article level metrics API
     data for Crossref, and more as the open source PLOS software is used.
     Obtain rCharts at https://github.com/ramnathv/rCharts.
 Title: R wrapper to the almetrics API platform developed by PLoS
-License: CC0
+License: MIT + file LICENSE
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "myrmecocystus@gmail.com"),
     person("Carl", "Boettiger", role = "aut",
@@ -25,19 +25,17 @@ VignetteBuilder: knitr
 Roxygen: list(wrap = FALSE)
 Imports:
     ggplot2,
-    RCurl,
     plyr,
     stringr,
     reshape,
     reshape2,
     httr,
     grid,
-    RJSONIO,
+    jsonlite,
     lubridate
 Suggests:
     testthat,
     roxygen2,
     rplos,
-    knitr,
-    jsonlite
+    knitr
 Enhances: rCharts

@@ -1,50 +1,52 @@
-#' Plot PLOS article-level metrics data. 
-#' 
-#' This can be used in conjuction with the function \code{\link{signposts}}.
-#' 
+#' Plot PLOS article-level metrics data.
+#'
+#' This can be used in conjuction with the function \code{\link{alm_signposts}}.
+#'
 #' @import ggplot2
 #' @importFrom reshape2 melt
-#' @param input A data.frame from a search from the \code{\link{signposts}} function
-#' @param type Type of chart, one of bar (default), multiBarChart, or 
+#' @export
+#' 
+#' @param input A data.frame from a search from the \code{\link{alm_signposts}} function
+#' @param type Type of chart, one of bar (default), multiBarChart, or
 #'    multiBarHorizontalChart. multiBarChart or multiBarHorizontalChart
-#'    options use the library rCharts, specifically the NVD3 javascript library. 
-#'    Choosing multiBarChart or multiBarHorizontalChart opens a visualization in 
+#'    options use the library rCharts, specifically the NVD3 javascript library.
+#'    Choosing multiBarChart or multiBarHorizontalChart opens a visualization in
 #'    your default browser, while option bar makes a ggplot2 plot within your R session.
-#' @param width Only applies with type="interactive", otherwise ignored. Width of 
+#' @param width Only applies with type="interactive", otherwise ignored. Width of
 #'    the plotting area.
-#' @param height Only applies with type="interactive", otherwise ignored. Height of 
+#' @param height Only applies with type="interactive", otherwise ignored. Height of
 #'    the plotting area.
-#' @details Note that DOIs are the unit of replication of each study. When plotting, 
+#' @details Note that DOIs are the unit of replication of each study. When plotting,
 #' if the prefix is common among all DOIs, then just the end of the DOI, the numeric
-#' part is printed to make plots less ugly. 
-#' @seealso \code{\link{alm}}, \code{\link{plot_signposts}}
+#' part is printed to make plots less ugly.
+#' @seealso \code{\link{alm_ids}}, \code{\link{plot_signposts}}
 #' @return A data.frame of the signpost numbers for the searched object.
-#' @references See a tutorial/vignette for alm at 
+#' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' # Plot data from a single identifier gives a bar chart
-#' dat <- signposts(doi="10.1371/journal.pone.0029797")
+#' dat <- alm_signposts(doi="10.1371/journal.pone.0029797")
 #' plot_signposts(input=dat)
-#' 
+#'
 #' # Plot data from many identifiers gives a line chart
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 #'    '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-#' dat <- signposts(doi=dois)
+#' dat <- alm_signposts(doi=dois)
 #' plot_signposts(input=dat)
-#' 
+#'
 #' # Or you can make an interactive chart
 #' plot_signposts(input=dat, type="multiBarChart")
-#' 
-#' # Lots of DOIs
-#' library(rplos); library(rCharts)
-#' dois <- searchplos('ecology', 'id', limit = 30)
-#' dat <- signposts(doi=do.call(c,dois$id))
+#'
+#' # Many DOIs
+#' library('rplos'); library('rCharts')
+#' dois <- searchplos(q='evolution', fl='id',
+#'    fq=list('-article_type:correction','doc_type:full'), limit = 10)
+#' dat <- alm_signposts(doi=dois$id)
 #' ## multiBarChart
 #' plot_signposts(input=dat, type="multiBarChart")
 #' ## multiBarHorizontalChart
 #' plot_signposts(input=dat, type="multiBarHorizontalChart")
 #' }
-#' @export
 
 plot_signposts <- function(input, type="bar", width=800, height=500)
 {
@@ -56,15 +58,15 @@ plot_signposts <- function(input, type="bar", width=800, height=500)
       x$doi <- doi_parts
       x
     } else
-    { x }  
+    { x }
   }
-  
+
   if(!is.data.frame(input))
     stop("object passed to input must be a data.frame")
-  
+
   if(nrow(input)==1){
     df <- melt(input)
-    ggplot(df, aes(variable, value)) + 
+    ggplot(df, aes(variable, value)) +
       theme_grey(base_size=16) +
       geom_bar(stat="identity") +
       labs(x="",y="")
@@ -72,7 +74,7 @@ plot_signposts <- function(input, type="bar", width=800, height=500)
   if(type=="bar"){
     input <- stripdois(input)
     df <- melt(input)
-    ggplot(df, aes(doi, value)) + 
+    ggplot(df, aes(doi, value)) +
       theme_grey(base_size=16) +
       geom_bar(stat="identity") +
       facet_wrap(~variable, scales="free") +
@@ -82,9 +84,6 @@ plot_signposts <- function(input, type="bar", width=800, height=500)
     input <- stripdois(input)
     df <- melt(input)
     n <- nPlot(value ~ doi, group = "variable", data = df, type = type)
-#     n$xAxis(rotateLabels=-90)
-#     n$xAxis(tickPadding=20)
-#     n$xAxis(staggerLabels = TRUE)
     n$set(width = width, height = height)
     if(type=="multiBarChart")
       n$chart(reduceXTicks = FALSE)

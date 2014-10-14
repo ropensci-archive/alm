@@ -5,64 +5,70 @@
 #' @importFrom reshape2 melt
 #' @importFrom plyr round_any
 #' @importFrom lubridate year
+#' @export
+#'
 #' @param input A data.frame, usuaally from a call to \code{link{alm}}.
 #' @param source Data source (column) to plot. Can be a single element, or a
 #'    character vector.
-#' @param color Color of the density plot and the title. Can be a hex color or 
+#' @param color Color of the density plot and the title. Can be a hex color or
 #'    rgb, etc.
 #' @param title Title for the plot, in top matching the color of the density plot.
-#' @param description Optional description, subtending the title. 
+#' @param description Optional description, subtending the title.
 #' @param plot_type Type of plot, one of density (default) or histogram.
 #' @author Martin Fenner, mfenner@@plos.org, modified by Scott Chamberlain
-#' @references See a tutorial/vignette for alm at 
+#' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
-#' library(rplos); library(plyr)
-#' dois <- searchplos(terms='*:*', fields="id", 
-#'    toquery=list('cross_published_journal_key:PLoSONE', 'doc_type:full', 
-#'    'publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]'), limit=200)
-#' alm <- alm(doi=do.call(c,dois$id), total_details=TRUE)
-#' alm <- ldply(alm)
-#' plot_density(alm)
+#' library('rplos'); library('plyr')
+#' dois <- searchplos(q='*:*', fl="id",
+#'    fq=list(
+#'      'cross_published_journal_key:PLoSONE',
+#'      'doc_type:full',
+#'      'publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]',
+#'      '-article_type:correction'),
+#'    limit=50)
+#' dois <- dois$id[!grepl("annotation", dois$id)]
+#' alm <- alm_ids(doi=dois, total_details=TRUE)
+#' alm <- ldply(alm$data, data.frame)
+#' plot_density(input=alm)
 #' plot_density(alm, color="#DCA121")
 #' plot_density(alm, title="Scopus citations from 2010")
-#' plot_density(alm, title="Scopus citations from 2010", description="Probablity of 
+#' plot_density(alm, title="Scopus citations from 2010", description="Probablity of
 #'    X number of citations for a paper")
 #' plot_density(alm, description="Probablity of X number of citations for a paper")
-#' plot_density(input=alm, source="crossref_citations")
+#' plot_density(input=alm, source="crossref_total")
 #' plot_density(input=alm, source="twitter_total")
 #' plot_density(input=alm, source="counter_total")
-#' plot_density(input=alm, source=c("counter_total","crossref_citations"))
-#' plot_density(input=alm, source=c("counter_total","crossref_citations"))
-#' plot_density(input=alm, source=c("counter_total","crossref_citations",
-#'    "twitter_total"))
-#' plot_density(input=alm, source=c("counter_total","crossref_citations","twitter_total"), 
+#' plot_density(input=alm, source=c("counter_total","facebook_likes"))
+#' plot_density(input=alm, source=c("counter_total","facebook_likes"))
+#' plot_density(input=alm, source=c("counter_total","facebook_likes", "twitter_total"))
+#' plot_density(input=alm, source=c("counter_total","crossref_total","twitter_total"),
 #'    color=c("#DBAC6A", "#E09B33", "#A06D34"))
-#' plot_density(input=alm, source=c("counter_total","crossref_citations",
-#'    "twitter_total","wos_citations"))
-#' plot_density(input=alm, source=c("counter_total","crossref_citations"), 
-#'    title="Counter, Crossref, Twitter, and Web of Science")
-#' plot_density(input=alm, source=c("counter_total","crossref_citations",
-#'    "twitter_total","wos_citations"), color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4"))
+#' plot_density(input=alm, source=c("counter_total","crossref_total",
+#'    "twitter_total","wos_total"))
+#' plot_density(input=alm, source=c("counter_total","crossref_total"),
+#'    title="Counter and Crossref")
+#' plot_density(input=alm, source=c("counter_total","crossref_total",
+#'    "twitter_total","wos_total"), color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4"))
 #' }
-#' @export
 
-plot_density <- function(input, source="scopus_citations", color="#1447f2", 
-                         title = "", description = "", plot_type="density")
+
+plot_density <- function(input, source="scopus_total", color="#1447f2", title = "",
+  description = "", plot_type="density")
 {
   plos_color <- "#1447f2"
-  input$publication_date <- as.Date(input$publication_date)
+  input$date_modified <- as.Date(input$date_modified)
   plot_type <- match.arg(plot_type, choices=c("histogram","density"))
-  yvarname <- switch(plot_type, 
-                      histogram = "No. of articles", 
+  yvarname <- switch(plot_type,
+                      histogram = "No. of articles",
                       density = "Probability")
-  plot_type <- switch(plot_type, 
-                      histogram = "geom_histogram", 
+  plot_type <- switch(plot_type,
+                      histogram = "geom_histogram",
                       density = "geom_density")
-  
+
   # Calculate quantiles and min/max x-axis limits
   minmax <- c(0, round_any(max(input[,source]), 10, f=ceiling))
-  
+
   # Determine margin at top of plot
   if(nchar(title)==0 && nchar(description)!=0 | nchar(description)==0 && nchar(title)!=0){
     plot_margin <- 2
@@ -71,7 +77,7 @@ plot_density <- function(input, source="scopus_citations", color="#1447f2",
   } else if(nchar(description)==0 && nchar(title)==0){
     plot_margin <- 1
   }
-  
+
   theme_density <- function(){
     list(theme_bw(base_size=16),
          theme(panel.grid.major=element_blank(),
@@ -84,7 +90,7 @@ plot_density <- function(input, source="scopus_citations", color="#1447f2",
   }
   # Plot
   if(length(source)==1){
-    plos_xlab <- capwords(gsub("_"," ",source))
+    plos_xlab <- alm_capwords(gsub("_"," ",source))
     p <- ggplot(input, aes_string(x=source)) +
       theme_density() +
       eval(parse(text=plot_type))(fill=color, colour=color) +
