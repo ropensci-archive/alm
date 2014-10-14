@@ -8,8 +8,8 @@ alm_sources(source = "crossref", info = "totals", key = NULL,
   url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
-\item{source}{(character) Name of source (or list of sources) to get ALM information for. Can be
-one or more sources in a vector or list.}
+\item{source}{(character) Name of source to get ALM information for. One source only.
+You can get multiple sources via a for loop or lapply-type call.}
 
 \item{info}{One of totals, summary, or detail (default totals + sum_metrics data in a list).
 Not specifying anything (the default) returns data.frame of totals across
@@ -41,10 +41,12 @@ See details for more information.
 }
 \examples{
 \dontrun{
+alm_sources()
 alm_sources(source='mendeley')
 alm_sources(source='scopus', info='summary')
-alm_sources(source=c('mendeley','twitter'))
+lapply(c('mendeley','twitter'), alm_sources, limit = 2)
 alm_sources(source='mendeley', limit=2)
+alm_sources(source='mendeley', limit=2, page=2)
 alm_sources(source='mendeley', limit=200)
 
 alm_sources(source='mendeley', info='summary')

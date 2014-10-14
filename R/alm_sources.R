@@ -4,8 +4,9 @@
 #'
 #' @importFrom plyr round_any
 #' @export
-#' @param source (character) Name of source (or list of sources) to get ALM information for. Can be
-#'    one or more sources in a vector or list.
+#' 
+#' @param source (character) Name of source to get ALM information for. One source only.
+#'    You can get multiple sources via a for loop or lapply-type call.
 #' @param info One of totals, summary, or detail (default totals + sum_metrics data in a list).
 #'   	Not specifying anything (the default) returns data.frame of totals across
 #' 		data providers. (character)
@@ -26,10 +27,12 @@
 #' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
+#' alm_sources()
 #' alm_sources(source='mendeley')
 #' alm_sources(source='scopus', info='summary')
-#' alm_sources(source=c('mendeley','twitter'))
+#' lapply(c('mendeley','twitter'), alm_sources, limit = 2)
 #' alm_sources(source='mendeley', limit=2)
+#' alm_sources(source='mendeley', limit=2, page=2)
 #' alm_sources(source='mendeley', limit=200)
 #'
 #' alm_sources(source='mendeley', info='summary')
@@ -40,12 +43,10 @@ alm_sources <- function(source = 'crossref', info = "totals", key = NULL, total_
 {
   key <- getkey(key)
   info <- match.arg(info, c("summary","totals","detail"))
-  source <- match.arg(source, several.ok = TRUE,
-                      choices = c("bloglines","citeulike","connotea","crossref","nature",
-                                  "postgenomic","pubmed","scopus","plos","researchblogging",
-                                  "biod","webofscience","pmc","facebook","mendeley","twitter",
-                                  "wikipedia","scienceseeker","relativemetric","f1000","figshare"))
-  source <- paste(source, collapse = ",")
+  source <- match.arg(source, c("bloglines","citeulike","connotea","crossref","nature",
+                          "postgenomic","pubmed","scopus","plos","researchblogging",
+                          "biod","webofscience","pmc","facebook","mendeley","twitter",
+                          "wikipedia","scienceseeker","relativemetric","f1000","figshare"))
 
   getalm <- function() {
     info2 <- switch(info, totals=NULL, detail='detail', summary='summary')
@@ -53,11 +54,11 @@ alm_sources <- function(source = 'crossref', info = "totals", key = NULL, total_
     args <- almcompact(list(api_key = key, info = info2, source = source))
 
     if(limit <= 50){
-      tt <- alm_GET(url, c(args, rows=limit, page=page), ...)
+      tt <- alm_GET(url, c(args, per_page=limit, page=page), ...)
     } else
     {
       pages <- 1 : (round_any(limit, 50, f = ceiling)/50)
-      temp <- lapply(pages, function(k) alm_GET(x = url, y = c(args, page=k, rows=50), ...))
+      temp <- lapply(pages, function(k) alm_GET(x = url, y = c(args, page=k, per_page=50), ...))
       tt <- do.call(c, lapply(temp, "[[", "data"))
       remove <- (length(pages)*50)-limit
       tt <- if(!remove==0) tt[-c(((length(tt)-remove)+1):length(tt))] else tt
@@ -72,7 +73,9 @@ alm_sources <- function(source = 'crossref', info = "totals", key = NULL, total_
     } else {
       rep <- if(limit <= 50) tt$data else tt
       restmp <- lapply(rep, getdata, y=info, z=total_details, w=sum_metrics)
+      restmp <- Map(function(x, y) data.frame(doi=y, x), restmp, vapply(rep, "[[", "", "doi"))
       restmp <- do.call(rbind, restmp)
+      names(restmp)[2] <- "source"
       return( list(meta=metadf(tt), data=restmp) )
     }
   }

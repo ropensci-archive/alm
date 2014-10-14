@@ -18,15 +18,16 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 {
 	key <- getkey(key)
   info <- match.arg(info, c("summary","totals","detail"))
-  source2 <- if(is.null(source)) NULL else paste(source, collapse=",")
   if(!is.null(doi)) doi <- doi[!grepl("image", doi)] # remove any DOIs of images
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))
-	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
+	if(length(id) == 0) stop("Supply one of: doi, pmid, pmcid, mendeley_uuid")
+	if(length(id) > 1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
+  if(length(source) > 1) stop("You can only supply one source")
 
 	getalm <- function() {
     info2 <- switch(info, totals=NULL, detail='detail', summary='summary')
 		if(!is.null(sum_metrics)) info <- info2 <- 'detail'
-		args <- almcompact(list(api_key = key, info = info2, source = source2, type = names(id)))
+		args <- almcompact(list(api_key = key, info = info2, source = source, type = names(id)))
 		if(length(id[[1]])==0){stop("Please provide a DOI or other identifier")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)

@@ -24,7 +24,8 @@ alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 IMPORTANT: note, however, that you can only get by day metrics for articles published since
 May 2014.}
 
-\item{source}{Name of source (or list of sources) to get ALM information for (character)}
+\item{source}{(character) Name of source to get ALM information for. One source only.
+You can get multiple sources via a for loop or lapply-type call.}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
@@ -53,13 +54,10 @@ This is the main function to search the PLoS ALM (article-level metrics) API.
 See details for more information.
 }
 \details{
-You can only supply one of the parmeters doi, pmid, pmcid, and mendeley.
-
-		Query for as many articles at a time as you like. Though queries are broken
-		up in to smaller bits of 50 identifiers at a time.
-
-		If you supply days, months and/or year parameters, days takes precedence
-		over months and year.
+You can only supply one of the parmeters doi, pmid, pmcid, and mendeley; and you
+must supply one of them. Query for as many articles at a time as you like. Though queries
+are broken up in to smaller bits of 50 identifiers at a time. If you supply days, months and/or
+year parameters, days takes precedence over months and year.
 }
 \examples{
 \dontrun{
@@ -88,14 +86,19 @@ alm_ids(mendeley_uuid="1d7e7f09-c59b-364b-8c39-a7686f0e9fa0")
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 		'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 out <- alm_ids(doi=dois)
-out[[1]] # get data for the first DOI
+out$data[[1]] # get data for the first DOI
 
 # Search for DOI's, then feed into alm
 library('rplos')
 dois <- searchplos(q='evolution', fl='id',
-   fq=list('-article_type:correction','doc_type:full'), limit = 52)
+   fq=list('-article_type:correction','doc_type:full'), limit = 150)
 out <- alm_ids(doi=dois$data$id)
 lapply(out, head)
+
+alm_ids(dois$data$id[1:5], source = "facebook")
+
+sources <- c("facebook","twitter","mendeley","reddit","scopus","wikipedia")
+lapply(sources, function(x) alm_ids(dois$data$id[1:5], source = x))
 
 # Provide more than one pmid
 pmids <- c(19300479, 19390606, 19343216)
@@ -104,9 +107,10 @@ out[[3]] # get data for the third pmid
 
 # Getting data for a specific source
 alm_ids(doi='10.1371/journal.pone.0035869', source='mendeley')
-alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'))
-alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'),
-   info='history')
+alm_ids(doi='10.1371/journal.pone.0035869', source='twitter')
+alm_ids(doi='10.1371/journal.pone.0035869', source='counter', info='detail')
+## fails if more than one source given
+alm_ids(doi='10.1371/journal.pone.0035869', source=c('twitter','facebook'))
 
 # Get detailed totals output
 alm_ids(doi='10.1371/journal.pone.0035869', total_details=TRUE)
@@ -119,9 +123,6 @@ alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='month')
 
 # Get summary metrics by year
 alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='year')
-
-# Search by source only, without article identifiers
-alm_ids(source='crossref')
 
 # Curl debugging
 library('httr')

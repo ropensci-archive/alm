@@ -1,11 +1,8 @@
 #' @seealso \code{\link{alm_plot}}
-#' @details You can only supply one of the parmeters doi, pmid, pmcid, and mendeley.
-#'
-#' 		Query for as many articles at a time as you like. Though queries are broken
-#' 		up in to smaller bits of 50 identifiers at a time.
-#'
-#' 		If you supply days, months and/or year parameters, days takes precedence
-#' 		over months and year.
+#' @details You can only supply one of the parmeters doi, pmid, pmcid, and mendeley; and you 
+#' must supply one of them. Query for as many articles at a time as you like. Though queries 
+#' are broken up in to smaller bits of 50 identifiers at a time. If you supply days, months and/or 
+#' year parameters, days takes precedence over months and year.
 #' @return PLoS altmetrics as data.frame's.
 #' @examples \dontrun{
 #' # The default call with either doi, pmid, pmcid, or mendeley without specifying
@@ -33,7 +30,7 @@
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 #'		'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 #' out <- alm_ids(doi=dois)
-#' out[[1]] # get data for the first DOI
+#' out$data[[1]] # get data for the first DOI
 #'
 #' # Search for DOI's, then feed into alm
 #' library('rplos')
@@ -42,8 +39,10 @@
 #' out <- alm_ids(doi=dois$data$id)
 #' lapply(out, head)
 #' 
-#' alm_ids(dois$data$id[1:5], 
-#'  source = c("facebook","twitter","mendeley","reddit","scopus","wikipedia"))
+#' alm_ids(dois$data$id[1:5], source = "facebook")
+#'  
+#' sources <- c("facebook","twitter","mendeley","reddit","scopus","wikipedia")
+#' lapply(sources, function(x) alm_ids(dois$data$id[1:5], source = x))
 #'
 #' # Provide more than one pmid
 #' pmids <- c(19300479, 19390606, 19343216)
@@ -52,9 +51,10 @@
 #'
 #' # Getting data for a specific source
 #' alm_ids(doi='10.1371/journal.pone.0035869', source='mendeley')
-#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'))
-#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('mendeley','twitter','counter'),
-#'    info='history')
+#' alm_ids(doi='10.1371/journal.pone.0035869', source='twitter')
+#' alm_ids(doi='10.1371/journal.pone.0035869', source='counter', info='detail')
+#' ## fails if more than one source given
+#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('twitter','facebook'))
 #'
 #' # Get detailed totals output
 #' alm_ids(doi='10.1371/journal.pone.0035869', total_details=TRUE)
@@ -67,9 +67,6 @@
 #'
 #' # Get summary metrics by year
 #' alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='year')
-#'
-#' # Search by source only, without article identifiers
-#' alm_ids(source='crossref')
 #'
 #' # Curl debugging
 #' library('httr')
@@ -91,7 +88,7 @@
 #'
 #' # Public Knowledge Project article data
 #' # You need to get an API key first, and pass in a different URL
-#' url <- 'http://pkp-alm.lib.sfu.ca/api/v3/articles'
+#' url <- 'http://pkp-alm.lib.sfu.ca/api/v5/articles'
 #' alm_ids(doi='10.3402/gha.v7.23554', url = url, key = getOption("pkpalmkey"))
 #'
 #' # Copernicus publishers article data
@@ -101,6 +98,6 @@
 #'
 #' # eLife publishers article data
 #' # You need to get an API key first, and pass in a different URL
-#' url <- 'http://alm.svr.elifesciences.org/api/v3/articles'
+#' url <- 'http://alm.svr.elifesciences.org/api/v5/articles'
 #' alm_ids(doi='10.7554/eLife.00471', url = url, key = getOption("elifealmkey"))
 #' }
