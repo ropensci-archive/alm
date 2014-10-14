@@ -16,8 +16,8 @@ alm_events(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 
 \item{mendeley_uuid}{Mendeley object identifier (character)}
 
-\item{source}{The source to get events data from. You can pass in a character
-vector, like: \code{c("mendeley","crossref")}}
+\item{source}{(character) Name of source to get ALM information for. One source only.
+You can get multiple sources via a for loop or lapply-type call.}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
@@ -95,7 +95,9 @@ out['19390606']
 alm_events(doi="10.1371/journal.pone.0035869", source="crossref")
 
 # Specify two specific sources
-alm_events(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
+## You have to do so through lapply, or similar approach
+lapply(c("crossref","twitter"),
+   function(x) alm_events(doi="10.1371/journal.pone.0035869", source=x))
 
 # Figshare data
 alm_events(doi="10.1371/journal.pone.0069841", source='figshare')
@@ -120,7 +122,7 @@ headfoo(alm_events(doi="10.1371/journal.pmed.1001587", source='articlecoveragecu
 # F1000 Prime data
 alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
 dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
-           '10.1371/journal.pbio.0040020','10.1371/journal.pmed.1001300')
+           '10.1371/journal.pbio.0040020')
 res <- alm_events(doi = dois, source='f1000')
 res[[3]]
 }

@@ -9,8 +9,8 @@
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
 #' @param mendeley_uuid Mendeley object identifier (character)
-#' @param source The source to get events data from. You can pass in a character
-#' 		vector, like: \code{c("mendeley","crossref")}
+#' @param source (character) Name of source to get ALM information for. One source only.
+#'    You can get multiple sources via a for loop or lapply-type call.
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param ... optional additional curl options (debugging tools mostly)
@@ -78,7 +78,9 @@
 #' alm_events(doi="10.1371/journal.pone.0035869", source="crossref")
 #'
 #' # Specify two specific sources
-#' alm_events(doi="10.1371/journal.pone.0035869", source=c("crossref","twitter"))
+#' ## You have to do so through lapply, or similar approach
+#' lapply(c("crossref","twitter"), 
+#'    function(x) alm_events(doi="10.1371/journal.pone.0035869", source=x))
 #'
 #' # Figshare data
 #' alm_events(doi="10.1371/journal.pone.0069841", source='figshare')
@@ -103,7 +105,7 @@
 #' # F1000 Prime data
 #' alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
 #' dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
-#'            '10.1371/journal.pbio.0040020','10.1371/journal.pmed.1001300')
+#'            '10.1371/journal.pbio.0040020')
 #' res <- alm_events(doi = dois, source='f1000')
 #' res[[3]]
 #' }
@@ -140,10 +142,10 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))
 	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
 	key <- getkey(key)
-	source2 <- if(is.null(source)) NULL else paste(source, collapse=",")
+	if(length(source) > 1) stop("You can only supply one source")
 
 	parse_events <- function() {
-	  args <- almcompact(list(api_key = key, info = 'detail', source = source2, type = names(id)))
+	  args <- almcompact(list(api_key = key, info = 'detail', source = source, type = names(id)))
 		if(length(id[[1]])==0){stop("Please provide a DOI")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
