@@ -16,8 +16,8 @@ alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL,
 
 \item{mendeley_uuid}{Mendeley object identifier (character)}
 
-\item{source}{Name of source (or list of sources) to get ALM information for
-(character)}
+\item{source}{(character) Name of source to get ALM information for. One source only.
+You can get multiple sources via a for loop or lapply-type call.}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 

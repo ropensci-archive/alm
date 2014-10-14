@@ -14,8 +14,8 @@
 #' @param pmcid PubMed Central object identifier (numeric)
 #' @param mendeley_uuid Mendeley object identifier (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
-#' @param source Name of source (or list of sources) to get ALM information for 
-#'    (character)
+#' @param source (character) Name of source to get ALM information for. One source only.
+#'    You can get multiple sources via a for loop or lapply-type call.
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
 #' @param ... optional additional curl options (debugging tools mostly)
 #' 
