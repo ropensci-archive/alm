@@ -23,6 +23,7 @@
 alm_title <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, 
   key = NULL, url = 'http://alm.plos.org/api/v5/articles', ...)
 {
+  .Deprecated(msg = "This function will be deprecated soon")
   temp <- alm_ids(doi = doi, pmid = pmid, pmcid = pmcid, mendeley_uuid = mendeley_uuid, url = url, 
                   info = "summary", key = key, ...)
   if(length(doi) == 1) temp$data$info$title else lapply(temp$data, function(x) x$info$title)  
