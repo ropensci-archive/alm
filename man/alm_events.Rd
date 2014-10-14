@@ -4,8 +4,8 @@
 \title{Retrieve PLoS article-level metrics (ALM) events.}
 \usage{
 alm_events(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
-  source = NULL, key = NULL, url = "http://alm.plos.org/api/v5/articles",
-  ...)
+  source = NULL, compact = TRUE, key = NULL,
+  url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}
@@ -18,6 +18,9 @@ alm_events(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 
 \item{source}{(character) Name of source to get ALM information for. One source only.
 You can get multiple sources via a for loop or lapply-type call.}
+
+\item{compact}{(logical) Whether to make output compact or not. If TRUE (default), remove
+empty sources.}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 

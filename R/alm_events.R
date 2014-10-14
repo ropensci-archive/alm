@@ -11,6 +11,8 @@
 #' @param mendeley_uuid Mendeley object identifier (character)
 #' @param source (character) Name of source to get ALM information for. One source only.
 #'    You can get multiple sources via a for loop or lapply-type call.
+#' @param compact (logical) Whether to make output compact or not. If TRUE (default), remove 
+#'    empty sources. 
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param ... optional additional curl options (debugging tools mostly)
@@ -137,7 +139,7 @@
 #' }
 
 alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
-  source = NULL, key = NULL, url='http://alm.plos.org/api/v5/articles', ...)
+  source = NULL, compact = TRUE, key = NULL, url='http://alm.plos.org/api/v5/articles', ...)
 {
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))
 	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
@@ -534,9 +536,14 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 	}
 	safe_parse_events <- plyr::failwith(NULL, parse_events)
 	finaldata <- safe_parse_events()
-	if(length(finaldata)>1){ return( finaldata )} else { finaldata[[1]] }
+	if(length(finaldata)>1){ lapply(finaldata, compact_events) } else { compact_events(finaldata[[1]]) }
 }
 
+compact_events <- function(x){
+  phrases <- c("sorry, no events content yet","parser not written yet")
+  keep <- sapply(x, function(y) if(any(phrases %in% y)) FALSE else TRUE)
+  x[keep]
+}
 
 try_date_parts <- function(w){
   tmp <- if(is.null(w[['date-parts']])) w[['date_parts']] else w[['date-parts']]
