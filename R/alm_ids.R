@@ -31,7 +31,7 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 		if(length(id[[1]])==0){stop("Please provide a DOI or other identifier")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
-				tt <- alm_GET(url, c(args, ids = id[[1]]), ...)
+				tt <- alm_GET(x = url, y = c(args, ids = id[[1]]), ...)
 			} else
 			{
 				if(length(id[[1]])>1){

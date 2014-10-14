@@ -16,28 +16,37 @@ _____  |  |   _____
 
 ## What it is!?
 
-`alm` is a set of functions to access article level metrics from the Public Library of Science journals using their ALM API.
+The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers, including (as of 2014-10-14):
 
+* PLOS (all their journals) at [http://alm.plos.org/]()
+* PLOS test server at [http://labs.crowdometer.org/]()
+* Copernicus at [http://metricus.copernicus.org/]()
+* Public Knowledge Project (PKP) at [http://pkp-alm.lib.sfu.ca/]()
+* Crossref at [http://det.labs.crossref.org/]()
+* eLife at [http://alm.svr.elifesciences.org/]()
+* Pensoft at [http://alm.pensoft.net:81/]()
 
 ## What is an article level metric?
 
-Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the Journal Impact Factor.
+Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the [Journal Impact Factor](http://www.wikiwand.com/en/Impact_factor).
 
 ## Are there other altmetrics data providers?
 
 Yes indeedy.
 
-+ [ImpactStory](http://impactstory.it/)
++ [ImpactStory](http://impactstory.org/)
 + [Altmetric.com](http://altmetric.com/)
 + [PlumAnalytics](http://www.plumanalytics.com/)
 
 ## Authentication
 
-You aren't currently not required to use an API key to access the PLoS ALM API, but soon will need to.
+You will need a different API key for each of the publishers listed above.
 
-Get your PLoS API key at [http://alm.plos.org/]().
+For each API key, go to the links above for each respective publisher.
 
-Put your API key in your .Rprofile file using `options(PlosApiKey = "YOUalmAPIKEY")`, and the functions within this package will be able to use your API key without you having to enter it every time you run a search. Alternatively, you can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter. 
+Put each API key in your .Rprofile file using, for example, `options(PlosApiKey = "YOUalmAPIKEY")`, and the functions within this package will be able to use your API key without you having to enter it every time you run a search. Alternatively, you can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter.
+
+`alm` defaults to using the entry in your options variables `PlosApiKey`, so to use a different publisher's data, pass in the key __AND__ the url for the service.
 
 ## Quick start
 
@@ -136,7 +145,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ##       pmid   pmcid                        mendeley_uuid
 ## 1 22253785 3256195 897fbbd6-5a23-3552-8077-97251b82c1e1
 ##            update_date     issued
-## 1 2014-10-13T23:09:59Z 2012-01-11
+## 1 2014-10-14T16:15:46Z 2012-01-11
 ## 
 ## $data$signposts
 ##                            doi viewed saved discussed cited
@@ -256,20 +265,12 @@ names(out)  # names of sources
 ```
 
 ```
-##  [1] "citeulike"              "crossref"              
-##  [3] "nature"                 "pubmed"                
-##  [5] "scopus"                 "counter"               
-##  [7] "researchblogging"       "wos"                   
-##  [9] "pmc"                    "facebook"              
-## [11] "mendeley"               "twitter"               
-## [13] "wikipedia"              "scienceseeker"         
-## [15] "relativemetric"         "f1000"                 
-## [17] "figshare"               "pmceurope"             
-## [19] "pmceuropedata"          "openedition"           
-## [21] "wordpress"              "reddit"                
-## [23] "datacite"               "copernicus"            
-## [25] "articlecoverage"        "articlecoveragecurated"
-## [27] "plos_comments"
+##  [1] "citeulike"        "crossref"         "nature"          
+##  [4] "pubmed"           "scopus"           "counter"         
+##  [7] "researchblogging" "pmc"              "facebook"        
+## [10] "mendeley"         "twitter"          "wikipedia"       
+## [13] "relativemetric"   "figshare"         "pmceuropedata"   
+## [16] "plos_comments"
 ```
 
 
@@ -362,10 +363,6 @@ dat <- alm_signposts(doi = "10.1371/journal.pone.0029797")
 plot_signposts(dat)
 ```
 
-```
-## Using doi as id variables
-```
-
 ![plot of chunk unnamed-chunk-11](inst/assets/img/unnamed-chunk-11.png) 
 
 Or plot many identifiers get a faceted bar chart, note the tick labels have just the last part of the DOI in this case to help you identify each DOI - printing the entire DOI would make lables overlap one another.
@@ -375,10 +372,6 @@ Or plot many identifiers get a faceted bar chart, note the tick labels have just
 dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", "10.1371/journal.pone.0039395")
 dat <- alm_signposts(doi = dois)
 plot_signposts(input = dat)
-```
-
-```
-## Using doi as id variables
 ```
 
 ![plot of chunk unnamed-chunk-12](inst/assets/img/unnamed-chunk-12.png) 
@@ -396,9 +389,9 @@ library('plyr')
 dois <- searchplos(q = "science", fl = "id", fq = list("-article_type:correction", "cross_published_journal_key:PLoSONE", "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), limit = 50)
 dois <- dois$data$id
 ```
+
+
 Collect altmetrics data and combine to a `data.frame` with `ldply`
-
-
 
 
 
@@ -429,12 +422,117 @@ plot_density(input = alm, source = c("counter_total", "crossref_total",
     "#B2C9E4"))
 ```
 
-```
-## No id variables; using all as measure variables
-```
-
 ![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16.png) 
 
+### Work with data from non-PLOS publishers
+
+Crossref
+
+
+```r
+crurl <- "http://alm.labs.crossref.org/api/v5/articles"
+crkey <- getOption("crossrefalmkey")
+alm_ids(doi='10.1371/journal.pone.0086859', url = crurl, key = crkey)
+```
+
+```
+## $meta
+##      total total_pages page error
+## 1 11636001      232721    1    NA
+## 
+## $data
+##              .id pdf html readers comments likes total
+## 1       crossref  NA   NA      NA       NA    NA     0
+## 2       mendeley  NA   NA      NA       NA    NA     0
+## 3       facebook  NA   NA      NA       NA    NA     0
+## 4            pmc  NA   NA      NA       NA    NA     0
+## 5      citeulike  NA   NA      NA       NA    NA     0
+## 6         pubmed  NA   NA      NA       NA    NA     0
+## 7      wordpress  NA   NA      NA       NA    NA     0
+## 8         reddit  NA   NA      NA       NA    NA     0
+## 9      wikipedia  NA   NA      NA       NA    NA     2
+## 10      datacite  NA   NA      NA       NA    NA     0
+## 11     pmceurope  NA   NA      NA       NA    NA     0
+## 12 pmceuropedata  NA   NA      NA       NA    NA     0
+```
+
+eLife
+
+
+```r
+elifeurl <- "http://alm.svr.elifesciences.org/api/v5/articles"
+elifekey <- getOption("elifealmkey")
+alm_ids(doi='10.7554/eLife.00471', url = elifeurl, key = elifekey)
+```
+
+```
+## $meta
+##   total total_pages page error
+## 1     1           1    1    NA
+## 
+## $data
+##               .id pdf html shares groups comments likes citations total
+## 1             pmc 242  639     NA     NA       NA    NA        NA   881
+## 2        crossref  NA   NA     NA     NA       NA    NA       135   135
+## 3          scopus  NA   NA     NA     NA       NA    NA       133   133
+## 4        facebook  NA   NA      3     NA        0     0        NA     3
+## 5        mendeley  NA   NA    454      0       NA    NA        NA   454
+## 6  twitter_search  NA   NA     NA     NA        0    NA        NA     0
+## 7       citeulike  NA   NA      1     NA       NA    NA        NA     1
+## 8          pubmed  NA   NA     NA     NA       NA    NA        72    72
+## 9       wordpress  NA   NA     NA     NA       NA    NA         5     5
+## 10         reddit  NA   NA     NA     NA        0     0        NA     0
+## 11      wikipedia  NA   NA     NA     NA       NA    NA         0     0
+## 12       datacite  NA   NA     NA     NA       NA    NA         0     0
+## 13      pmceurope  NA   NA     NA     NA       NA    NA       131   131
+## 14  pmceuropedata  NA   NA     NA     NA       NA    NA         1     1
+## 15  scienceseeker  NA   NA     NA     NA       NA    NA         0     0
+## 16         nature  NA   NA     NA     NA       NA    NA         0     0
+## 17    openedition  NA   NA     NA     NA       NA    NA         0     0
+## 18          f1000  NA   NA     NA     NA       NA    NA         4     4
+## 19       figshare  NA   NA     NA     NA       NA    NA         0     0
+## 20  plos_comments  NA   NA     NA     NA       NA    NA         0     0
+## 21       connotea  NA   NA     NA     NA       NA    NA         0     0
+## 22    postgenomic  NA   NA     NA     NA       NA    NA         0     0
+## 23      bloglines  NA   NA     NA     NA       NA    NA         0     0
+## 24           biod  NA   NA     NA     NA       NA    NA        NA     0
+```
+
+Pensoft
+
+
+```r
+psurl <- 'http://alm.pensoft.net:81/api/v5/articles'
+pskey <- getOption("pensoftalmkey")
+alm_ids(doi='10.3897/zookeys.88.807', url = psurl, key = pskey)
+```
+
+```
+## $meta
+##   total total_pages page error
+## 1     1           1    1    NA
+## 
+## $data
+##               .id pdf html readers comments likes total
+## 1        facebook  NA   NA      NA       NA    NA     0
+## 2      copernicus   0    0      NA       NA    NA     0
+## 3       wikipedia  NA   NA      NA       NA    NA   136
+## 4          nature  NA   NA      NA       NA    NA     0
+## 5       citeulike  NA   NA       1       NA    NA     1
+## 6        crossref  NA   NA      NA       NA    NA    81
+## 7        datacite  NA   NA      NA       NA    NA     0
+## 8   pmceuropedata  NA   NA      NA       NA    NA     0
+## 9          pubmed  NA   NA      NA       NA    NA    51
+## 10          f1000  NA   NA      NA       NA    NA     0
+## 11         scopus  NA   NA      NA       NA    NA   176
+## 12       figshare  NA   NA      NA       NA    NA     0
+## 13        counter  NA   NA      NA       NA    NA     0
+## 14       mendeley  NA   NA     123       NA    NA   123
+## 15         reddit  NA   NA      NA        0     0     0
+## 16 twitter_search  NA   NA      NA        0    NA     0
+## 17      wordpress  NA   NA      NA       NA    NA     0
+## 18      pmceurope  NA   NA      NA       NA    NA    52
+```
 
 ## Meta
 

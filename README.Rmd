@@ -1,5 +1,5 @@
 ```{r, eval=TRUE, echo=FALSE}
-knitr::opts_chunk$set(fig.path="inst/assets/img/")
+knitr::opts_chunk$set(fig.path="inst/assets/img/", warning=FALSE, message=FALSE)
 ```
 
 <pre>
@@ -18,28 +18,37 @@ _____  |  |   _____
 
 ## What it is!?
 
-`alm` is a set of functions to access article level metrics from the Public Library of Science journals using their ALM API.
+The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers, including (as of 2014-10-14):
 
+* PLOS (all their journals) at [http://alm.plos.org/]()
+* PLOS test server at [http://labs.crowdometer.org/]()
+* Copernicus at [http://metricus.copernicus.org/]()
+* Public Knowledge Project (PKP) at [http://pkp-alm.lib.sfu.ca/]()
+* Crossref at [http://det.labs.crossref.org/]()
+* eLife at [http://alm.svr.elifesciences.org/]()
+* Pensoft at [http://alm.pensoft.net:81/]()
 
 ## What is an article level metric?
 
-Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the Journal Impact Factor.
+Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the [Journal Impact Factor](http://www.wikiwand.com/en/Impact_factor).
 
 ## Are there other altmetrics data providers?
 
 Yes indeedy.
 
-+ [ImpactStory](http://impactstory.it/)
++ [ImpactStory](http://impactstory.org/)
 + [Altmetric.com](http://altmetric.com/)
 + [PlumAnalytics](http://www.plumanalytics.com/)
 
 ## Authentication
 
-You aren't currently not required to use an API key to access the PLoS ALM API, but soon will need to.
+You will need a different API key for each of the publishers listed above.
 
-Get your PLoS API key at [http://alm.plos.org/]().
+For each API key, go to the links above for each respective publisher.
 
-Put your API key in your .Rprofile file using `options(PlosApiKey = "YOUalmAPIKEY")`, and the functions within this package will be able to use your API key without you having to enter it every time you run a search. Alternatively, you can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter. 
+Put each API key in your .Rprofile file using, for example, `options(PlosApiKey = "YOUalmAPIKEY")`, and the functions within this package will be able to use your API key without you having to enter it every time you run a search. Alternatively, you can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter.
+
+`alm` defaults to using the entry in your options variables `PlosApiKey`, so to use a different publisher's data, pass in the key __AND__ the url for the service.
 
 ## Quick start
 
@@ -83,7 +92,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 
 ### Search on many identifiers
 
-```{r}
+```{r cache=TRUE}
 dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", "10.1371/journal.pone.0039395")
 out <- alm_ids(doi = dois)
 lapply(out$data, head)
@@ -117,7 +126,7 @@ plot_signposts(dat)
 
 Or plot many identifiers get a faceted bar chart, note the tick labels have just the last part of the DOI in this case to help you identify each DOI - printing the entire DOI would make lables overlap one another.
 
-```{r fig.width=8}
+```{r fig.width=8, cache=TRUE}
 dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", "10.1371/journal.pone.0039395")
 dat <- alm_signposts(doi = dois)
 plot_signposts(input = dat)
@@ -129,7 +138,7 @@ Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarC
 
 Note: Do you the key below in the `searchplos` call in this example, but if you plan to use rplos more, get your own API key [here](http://api.plos.org/).
 
-```{r}
+```{r, cache=TRUE}
 library('rplos')
 library('plyr')
 dois <- searchplos(q = "science", fl = "id", fq = list("-article_type:correction", "cross_published_journal_key:PLoSONE", "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), limit = 50)
@@ -140,7 +149,7 @@ dois <- dois$data$id
 Collect altmetrics data and combine to a `data.frame` with `ldply`
 
 
-```{r}
+```{r cache=TRUE}
 alm <- alm_ids(doi = dois, total_details = TRUE)
 alm <- ldply(alm$data)
 ```
@@ -163,6 +172,31 @@ plot_density(input = alm, source = c("counter_total", "crossref_total",
     "#B2C9E4"))
 ```
 
+### Work with data from non-PLOS publishers
+
+Crossref
+
+```{r}
+crurl <- "http://alm.labs.crossref.org/api/v5/articles"
+crkey <- getOption("crossrefalmkey")
+alm_ids(doi='10.1371/journal.pone.0086859', url = crurl, key = crkey)
+```
+
+eLife
+
+```{r}
+elifeurl <- "http://alm.svr.elifesciences.org/api/v5/articles"
+elifekey <- getOption("elifealmkey")
+alm_ids(doi='10.7554/eLife.00471', url = elifeurl, key = elifekey)
+```
+
+Pensoft
+
+```{r}
+psurl <- 'http://alm.pensoft.net:81/api/v5/articles'
+pskey <- getOption("pensoftalmkey")
+alm_ids(doi='10.3897/zookeys.88.807', url = psurl, key = pskey)
+```
 
 ## Meta
 
