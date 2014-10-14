@@ -37,11 +37,9 @@ Yes indeedy.
 
 You aren't currently not required to use an API key to access the PLoS ALM API, but soon will need to.
 
-Get your PLoS API key [here](http://api.plos.org/)
+Get your PLoS API key at [http://alm.plos.org/]().
 
-Put your API key in your .Rprofile file using exactly this:
-options(PlosApiKey = "YOUalmAPIKEY"),
-and the functions within this package will be able to use your API key without you having to enter it every time you run a search.
+Put your API key in your .Rprofile file using `options(PlosApiKey = "YOUalmAPIKEY")`, and the functions within this package will be able to use your API key without you having to enter it every time you run a search. Alternatively, you can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter. 
 
 ## Quick start
 
@@ -135,7 +133,7 @@ Note: Do you the key below in the `searchplos` call in this example, but if you 
 library('rplos')
 library('plyr')
 dois <- searchplos(q = "science", fl = "id", fq = list("-article_type:correction", "cross_published_journal_key:PLoSONE", "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), limit = 50)
-dois <- dois$id
+dois <- dois$data$id
 ```
 
 
@@ -168,19 +166,8 @@ plot_density(input = alm, source = c("counter_total", "crossref_total",
 
 ## Meta
 
-Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
-
-License: MIT
-
-This package is part of the [rOpenSci](http://ropensci.org/packages) project.
-
-To cite package `alm` in publications use:
-
-```{r}
-citation(package = 'alm')
-```
-
-Get citation information for `alm` in R doing `citation(package = 'alm')`
-
+* Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
+* License: MIT
+* Get citation information for `alm` in R doing `citation(package = 'alm')`
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

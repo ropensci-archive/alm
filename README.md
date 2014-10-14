@@ -35,11 +35,9 @@ Yes indeedy.
 
 You aren't currently not required to use an API key to access the PLoS ALM API, but soon will need to.
 
-Get your PLoS API key [here](http://api.plos.org/)
+Get your PLoS API key at [http://alm.plos.org/]().
 
-Put your API key in your .Rprofile file using exactly this:
-options(PlosApiKey = "YOUalmAPIKEY"),
-and the functions within this package will be able to use your API key without you having to enter it every time you run a search.
+Put your API key in your .Rprofile file using `options(PlosApiKey = "YOUalmAPIKEY")`, and the functions within this package will be able to use your API key without you having to enter it every time you run a search. Alternatively, you can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter. 
 
 ## Quick start
 
@@ -90,14 +88,14 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 ## 3                  nature   NA    NA      NA       NA    NA      4
 ## 4                  pubmed   NA    NA      NA       NA    NA      2
 ## 5                  scopus   NA    NA      NA       NA    NA      7
-## 6                 counter 2487 30224      NA       NA    NA  32825
+## 6                 counter 2512 30600      NA       NA    NA  33228
 ## 7        researchblogging   NA    NA      NA       NA    NA      1
 ## 8                     wos   NA    NA      NA       NA    NA      7
-## 9                     pmc   68   467      NA       NA    NA    535
+## 9                     pmc   74   511      NA       NA    NA    585
 ## 10               facebook   NA    NA     149       22    60    231
-## 11               mendeley   NA    NA      78       NA    NA     78
+## 11               mendeley   NA    NA      80       NA    NA     80
 ## 12                twitter   NA    NA      NA       12    NA     12
-## 13              wikipedia   NA    NA      NA       NA    NA     48
+## 13              wikipedia   NA    NA      NA       NA    NA     49
 ## 14          scienceseeker   NA    NA      NA       NA    NA      0
 ## 15         relativemetric   NA    NA      NA       NA    NA 157436
 ## 16                  f1000   NA    NA      NA       NA    NA      0
@@ -138,11 +136,11 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ##       pmid   pmcid                        mendeley_uuid
 ## 1 22253785 3256195 897fbbd6-5a23-3552-8077-97251b82c1e1
 ##            update_date     issued
-## 1 2014-08-25T14:03:30Z 2012-01-11
+## 1 2014-10-13T23:09:59Z 2012-01-11
 ## 
 ## $data$signposts
 ##                            doi viewed saved discussed cited
-## 1 10.1371/journal.pone.0029797  33360    79       243     7
+## 1 10.1371/journal.pone.0029797  33813    81       243     7
 ## 
 ## $data$totals
 ##                       .id  pdf  html readers comments likes  total
@@ -151,14 +149,14 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ## 3                  nature   NA    NA      NA       NA    NA      4
 ## 4                  pubmed   NA    NA      NA       NA    NA      2
 ## 5                  scopus   NA    NA      NA       NA    NA      7
-## 6                 counter 2487 30224      NA       NA    NA  32825
+## 6                 counter 2512 30600      NA       NA    NA  33228
 ## 7        researchblogging   NA    NA      NA       NA    NA      1
 ## 8                     wos   NA    NA      NA       NA    NA      7
-## 9                     pmc   68   467      NA       NA    NA    535
+## 9                     pmc   74   511      NA       NA    NA    585
 ## 10               facebook   NA    NA     149       22    60    231
-## 11               mendeley   NA    NA      78       NA    NA     78
+## 11               mendeley   NA    NA      80       NA    NA     80
 ## 12                twitter   NA    NA      NA       12    NA     12
-## 13              wikipedia   NA    NA      NA       NA    NA     48
+## 13              wikipedia   NA    NA      NA       NA    NA     49
 ## 14          scienceseeker   NA    NA      NA       NA    NA      0
 ## 15         relativemetric   NA    NA      NA       NA    NA 157436
 ## 16                  f1000   NA    NA      NA       NA    NA      0
@@ -203,17 +201,17 @@ lapply(out$data, head)
 ## 2  crossref  NA   NA      NA       NA    NA     6
 ## 3    nature  NA   NA      NA       NA    NA     0
 ## 4    pubmed  NA   NA      NA       NA    NA     5
-## 5    scopus  NA   NA      NA       NA    NA    10
-## 6   counter 379 1831      NA       NA    NA  2229
+## 5    scopus  NA   NA      NA       NA    NA    12
+## 6   counter 393 1976      NA       NA    NA  2389
 ## 
 ## $`10.1371/journal.pone.0039395`
 ##         .id pdf html readers comments likes total
 ## 1 citeulike  NA   NA       0       NA    NA     0
-## 2  crossref  NA   NA      NA       NA    NA     0
+## 2  crossref  NA   NA      NA       NA    NA     1
 ## 3    nature  NA   NA      NA       NA    NA     0
 ## 4    pubmed  NA   NA      NA       NA    NA     1
 ## 5    scopus  NA   NA      NA       NA    NA     3
-## 6   counter 227 1282      NA       NA    NA  1535
+## 6   counter 233 1336      NA       NA    NA  1596
 ## 
 ## $`10.1371/journal.pone.0029797`
 ##         .id  pdf  html readers comments likes total
@@ -222,7 +220,7 @@ lapply(out$data, head)
 ## 3    nature   NA    NA      NA       NA    NA     4
 ## 4    pubmed   NA    NA      NA       NA    NA     2
 ## 5    scopus   NA    NA      NA       NA    NA     7
-## 6   counter 2487 30224      NA       NA    NA 32825
+## 6   counter 2512 30600      NA       NA    NA 33228
 ## 
 ## $`10.1371/journal.pone.0001543`
 ##         .id pdf html readers comments likes total
@@ -231,7 +229,7 @@ lapply(out$data, head)
 ## 3    nature  NA   NA      NA       NA    NA     0
 ## 4    pubmed  NA   NA      NA       NA    NA     7
 ## 5    scopus  NA   NA      NA       NA    NA    11
-## 6   counter 447 2709      NA       NA    NA  3202
+## 6   counter 452 2727      NA       NA    NA  3226
 ```
 
 ### Output an-easy-to-combine-with-other-results data.frame
@@ -315,6 +313,9 @@ out[["pmc"]]  # get the results for PubMed Central
 ## 27                   0     3        0        0        11        10   1
 ## 28                   0     5        0        0        15        12   0
 ## 29                   0     6        0        0        12        12   2
+## 30                   0     4        0        0         8         9   1
+## 31                   0     8        0        0        18        14   3
+## 32                   0     9        0        0        18        20   2
 ##    year figure scanned.summary supp.data
 ## 1  2012      9               0         0
 ## 2  2012     11               0         2
@@ -345,6 +346,9 @@ out[["pmc"]]  # get the results for PubMed Central
 ## 27 2014      2               0         0
 ## 28 2014      0               0         1
 ## 29 2014      0               0         0
+## 30 2014      0               0         1
+## 31 2014      0               0         0
+## 32 2014      0               0         0
 ## 
 ## $csl
 ## list()
@@ -390,7 +394,7 @@ Note: Do you the key below in the `searchplos` call in this example, but if you 
 library('rplos')
 library('plyr')
 dois <- searchplos(q = "science", fl = "id", fq = list("-article_type:correction", "cross_published_journal_key:PLoSONE", "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), limit = 50)
-dois <- dois$id
+dois <- dois$data$id
 ```
 
 
@@ -434,40 +438,8 @@ plot_density(input = alm, source = c("counter_total", "crossref_total",
 
 ## Meta
 
-Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
-
-License: MIT
-
-This package is part of the [rOpenSci](http://ropensci.org/packages) project.
-
-To cite package `alm` in publications use:
-
-
-```r
-citation(package = 'alm')
-```
-
-```
-## 
-## To cite package 'alm' in publications use:
-## 
-##   Scott Chamberlain, Carl Boettiger, Karthik Ram and Fenner Martin
-##   (2014). alm: R wrapper to the almetrics API platform developed
-##   by PLoS. R package version 0.1.9.99.
-##   https://github.com/ropensci/alm
-## 
-## A BibTeX entry for LaTeX users is
-## 
-##   @Manual{,
-##     title = {alm: R wrapper to the almetrics API platform developed by PLoS},
-##     author = {Scott Chamberlain and Carl Boettiger and Karthik Ram and Fenner Martin},
-##     year = {2014},
-##     note = {R package version 0.1.9.99},
-##     url = {https://github.com/ropensci/alm},
-##   }
-```
-
-Get citation information for `alm` in R doing `citation(package = 'alm')`
-
+* Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
+* License: MIT
+* Get citation information for `alm` in R doing `citation(package = 'alm')`
 
 [![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
