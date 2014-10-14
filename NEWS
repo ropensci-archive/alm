@@ -1,3 +1,34 @@
+alm 0.3.0
+===============
+
+NEW FEATURES
+
+* The ALM service that this package interacts with was recently renamed to Lagotto.
+* New function `alm_alerts()` added. This function works only with the v4 API, and you have to be given certain status in the Lagotto server to be able to use this function, which requires your username and API key.
+* Using `jsonlite` now instead of `RJSONIO` for JSON parsing.
+* Now using `httr` instead of `RCurl`.
+* Along with using `httr` instead of `RCurl`, all functions now accept options via the `...` parameter that are passed on to `httr::GET()`. 
+* New function `alm_signposts()` that uses `alm_ids()` internally, and just gives back the viewed, saved, discussed, and cited summary data.
+* New function `alm_status()` to check status of the Lagotto server for any publisher using the service. (#24)
+* New function `alm_sources()` to search for data based on source type, e,g., Twitter.
+* The `source` parameter only takes one source type now. This is a rather large change. You can  still seaerch for multiple sources, just pass them through the function via a for loop or `lapply` type function. 
+* This version of the package now is set up to deal with the Lagotto version 5 API. Thus, the default URL for the PLOS server is `http://alm.plos.org/api/v5/articles`, and similar for other publishers. 
+* `alm_events()` now by default drops all sources with no data, toggle this with the `compact` parameter (#26)
+
+MINOR IMPROVEMENTS
+
+* Changed license to `MIT` from `CC0`.
+* A series of functions now defunct: `alm_pubmedid()`, `alm_pubmedcentid()`, `almupdated()`, `almdateupdated()`, `alm_totals()`. The functionality of all of these functions can be done with `alm_ids()`.
+* `alm()` function name changed to `alm_ids()` to avoid confusion with the package name.
+* `almdatepub()` function name changed to `alm_datepub()` to be consistent with snake_case naming of other functions.
+* `almtitle()` function name changed to `alm_title()` to be consistent with snake_case naming of other functions. Also, message added to say this function will be gone soon.
+* `almplot()` function name changed to `alm_plot()` to be consistent with snake_case naming of other functions. 
+* `almevents()` function name changed to `alm_events()` to be consistent with snake_case naming of other functions.
+* Parameter `mdid` across function changed to `mendeley_uuid` - for the Mendeley UUID.
+* Options for parameter `info` changed to totals, summary, or detail - history option deprecated.
+* `months`, `days`, and `year` parameter gone.
+* `signposts()` function name change to `alm_signposts()`
+
 alm 0.1.9
 ===============
 
