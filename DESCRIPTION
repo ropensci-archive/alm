@@ -8,7 +8,7 @@ Description: An R interface to the open source article level metrics API
     data for Crossref, and more as the open source PLOS software is used.
     Obtain rCharts at https://github.com/ramnathv/rCharts.
 Title: R wrapper to the almetrics API platform developed by PLoS
-License: CC0
+License: MIT + file LICENSE
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "myrmecocystus@gmail.com"),
     person("Carl", "Boettiger", role = "aut",
