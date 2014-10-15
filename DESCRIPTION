@@ -6,8 +6,10 @@ Description: An R interface to the open source article level metrics API
     using the open source app created by PLOS, so you can drop in a different
     base URL to the functions in this package to get to not only PLOS data, but
     data for Crossref, and more as the open source PLOS software is used.
-    Obtain rCharts at https://github.com/ramnathv/rCharts.
-Title: R wrapper to the almetrics API platform developed by PLoS
+    rCharts is in Enhances; and can be used for creating interactive charts
+    (e.g., in the function plot_signposts in this package); obtain rCharts at
+    https://github.com/ramnathv/rCharts.
+Title: R Wrapper to the Almetrics API Platform Developed by PLOS
 License: MIT + file LICENSE
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "myrmecocystus@gmail.com"),
