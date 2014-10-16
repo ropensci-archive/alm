@@ -249,7 +249,9 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 					{
 						parserblogging <- function(w){
 							temp <- w$event
-							bloginfo <- data.frame(temp[names(temp) %in% c('post_title','blog_name','blogger_name','published_date','post_url')], stringsAsFactors = FALSE)
+              ss <- temp[names(temp) %in% c('post_title','blog_name','blogger_name','published_date','post_url')]
+              ss[sapply(ss, is.null)] <- NA
+							bloginfo <- data.frame(ss, stringsAsFactors = FALSE)
 							if(length(temp$citations$citation[[1]])>1){
 								citations <- paste(sapply(temp$citations$citation, function(z) z$doi), sep="", collapse=",")
 							} else
