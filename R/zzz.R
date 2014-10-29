@@ -54,7 +54,8 @@ addmissing <- function(x){
 #' @export
 getkey <- function(x = NULL) {
 	if(is.null(x)){
-		key <- getOption("PlosApiKey")
+	  key <- Sys.getenv("ALM_KEY", "")
+	  if(key == "") key <- getOption("PlosApiKey")
 
 		if(is.null(key)){
 			key <- "MUvThuaeRNV2cNs"
@@ -62,11 +63,11 @@ getkey <- function(x = NULL) {
 		} else
 			if(class(key)=="character"){key <- key} else
 				{ stop("check your key input - it should be a character string") }
-	} else
-		{ key <- x }
+	} else { 
+    key <- x 
+  }
 	key
 }
-
 
 #' Capitalize the first letter of a character string.
 #'
