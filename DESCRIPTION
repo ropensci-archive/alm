@@ -1,6 +1,6 @@
 Package: alm
-Version: 0.3.0.99
-Date: 2014-10-16
+Version: 0.3.1
+Date: 2014-10-29
 Description: An R interface to the open source article level metrics API
     created by the Public Library of Science (PLOS). A number of publishers are
     using the open source app created by PLOS, so you can drop in a different
