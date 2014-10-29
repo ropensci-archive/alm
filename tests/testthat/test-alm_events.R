@@ -20,7 +20,7 @@ test_that("almevents returns correct things when two dois passed in", {
 })
 
 test_that("almevents returns correctly when one specific source requested", {
-  out3 <- alm_events(doi="10.1371/journal.pone.0035869", source="crossref", key=key)
+  out3 <- alm_events(doi="10.1371/journal.pone.0015552", source="reddit", key=key)
   expect_equal(length(out3), 1)
-  expect_match(names(out3), "crossref")
+  expect_match(names(out3), "reddit")
 })
