@@ -1,9 +1,7 @@
 # tests for almevents fxn in alm
 context("almevents")
 
-key <- "rkfDr76z75benY3pytM1"
-
-out <- alm_events(doi="10.1371/journal.pone.0029797", key=key)
+out <- alm_events(doi="10.1371/journal.pone.0029797")
 out <- out[!out %in% c("sorry, no events content yet","parser not written yet")] # remove those with no data
 
 test_that("almevents returns the correct class", {
@@ -13,14 +11,14 @@ test_that("almevents returns the correct class", {
 
 test_that("almevents returns correct things when two dois passed in", {
   dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117')
-  out2 <- alm_events(doi=dois, key=key)
+  out2 <- alm_events(doi=dois)
   expect_is(out2, "list")
   expect_equal(length(out2), 2)
   expect_equal(length(out2), 2)
 })
 
 test_that("almevents returns correctly when one specific source requested", {
-  out3 <- alm_events(doi="10.1371/journal.pone.0015552", source="reddit", key=key)
+  out3 <- alm_events(doi="10.1371/journal.pone.0015552", source="reddit")
   expect_equal(length(out3), 1)
   expect_match(names(out3), "reddit")
 })

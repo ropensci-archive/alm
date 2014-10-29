@@ -58,7 +58,7 @@ getkey <- function(x = NULL) {
 	  if(key == "") key <- getOption("PlosApiKey")
 
 		if(is.null(key)){
-			key <- "MUvThuaeRNV2cNs"
+			key <- "rkfDr76z75benY3pytM1"
 			message("Using default key: Please get your own API key at http://api.plos.org/")
 		} else
 			if(class(key)=="character"){key <- key} else

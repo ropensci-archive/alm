@@ -1,12 +1,10 @@
 # tests for alm_signposts fxn in alm
 context("alm_signposts")
 
-key <- "rkfDr76z75benY3pytM1"
-
-dat1 <- alm_signposts(doi="10.1371/journal.pone.0029797", key=key)
+dat1 <- alm_signposts(doi="10.1371/journal.pone.0029797")
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
  '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-dat2 <- alm_signposts(doi=dois, key=key)
+dat2 <- alm_signposts(doi=dois)
 
 test_that("alm_signposts returns the correct class", {
   expect_that(dat1, is_a("data.frame"))
