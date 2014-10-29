@@ -9,10 +9,8 @@ _____  |  |   _____
      \/           \/
 </pre>
 
-|Platform|master|dev|
-|----|----|----|
-|Linux|[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=master)](https://travis-ci.org/ropensci/alm?branch=master)|[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=dev)](https://travis-ci.org/ropensci/alm?branch=dev)|
-|Windows|[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/master)](https://ci.appveyor.com/project/sckott/alm/branch/master)|[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/dev)](https://ci.appveyor.com/project/sckott/alm/branch/dev)|
+[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=master)](https://travis-ci.org/ropensci/alm?branch=master)
+[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/master)](https://ci.appveyor.com/project/sckott/alm/branch/master)
 
 ## What it is!?
 
@@ -93,11 +91,11 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 ## $data
 ##                       .id  pdf  html readers comments likes  total
 ## 1               citeulike   NA    NA       1       NA    NA      1
-## 2                crossref   NA    NA      NA       NA    NA      8
+## 2                crossref   NA    NA      NA       NA    NA      0
 ## 3                  nature   NA    NA      NA       NA    NA      4
 ## 4                  pubmed   NA    NA      NA       NA    NA      2
 ## 5                  scopus   NA    NA      NA       NA    NA      7
-## 6                 counter 2512 30600      NA       NA    NA  33228
+## 6                 counter 2515 30685      NA       NA    NA  33316
 ## 7        researchblogging   NA    NA      NA       NA    NA      1
 ## 8                     wos   NA    NA      NA       NA    NA      7
 ## 9                     pmc   74   511      NA       NA    NA    585
@@ -108,7 +106,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 ## 14          scienceseeker   NA    NA      NA       NA    NA      0
 ## 15         relativemetric   NA    NA      NA       NA    NA 157436
 ## 16                  f1000   NA    NA      NA       NA    NA      0
-## 17               figshare    0    18      NA       NA     0     18
+## 17               figshare    0    21      NA       NA     0     21
 ## 18              pmceurope   NA    NA      NA       NA    NA      4
 ## 19          pmceuropedata   NA    NA      NA       NA    NA     49
 ## 20            openedition   NA    NA      NA       NA    NA      0
@@ -145,20 +143,20 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ##       pmid   pmcid                        mendeley_uuid
 ## 1 22253785 3256195 897fbbd6-5a23-3552-8077-97251b82c1e1
 ##            update_date     issued
-## 1 2014-10-14T16:15:46Z 2012-01-11
+## 1 2014-10-29T17:15:07Z 2012-01-11
 ## 
 ## $data$signposts
 ##                            doi viewed saved discussed cited
-## 1 10.1371/journal.pone.0029797  33813    81       243     7
+## 1 10.1371/journal.pone.0029797  33901    81       243     7
 ## 
 ## $data$totals
 ##                       .id  pdf  html readers comments likes  total
 ## 1               citeulike   NA    NA       1       NA    NA      1
-## 2                crossref   NA    NA      NA       NA    NA      8
+## 2                crossref   NA    NA      NA       NA    NA      0
 ## 3                  nature   NA    NA      NA       NA    NA      4
 ## 4                  pubmed   NA    NA      NA       NA    NA      2
 ## 5                  scopus   NA    NA      NA       NA    NA      7
-## 6                 counter 2512 30600      NA       NA    NA  33228
+## 6                 counter 2515 30685      NA       NA    NA  33316
 ## 7        researchblogging   NA    NA      NA       NA    NA      1
 ## 8                     wos   NA    NA      NA       NA    NA      7
 ## 9                     pmc   74   511      NA       NA    NA    585
@@ -169,7 +167,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ## 14          scienceseeker   NA    NA      NA       NA    NA      0
 ## 15         relativemetric   NA    NA      NA       NA    NA 157436
 ## 16                  f1000   NA    NA      NA       NA    NA      0
-## 17               figshare    0    18      NA       NA     0     18
+## 17               figshare    0    21      NA       NA     0     21
 ## 18              pmceurope   NA    NA      NA       NA    NA      4
 ## 19          pmceuropedata   NA    NA      NA       NA    NA     49
 ## 20            openedition   NA    NA      NA       NA    NA      0
@@ -265,12 +263,11 @@ names(out)  # names of sources
 ```
 
 ```
-##  [1] "citeulike"        "crossref"         "nature"          
-##  [4] "pubmed"           "scopus"           "counter"         
-##  [7] "researchblogging" "pmc"              "facebook"        
-## [10] "mendeley"         "twitter"          "wikipedia"       
-## [13] "relativemetric"   "figshare"         "pmceuropedata"   
-## [16] "plos_comments"
+##  [1] "citeulike"        "nature"           "pubmed"          
+##  [4] "scopus"           "counter"          "researchblogging"
+##  [7] "pmc"              "facebook"         "mendeley"        
+## [10] "twitter"          "wikipedia"        "relativemetric"  
+## [13] "figshare"         "pmceuropedata"    "plos_comments"
 ```
 
 
@@ -363,7 +360,7 @@ dat <- alm_signposts(doi = "10.1371/journal.pone.0029797")
 plot_signposts(dat)
 ```
 
-![plot of chunk unnamed-chunk-11](inst/assets/img/unnamed-chunk-11.png) 
+![plot of chunk unnamed-chunk-11](inst/assets/img/unnamed-chunk-11-1.png) 
 
 Or plot many identifiers get a faceted bar chart, note the tick labels have just the last part of the DOI in this case to help you identify each DOI - printing the entire DOI would make lables overlap one another.
 
@@ -409,7 +406,7 @@ The default plot
 plot_density(alm)
 ```
 
-![plot of chunk unnamed-chunk-15](inst/assets/img/unnamed-chunk-15.png) 
+![plot of chunk unnamed-chunk-15](inst/assets/img/unnamed-chunk-15-1.png) 
 
 
 Plot many sources in different panels in the same plot, and pass in colors just for fun
@@ -422,7 +419,7 @@ plot_density(input = alm, source = c("counter_total", "crossref_total",
     "#B2C9E4"))
 ```
 
-![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16.png) 
+![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png) 
 
 ### Work with data from non-PLOS publishers
 
@@ -437,8 +434,8 @@ alm_ids(doi='10.1371/journal.pone.0086859', url = crurl, key = crkey)
 
 ```
 ## $meta
-##      total total_pages page error
-## 1 11636001      232721    1    NA
+##   total total_pages page error
+## 1     1           1    1    NA
 ## 
 ## $data
 ##              .id pdf html readers comments likes total
@@ -473,18 +470,18 @@ alm_ids(doi='10.7554/eLife.00471', url = elifeurl, key = elifekey)
 ## $data
 ##               .id pdf html shares groups comments likes citations total
 ## 1             pmc 242  639     NA     NA       NA    NA        NA   881
-## 2        crossref  NA   NA     NA     NA       NA    NA       135   135
-## 3          scopus  NA   NA     NA     NA       NA    NA       133   133
+## 2        crossref  NA   NA     NA     NA       NA    NA       139   139
+## 3          scopus  NA   NA     NA     NA       NA    NA       138   138
 ## 4        facebook  NA   NA      3     NA        0     0        NA     3
 ## 5        mendeley  NA   NA    454      0       NA    NA        NA   454
 ## 6  twitter_search  NA   NA     NA     NA        0    NA        NA     0
 ## 7       citeulike  NA   NA      1     NA       NA    NA        NA     1
-## 8          pubmed  NA   NA     NA     NA       NA    NA        72    72
-## 9       wordpress  NA   NA     NA     NA       NA    NA         5     5
+## 8          pubmed  NA   NA     NA     NA       NA    NA        80    80
+## 9       wordpress  NA   NA     NA     NA       NA    NA         0     0
 ## 10         reddit  NA   NA     NA     NA        0     0        NA     0
 ## 11      wikipedia  NA   NA     NA     NA       NA    NA         0     0
 ## 12       datacite  NA   NA     NA     NA       NA    NA         0     0
-## 13      pmceurope  NA   NA     NA     NA       NA    NA       131   131
+## 13      pmceurope  NA   NA     NA     NA       NA    NA       135   135
 ## 14  pmceuropedata  NA   NA     NA     NA       NA    NA         1     1
 ## 15  scienceseeker  NA   NA     NA     NA       NA    NA         0     0
 ## 16         nature  NA   NA     NA     NA       NA    NA         0     0
