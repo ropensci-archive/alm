@@ -6,4 +6,6 @@ I see two notes in R CMD CHECK. One is about rCharts, which is not on CRAN, but 
 
 In addition, I made the REAMDE file WC3 compliant on Kurt Hornik's request.
 
+Note that I changed the title in the DESCRIPTION file slightly to match a name change in the service this package interacts with.
+
 Thanks! Scott Chamberlain
