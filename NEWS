@@ -1,6 +1,10 @@
 alm 0.3.1
 ===============
 
+MINOR IMPROVEMENTS
+
+* Vignette now as markdown (renders as HTML) instead of as pdf.
+
 BUG FIXES
 
 * Fixed two broken tests.
