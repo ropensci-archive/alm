@@ -91,7 +91,7 @@ out$data[[1]] # get data for the first DOI
 # Search for DOI's, then feed into alm
 library('rplos')
 dois <- searchplos(q='evolution', fl='id',
-   fq=list('-article_type:correction','doc_type:full'), limit = 150)
+   fq=list('-article_type:correction','doc_type:full'), limit = 250)
 out <- alm_ids(doi=dois$data$id)
 lapply(out, head)
 
