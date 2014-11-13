@@ -1,4 +1,4 @@
-all: move pandoc rmd2md reducepdf
+all: move rmd2md
 
 move:
 		cp inst/vign/alm_vignette.md vignettes/
@@ -11,7 +11,7 @@ pandoc:
 
 rmd2md:
 		cd vignettes;\
-		cp alm_vignette.md alm_vignette.Rmd;\
+		mv alm_vignette.md alm_vignette.Rmd
 
 reducepdf:
 		Rscript -e 'tools::compactPDF("vignettes/alm_vignette.pdf", gs_quality = "ebook")'
