@@ -16,13 +16,13 @@ _____  |  |   _____
 
 The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers, including (as of 2014-10-14):
 
-* PLOS (all their journals) at [http://alm.plos.org/]()
-* PLOS test server at [http://labs.crowdometer.org/]()
-* Copernicus at [http://metricus.copernicus.org/]()
-* Public Knowledge Project (PKP) at [http://pkp-alm.lib.sfu.ca/]()
-* Crossref at [http://det.labs.crossref.org/]()
-* eLife at [http://alm.svr.elifesciences.org/]()
-* Pensoft at [http://alm.pensoft.net:81/]()
+* PLOS (all their journals) at [http://alm.plos.org/](http://alm.plos.org/)
+* PLOS test server at [http://labs.crowdometer.org/](http://labs.crowdometer.org/)
+* Copernicus at [http://metricus.copernicus.org/](http://metricus.copernicus.org/)
+* Public Knowledge Project (PKP) at [http://pkp-alm.lib.sfu.ca/](http://pkp-alm.lib.sfu.ca/)
+* Crossref at [http://det.labs.crossref.org/](http://det.labs.crossref.org/)
+* eLife at [http://alm.svr.elifesciences.org/](http://alm.svr.elifesciences.org/)
+* Pensoft at [http://alm.pensoft.net:81/](http://alm.pensoft.net:81/)
 
 ## What is an article level metric?
 
@@ -91,18 +91,18 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 ## $data
 ##                       .id  pdf  html readers comments likes  total
 ## 1               citeulike   NA    NA       1       NA    NA      1
-## 2                crossref   NA    NA      NA       NA    NA      0
+## 2                crossref   NA    NA      NA       NA    NA      8
 ## 3                  nature   NA    NA      NA       NA    NA      4
 ## 4                  pubmed   NA    NA      NA       NA    NA      2
-## 5                  scopus   NA    NA      NA       NA    NA      7
-## 6                 counter 2515 30685      NA       NA    NA  33316
+## 5                  scopus   NA    NA      NA       NA    NA      8
+## 6                 counter 2524 30801      NA       NA    NA  33443
 ## 7        researchblogging   NA    NA      NA       NA    NA      1
 ## 8                     wos   NA    NA      NA       NA    NA      7
-## 9                     pmc   74   511      NA       NA    NA    585
+## 9                     pmc   78   534      NA       NA    NA    612
 ## 10               facebook   NA    NA     149       22    60    231
 ## 11               mendeley   NA    NA      80       NA    NA     80
 ## 12                twitter   NA    NA      NA       12    NA     12
-## 13              wikipedia   NA    NA      NA       NA    NA     49
+## 13              wikipedia   NA    NA      NA       NA    NA     50
 ## 14          scienceseeker   NA    NA      NA       NA    NA      0
 ## 15         relativemetric   NA    NA      NA       NA    NA 157436
 ## 16                  f1000   NA    NA      NA       NA    NA      0
@@ -143,27 +143,27 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ##       pmid   pmcid                        mendeley_uuid
 ## 1 22253785 3256195 897fbbd6-5a23-3552-8077-97251b82c1e1
 ##            update_date     issued
-## 1 2014-10-29T17:15:07Z 2012-01-11
+## 1 2014-11-12T21:41:48Z 2012-01-11
 ## 
 ## $data$signposts
 ##                            doi viewed saved discussed cited
-## 1 10.1371/journal.pone.0029797  33901    81       243     7
+## 1 10.1371/journal.pone.0029797  34055    81       243     8
 ## 
 ## $data$totals
 ##                       .id  pdf  html readers comments likes  total
 ## 1               citeulike   NA    NA       1       NA    NA      1
-## 2                crossref   NA    NA      NA       NA    NA      0
+## 2                crossref   NA    NA      NA       NA    NA      8
 ## 3                  nature   NA    NA      NA       NA    NA      4
 ## 4                  pubmed   NA    NA      NA       NA    NA      2
-## 5                  scopus   NA    NA      NA       NA    NA      7
-## 6                 counter 2515 30685      NA       NA    NA  33316
+## 5                  scopus   NA    NA      NA       NA    NA      8
+## 6                 counter 2524 30801      NA       NA    NA  33443
 ## 7        researchblogging   NA    NA      NA       NA    NA      1
 ## 8                     wos   NA    NA      NA       NA    NA      7
-## 9                     pmc   74   511      NA       NA    NA    585
+## 9                     pmc   78   534      NA       NA    NA    612
 ## 10               facebook   NA    NA     149       22    60    231
 ## 11               mendeley   NA    NA      80       NA    NA     80
 ## 12                twitter   NA    NA      NA       12    NA     12
-## 13              wikipedia   NA    NA      NA       NA    NA     49
+## 13              wikipedia   NA    NA      NA       NA    NA     50
 ## 14          scienceseeker   NA    NA      NA       NA    NA      0
 ## 15         relativemetric   NA    NA      NA       NA    NA 157436
 ## 16                  f1000   NA    NA      NA       NA    NA      0
@@ -263,11 +263,12 @@ names(out)  # names of sources
 ```
 
 ```
-##  [1] "citeulike"        "nature"           "pubmed"          
-##  [4] "scopus"           "counter"          "researchblogging"
-##  [7] "pmc"              "facebook"         "mendeley"        
-## [10] "twitter"          "wikipedia"        "relativemetric"  
-## [13] "figshare"         "pmceuropedata"    "plos_comments"
+##  [1] "citeulike"        "crossref"         "nature"          
+##  [4] "pubmed"           "scopus"           "counter"         
+##  [7] "researchblogging" "pmc"              "facebook"        
+## [10] "mendeley"         "twitter"          "wikipedia"       
+## [13] "relativemetric"   "figshare"         "pmceuropedata"   
+## [16] "plos_comments"
 ```
 
 
@@ -314,6 +315,7 @@ out[["pmc"]]  # get the results for PubMed Central
 ## 30                   0     4        0        0         8         9   1
 ## 31                   0     8        0        0        18        14   3
 ## 32                   0     9        0        0        18        20   2
+## 33                   0    10        0        0        23        18   4
 ##    year figure scanned.summary supp.data
 ## 1  2012      9               0         0
 ## 2  2012     11               0         2
@@ -347,6 +349,7 @@ out[["pmc"]]  # get the results for PubMed Central
 ## 30 2014      0               0         1
 ## 31 2014      0               0         0
 ## 32 2014      0               0         0
+## 33 2014      0               0         0
 ## 
 ## $csl
 ## list()
@@ -469,7 +472,7 @@ alm_ids(doi='10.7554/eLife.00471', url = elifeurl, key = elifekey)
 ## 
 ## $data
 ##               .id pdf html shares groups comments likes citations total
-## 1             pmc 242  639     NA     NA       NA    NA        NA   881
+## 1             pmc 337  884     NA     NA       NA    NA        NA  1221
 ## 2        crossref  NA   NA     NA     NA       NA    NA       139   139
 ## 3          scopus  NA   NA     NA     NA       NA    NA       138   138
 ## 4        facebook  NA   NA      3     NA        0     0        NA     3
