@@ -9,8 +9,10 @@
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
 #' @param mendeley_uuid Mendeley object identifier (character)
-#' @param source (character) Name of source to get ALM information for. One source only.
+#' @param source_id (character) Name of source to get ALM information for. One source only.
 #'    You can get multiple sources via a for loop or lapply-type call.
+#' @param publisher_id (character) Metrics for articles by a given publisher, using the Crossref
+#'    \code{member_id}.
 #' @param compact (logical) Whether to make output compact or not. If TRUE (default), remove 
 #'    empty sources. 
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
@@ -77,38 +79,38 @@
 #' out['19390606']
 #'
 #' # Specify a specific source
-#' alm_events(doi="10.1371/journal.pone.0035869", source="crossref")
+#' alm_events(doi="10.1371/journal.pone.0035869", source_id="crossref")
 #'
 #' # Specify two specific sources
 #' ## You have to do so through lapply, or similar approach
 #' lapply(c("crossref","twitter"), 
-#'    function(x) alm_events(doi="10.1371/journal.pone.0035869", source=x))
+#'    function(x) alm_events(doi="10.1371/journal.pone.0035869", source_id=x))
 #'
 #' # Figshare data
-#' alm_events(doi="10.1371/journal.pone.0069841", source='figshare')
+#' alm_events(doi="10.1371/journal.pone.0069841", source_id='figshare')
 #'
 #' # Datacite data
-#' alm_events("10.1371/journal.pone.0012090", source='datacite')
+#' alm_events("10.1371/journal.pone.0012090", source_id='datacite')
 #' 
 #' # Reddit data
-#' alm_events("10.1371/journal.pone.0015552", source='reddit')
+#' alm_events("10.1371/journal.pone.0015552", source_id='reddit')
 #' 
 #' # Wordpress data
-#' alm_events("10.1371/journal.pcbi.1000361", source='wordpress')
+#' alm_events("10.1371/journal.pcbi.1000361", source_id='wordpress')
 #' 
 #' # Articlecoverage data
-#' alm_events(doi="10.1371/journal.pmed.0020124", source='articlecoverage')
+#' alm_events(doi="10.1371/journal.pmed.0020124", source_id='articlecoverage')
 #' 
 #' # Articlecoveragecurated data
 #' headfoo <- function(x) head(x$articlecoveragecurated$events)
-#' headfoo(alm_events(doi="10.1371/journal.pone.0088278", source='articlecoveragecurated'))
-#' headfoo(alm_events(doi="10.1371/journal.pmed.1001587", source='articlecoveragecurated'))
+#' headfoo(alm_events(doi="10.1371/journal.pone.0088278", source_id='articlecoveragecurated'))
+#' headfoo(alm_events(doi="10.1371/journal.pmed.1001587", source_id='articlecoveragecurated'))
 #'
 #' # F1000 Prime data
-#' alm_events(doi="10.1371/journal.pbio.1001041", source='f1000')
+#' alm_events(doi="10.1371/journal.pbio.1001041", source_id='f1000')
 #' dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
 #'            '10.1371/journal.pbio.0040020')
-#' res <- alm_events(doi = dois, source='f1000')
+#' res <- alm_events(doi = dois, source_id='f1000')
 #' res[[3]]
 #' }
 #'
@@ -139,15 +141,17 @@
 #' }
 
 alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
-  source = NULL, compact = TRUE, key = NULL, url='http://alm.plos.org/api/v5/articles', ...)
+  source_id = NULL, publisher_id = NULL, compact = TRUE, key = NULL, url='http://alm.plos.org/api/v5/articles', ...)
 {
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))
 	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
 	key <- getkey(key)
-	if(length(source) > 1) stop("You can only supply one source")
+	if(length(source_id) > 1) stop("You can only supply one source_id")
+	if(length(publisher_id) > 1) stop("You can only supply one publisher_id")
 
 	parse_events <- function() {
-	  args <- almcompact(list(api_key = key, info = 'detail', source = source, type = names(id)))
+	  args <- almcompact(list(api_key = key, info = 'detail', source_id = source_id, 
+                            publisher_id=publisher_id, type = names(id)))
 		if(length(id[[1]])==0){stop("Please provide a DOI")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
@@ -529,7 +533,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 		}
 
 		# Actually get the events data
-		tmpout <- lapply(events, getevents, label=source)
+		tmpout <- lapply(events, getevents, label=source_id)
 		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid)))
 		names(tmpout) <- if(!byid == 'doi') { id[[1]] } else {
 		  if(length(id[[1]])>50) vapply(ttt, "[[", character(1), "doi") else vapply(ttt$data, "[[", character(1), "doi")

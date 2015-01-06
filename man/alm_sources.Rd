@@ -4,12 +4,12 @@
 \alias{alm_sources}
 \title{Retrieve PLoS article-level metrics (ALM) by source.}
 \usage{
-alm_sources(source = "crossref", info = "totals", key = NULL,
+alm_sources(source_id = "crossref", info = "totals", key = NULL,
   total_details = FALSE, sum_metrics = NULL, limit = 50, page = 1,
   url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
-\item{source}{(character) Name of source to get ALM information for. One source only.
+\item{source_id}{(character) Name of source to get ALM information for. One source only.
 You can get multiple sources via a for loop or lapply-type call.}
 
 \item{info}{One of totals, summary, or detail (default totals + sum_metrics data in a list).
@@ -43,14 +43,14 @@ See details for more information.
 \examples{
 \dontrun{
 alm_sources()
-alm_sources(source='mendeley')
-alm_sources(source='scopus', info='summary')
+alm_sources(source_id='mendeley')
+alm_sources(source_id='scopus', info='summary')
 lapply(c('mendeley','twitter'), alm_sources, limit = 2)
-alm_sources(source='mendeley', limit=2)
-alm_sources(source='mendeley', limit=2, page=2)
-alm_sources(source='mendeley', limit=200)
+alm_sources(source_id='mendeley', limit=2)
+alm_sources(source_id='mendeley', limit=2, page=2)
+alm_sources(source_id='mendeley', limit=200)
 
-alm_sources(source='mendeley', info='summary')
+alm_sources(source_id='mendeley', info='summary')
 }
 }
 \references{

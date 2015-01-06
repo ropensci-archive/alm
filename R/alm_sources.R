@@ -5,7 +5,7 @@
 #' @importFrom plyr round_any
 #' @export
 #' 
-#' @param source (character) Name of source to get ALM information for. One source only.
+#' @param source_id (character) Name of source to get ALM information for. One source only.
 #'    You can get multiple sources via a for loop or lapply-type call.
 #' @param info One of totals, summary, or detail (default totals + sum_metrics data in a list).
 #'   	Not specifying anything (the default) returns data.frame of totals across
@@ -28,22 +28,22 @@
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 #' @examples \dontrun{
 #' alm_sources()
-#' alm_sources(source='mendeley')
-#' alm_sources(source='scopus', info='summary')
+#' alm_sources(source_id='mendeley')
+#' alm_sources(source_id='scopus', info='summary')
 #' lapply(c('mendeley','twitter'), alm_sources, limit = 2)
-#' alm_sources(source='mendeley', limit=2)
-#' alm_sources(source='mendeley', limit=2, page=2)
-#' alm_sources(source='mendeley', limit=200)
+#' alm_sources(source_id='mendeley', limit=2)
+#' alm_sources(source_id='mendeley', limit=2, page=2)
+#' alm_sources(source_id='mendeley', limit=200)
 #'
-#' alm_sources(source='mendeley', info='summary')
+#' alm_sources(source_id='mendeley', info='summary')
 #' }
 
-alm_sources <- function(source = 'crossref', info = "totals", key = NULL, total_details = FALSE,
+alm_sources <- function(source_id = 'crossref', info = "totals", key = NULL, total_details = FALSE,
   sum_metrics = NULL, limit=50, page=1, url = 'http://alm.plos.org/api/v5/articles', ...)
 {
   key <- getkey(key)
   info <- match.arg(info, c("summary","totals","detail"))
-  source <- match.arg(source, c("bloglines","citeulike","connotea","crossref","nature",
+  source_id <- match.arg(source_id, c("bloglines","citeulike","connotea","crossref","nature",
                           "postgenomic","pubmed","scopus","plos","researchblogging",
                           "biod","webofscience","pmc","facebook","mendeley","twitter",
                           "wikipedia","scienceseeker","relativemetric","f1000","figshare"))
@@ -51,7 +51,7 @@ alm_sources <- function(source = 'crossref', info = "totals", key = NULL, total_
   getalm <- function() {
     info2 <- switch(info, totals=NULL, detail='detail', summary='summary')
     if(!is.null(sum_metrics)) info <- info2 <- 'detail'
-    args <- almcompact(list(api_key = key, info = info2, source = source))
+    args <- almcompact(list(api_key = key, info = info2, source_id = source_id))
 
     if(limit <= 50){
       tt <- alm_GET(url, c(args, per_page=limit, page=page), ...)
@@ -75,7 +75,7 @@ alm_sources <- function(source = 'crossref', info = "totals", key = NULL, total_
       restmp <- lapply(rep, getdata, y=info, z=total_details, w=sum_metrics)
       restmp <- Map(function(x, y) data.frame(doi=y, x), restmp, vapply(rep, "[[", "", "doi"))
       restmp <- do.call(rbind, restmp)
-      names(restmp)[2] <- "source"
+      names(restmp)[2] <- "source_id"
       return( list(meta=metadf(tt), data=restmp) )
     }
   }
