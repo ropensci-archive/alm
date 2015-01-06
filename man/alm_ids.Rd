@@ -28,6 +28,9 @@ May 2014.}
 \item{source_id}{(character) Name of source to get ALM information for. One source only.
 You can get multiple sources via a for loop or lapply-type call.}
 
+\item{publisher_id}{(character) Metrics for articles by a given publisher, using the Crossref
+\code{member_id}.}
+
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
 \item{total_details}{If FALSE (the default) the standard totals data.frame is
