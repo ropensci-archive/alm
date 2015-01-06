@@ -39,22 +39,22 @@
 #' out <- alm_ids(doi=dois$data$id)
 #' lapply(out, head)
 #' 
-#' alm_ids(dois$data$id[1:5], source = "facebook")
+#' alm_ids(dois$data$id[1:5], source_id = "facebook")
 #'  
 #' sources <- c("facebook","twitter","mendeley","reddit","scopus","wikipedia")
-#' lapply(sources, function(x) alm_ids(dois$data$id[1:5], source = x))
+#' lapply(sources, function(x) alm_ids(dois$data$id[1:5], source_id = x))
 #'
 #' # Provide more than one pmid
 #' pmids <- c(19300479, 19390606, 19343216)
 #' out <- alm_ids(pmid=pmids)
 #' out[[3]] # get data for the third pmid
 #'
-#' # Getting data for a specific source
-#' alm_ids(doi='10.1371/journal.pone.0035869', source='mendeley')
-#' alm_ids(doi='10.1371/journal.pone.0035869', source='twitter')
-#' alm_ids(doi='10.1371/journal.pone.0035869', source='counter', info='detail')
-#' ## fails if more than one source given
-#' alm_ids(doi='10.1371/journal.pone.0035869', source=c('twitter','facebook'))
+#' # Getting data for a specific source_id
+#' alm_ids(doi='10.1371/journal.pone.0035869', source_id='mendeley')
+#' alm_ids(doi='10.1371/journal.pone.0035869', source_id='twitter')
+#' alm_ids(doi='10.1371/journal.pone.0035869', source_id='counter', info='detail')
+#' ## fails if more than one source_id given
+#' alm_ids(doi='10.1371/journal.pone.0035869', source_id=c('twitter','facebook'))
 #'
 #' # Get detailed totals output
 #' alm_ids(doi='10.1371/journal.pone.0035869', total_details=TRUE)

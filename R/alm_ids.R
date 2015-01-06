@@ -13,7 +13,7 @@
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 
 alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, info = "totals",
-  source = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL, sleep = 0,
+  source_id = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL, sleep = 0,
 	url = 'http://alm.plos.org/api/v5/articles', ...)
 {
 	key <- getkey(key)
@@ -22,12 +22,12 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))
 	if(length(id) == 0) stop("Supply one of: doi, pmid, pmcid, mendeley_uuid")
 	if(length(id) > 1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
-  if(length(source) > 1) stop("You can only supply one source")
+  if(length(source_id) > 1) stop("You can only supply one source_id")
 
 	getalm <- function() {
     info2 <- switch(info, totals=NULL, detail='detail', summary='summary')
 		if(!is.null(sum_metrics)) info <- info2 <- 'detail'
-		args <- almcompact(list(api_key = key, info = info2, source = source, type = names(id)))
+		args <- almcompact(list(api_key = key, info = info2, source_id = source_id, type = names(id)))
 		if(length(id[[1]])==0){stop("Please provide a DOI or other identifier")} else
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)

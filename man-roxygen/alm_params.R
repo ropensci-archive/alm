@@ -8,8 +8,10 @@
 #'   	for info, signposts, totals, and sum_metrics (see the sum_metrics parameter below). 
 #'    IMPORTANT: note, however, that you can only get by day metrics for articles published since 
 #'    May 2014.
-#' @param source (character) Name of source to get ALM information for. One source only.
+#' @param source_id (character) Name of source to get ALM information for. One source only.
 #'    You can get multiple sources via a for loop or lapply-type call.
+#' @param publisher_id (character) Metrics for articles by a given publisher, using the Crossref
+#'    \code{member_id}.
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
 #' @param total_details If FALSE (the default) the standard totals data.frame is
 #'    returned; if TRUE, the totals data is in a wide format with more details
