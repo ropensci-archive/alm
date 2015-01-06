@@ -4,25 +4,10 @@
 \alias{plot_signposts}
 \title{Plot PLOS article-level metrics data.}
 \usage{
-plot_signposts(input, type = "bar", width = 800, height = 500)
+plot_signposts(input, width = 800, height = 500)
 }
 \arguments{
 \item{input}{A data.frame from a search from the \code{\link{alm_signposts}} function}
-
-\item{type}{Type of chart, one of bar (default), multiBarChart, or
-multiBarHorizontalChart. multiBarChart or multiBarHorizontalChart
-options use the library rCharts, specifically the NVD3 javascript library.
-Choosing multiBarChart or multiBarHorizontalChart opens a visualization in
-your default browser, while option bar makes a ggplot2 plot within your R session.}
-
-\item{width}{Only applies with type="interactive", otherwise ignored. Width of
-the plotting area.}
-
-\item{height}{Only applies with type="interactive", otherwise ignored. Height of
-the plotting area.}
-}
-\value{
-A data.frame of the signpost numbers for the searched object.
 }
 \description{
 This can be used in conjuction with the function \code{\link{alm_signposts}}.
@@ -43,19 +28,6 @@ dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
    '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 dat <- alm_signposts(doi=dois)
 plot_signposts(input=dat)
-
-# Or you can make an interactive chart
-plot_signposts(input=dat, type="multiBarChart")
-
-# Many DOIs
-library('rplos'); library('rCharts')
-dois <- searchplos(q='evolution', fl='id',
-   fq=list('-article_type:correction','doc_type:full'), limit = 10)
-dat <- alm_signposts(doi=dois$id)
-## multiBarChart
-plot_signposts(input=dat, type="multiBarChart")
-## multiBarHorizontalChart
-plot_signposts(input=dat, type="multiBarHorizontalChart")
 }
 }
 \references{
@@ -63,6 +35,6 @@ See a tutorial/vignette for alm at
 \url{http://ropensci.org/tutorials/alm_tutorial.html}
 }
 \seealso{
-\code{\link{alm_ids}}, \code{\link{plot_signposts}}
+\code{\link{alm_signposts}}
 }
 
