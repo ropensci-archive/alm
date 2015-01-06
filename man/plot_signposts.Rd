@@ -4,7 +4,7 @@
 \alias{plot_signposts}
 \title{Plot PLOS article-level metrics data.}
 \usage{
-plot_signposts(input, width = 800, height = 500)
+plot_signposts(input)
 }
 \arguments{
 \item{input}{A data.frame from a search from the \code{\link{alm_signposts}} function}

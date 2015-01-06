@@ -25,7 +25,7 @@
 #' plot_signposts(input=dat)
 #' }
 
-plot_signposts <- function(input, width=800, height=500){
+plot_signposts <- function(input){
   
   stripdois <- function(x){
     temp <- strsplit(as.character(x$doi), "\\.")
