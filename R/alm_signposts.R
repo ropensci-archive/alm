@@ -14,7 +14,7 @@
 #' @param pmcid PubMed Central object identifier (numeric)
 #' @param mendeley_uuid Mendeley object identifier (character)
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
-#' @param source (character) Name of source to get ALM information for. One source only.
+#' @param source_id (character) Name of source to get ALM information for. One source only.
 #'    You can get multiple sources via a for loop or lapply-type call.
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
 #' @param ... optional additional curl options (debugging tools mostly)
@@ -41,16 +41,19 @@
 #' # A single PubMed Central ID (pmcid)
 #' alm_signposts(pmcid=212692)
 #' 
+#' # A single PubMed Central ID (pmcid)
+#' alm_signposts(source_id = "crossref")
+#' 
 #' # Curl debugging
 #' library('httr')
 #' alm_signposts(pmid=22590526, config=verbose())
 #' }
 
 alm_signposts <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, 
-  source = NULL, key = NULL, url = 'http://alm.plos.org/api/v5/articles', ...)
+  source_id = NULL, key = NULL, url = 'http://alm.plos.org/api/v5/articles', ...)
 {	
   temp <- alm_ids(doi = doi, pmid = pmid, pmcid = pmcid, mendeley_uuid = mendeley_uuid, url = url, 
-      info = "summary", source = source, key = key, ...)
+      info = "summary", source_id = source_id, key = key, ...)
   if( !is.null(temp$data[['signposts']]) ){
     temp$data[['signposts']]
   } else

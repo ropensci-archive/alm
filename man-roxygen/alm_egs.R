@@ -67,6 +67,10 @@
 #'
 #' # Get summary metrics by year
 #' alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='year')
+#' 
+#' # Get data by source_id
+#' alm_ids(source_id='crossref')
+#' alm_ids(source_id='twitter')
 #'
 #' # Curl debugging
 #' library('httr')

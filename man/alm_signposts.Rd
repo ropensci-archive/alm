@@ -5,7 +5,7 @@
 \title{Retrieve PLOS article-level metrics signposts.}
 \usage{
 alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL,
-  mendeley_uuid = NULL, source = NULL, key = NULL,
+  mendeley_uuid = NULL, source_id = NULL, key = NULL,
   url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
@@ -17,7 +17,7 @@ alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL,
 
 \item{mendeley_uuid}{Mendeley object identifier (character)}
 
-\item{source}{(character) Name of source to get ALM information for. One source only.
+\item{source_id}{(character) Name of source to get ALM information for. One source only.
 You can get multiple sources via a for loop or lapply-type call.}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
@@ -58,6 +58,9 @@ alm_signposts(pmid=22590526)
 
 # A single PubMed Central ID (pmcid)
 alm_signposts(pmcid=212692)
+
+# A single PubMed Central ID (pmcid)
+alm_signposts(source_id = "crossref")
 
 # Curl debugging
 library('httr')

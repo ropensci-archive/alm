@@ -5,8 +5,8 @@
 \title{Retrieve PLoS article-level metrics (ALM).}
 \usage{
 alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
-  info = "totals", source_id = NULL, key = NULL, total_details = FALSE,
-  sum_metrics = NULL, sleep = 0,
+  info = "totals", source_id = NULL, publisher_id = NULL, key = NULL,
+  total_details = FALSE, sum_metrics = NULL, sleep = 0,
   url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
@@ -46,9 +46,6 @@ of upsetting the server gods, can you say 504 error?}
 \item{url}{API endpoint, defaults to http://alm.plos.org/api/v5/articles (character)}
 
 \item{...}{optional additional curl options (debugging tools mostly)}
-
-\item{publisher_id}{(character) Metrics for articles by a given publisher, using the Crossref
-\code{member_id}.}
 }
 \value{
 PLoS altmetrics as data.frame's.
@@ -127,6 +124,10 @@ alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='month')
 
 # Get summary metrics by year
 alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='year')
+
+# Get data by source_id
+alm_ids(source_id='crossref')
+alm_ids(source_id='twitter')
 
 # Curl debugging
 library('httr')

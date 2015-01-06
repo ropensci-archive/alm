@@ -160,7 +160,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 	  args <- almcompact(list(api_key = key, info = 'detail', source_id = source_id, 
                             publisher_id=publisher_id, type = idtype(names(id))))
 		if(length(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))) == 0){
-      if(length(id) == 0) stop("Please provide a DOI")
+      if(length(id) == 0) stop("Please provide one of: doi, pmid, pmcid, mendeley_uuid, source_id, or publisher_id")
       ttt <- alm_GET(url, args, ...)
       events <- lapply(ttt$data, function(x) x$sources)
 		} else {
@@ -581,5 +581,5 @@ parse_csl <- function(z){
 }
 
 idtype <- function(x){
-  if( names(id) %in% c("doi", "pmid", "pmcid", "mendeley_uuid") ) names(id) else NULL
+  if( x %in% c("doi", "pmid", "pmcid", "mendeley_uuid") ) x else NULL
 }
