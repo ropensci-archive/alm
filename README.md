@@ -91,22 +91,22 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 ## $data
 ##                       .id  pdf  html readers comments likes  total
 ## 1               citeulike   NA    NA       1       NA    NA      1
-## 2                crossref   NA    NA      NA       NA    NA      8
+## 2                crossref   NA    NA      NA       NA    NA      7
 ## 3                  nature   NA    NA      NA       NA    NA      4
 ## 4                  pubmed   NA    NA      NA       NA    NA      2
-## 5                  scopus   NA    NA      NA       NA    NA      8
-## 6                 counter 2524 30801      NA       NA    NA  33443
+## 5                  scopus   NA    NA      NA       NA    NA      9
+## 6                 counter 2550 31308      NA       NA    NA  33980
 ## 7        researchblogging   NA    NA      NA       NA    NA      1
 ## 8                     wos   NA    NA      NA       NA    NA      7
 ## 9                     pmc   78   534      NA       NA    NA    612
-## 10               facebook   NA    NA     149       22    60    231
+## 10               facebook   NA    NA     150       22    60    232
 ## 11               mendeley   NA    NA      80       NA    NA     80
 ## 12                twitter   NA    NA      NA       12    NA     12
-## 13              wikipedia   NA    NA      NA       NA    NA     50
+## 13              wikipedia   NA    NA      NA       NA    NA     49
 ## 14          scienceseeker   NA    NA      NA       NA    NA      0
 ## 15         relativemetric   NA    NA      NA       NA    NA 157436
 ## 16                  f1000   NA    NA      NA       NA    NA      0
-## 17               figshare    0    21      NA       NA     0     21
+## 17               figshare    0    25      NA       NA     0     25
 ## 18              pmceurope   NA    NA      NA       NA    NA      4
 ## 19          pmceuropedata   NA    NA      NA       NA    NA     49
 ## 20            openedition   NA    NA      NA       NA    NA      0
@@ -117,6 +117,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 ## 25        articlecoverage   NA    NA      NA        0    NA      0
 ## 26 articlecoveragecurated   NA    NA      NA        0    NA      0
 ## 27          plos_comments   NA    NA      NA       11    NA     16
+## 28                  orcid   NA    NA       0       NA    NA      0
 ```
 
 ### Details for a single DOI
@@ -134,40 +135,42 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ## 
 ## $data
 ## $data$info
-##                            doi
-## 1 10.1371/journal.pone.0029797
+##                                 id
+## 1 doi/10.1371/journal.pone.0029797
 ##                                                                             title
 ## 1 Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate
-##                                                                canonical_url
-## 1 http://www.plosone.org/article/info%3Adoi%2F10.1371%2Fjournal.pone.0029797
-##       pmid   pmcid                        mendeley_uuid
-## 1 22253785 3256195 897fbbd6-5a23-3552-8077-97251b82c1e1
-##            update_date     issued
-## 1 2014-11-12T21:41:48Z 2012-01-11
+##   publisher_id                          doi
+## 1          340 10.1371/journal.pone.0029797
+##                                                          canonical_url
+## 1 http://www.plosone.org/article/info:doi/10.1371/journal.pone.0029797
+##       pmid   pmcid         scp             wos          update_date
+## 1 22253785 3256195 84855712734 000301355700052 2015-01-06T19:10:32Z
+##       issued
+## 1 2012-01-11
 ## 
 ## $data$signposts
 ##                            doi viewed saved discussed cited
-## 1 10.1371/journal.pone.0029797  34055    81       243     8
+## 1 10.1371/journal.pone.0029797  34592    81       244     9
 ## 
 ## $data$totals
 ##                       .id  pdf  html readers comments likes  total
 ## 1               citeulike   NA    NA       1       NA    NA      1
-## 2                crossref   NA    NA      NA       NA    NA      8
+## 2                crossref   NA    NA      NA       NA    NA      7
 ## 3                  nature   NA    NA      NA       NA    NA      4
 ## 4                  pubmed   NA    NA      NA       NA    NA      2
-## 5                  scopus   NA    NA      NA       NA    NA      8
-## 6                 counter 2524 30801      NA       NA    NA  33443
+## 5                  scopus   NA    NA      NA       NA    NA      9
+## 6                 counter 2550 31308      NA       NA    NA  33980
 ## 7        researchblogging   NA    NA      NA       NA    NA      1
 ## 8                     wos   NA    NA      NA       NA    NA      7
 ## 9                     pmc   78   534      NA       NA    NA    612
-## 10               facebook   NA    NA     149       22    60    231
+## 10               facebook   NA    NA     150       22    60    232
 ## 11               mendeley   NA    NA      80       NA    NA     80
 ## 12                twitter   NA    NA      NA       12    NA     12
-## 13              wikipedia   NA    NA      NA       NA    NA     50
+## 13              wikipedia   NA    NA      NA       NA    NA     49
 ## 14          scienceseeker   NA    NA      NA       NA    NA      0
 ## 15         relativemetric   NA    NA      NA       NA    NA 157436
 ## 16                  f1000   NA    NA      NA       NA    NA      0
-## 17               figshare    0    21      NA       NA     0     21
+## 17               figshare    0    25      NA       NA     0     25
 ## 18              pmceurope   NA    NA      NA       NA    NA      4
 ## 19          pmceuropedata   NA    NA      NA       NA    NA     49
 ## 20            openedition   NA    NA      NA       NA    NA      0
@@ -178,6 +181,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ## 25        articlecoverage   NA    NA      NA        0    NA      0
 ## 26 articlecoveragecurated   NA    NA      NA        0    NA      0
 ## 27          plos_comments   NA    NA      NA       11    NA     16
+## 28                  orcid   NA    NA       0       NA    NA      0
 ## 
 ## $data$sum_metrics
 ##                .id year month day total X[[1L]]
@@ -268,7 +272,7 @@ names(out)  # names of sources
 ##  [7] "researchblogging" "pmc"              "facebook"        
 ## [10] "mendeley"         "twitter"          "wikipedia"       
 ## [13] "relativemetric"   "figshare"         "pmceuropedata"   
-## [16] "plos_comments"
+## [16] "plos_comments"    "orcid"
 ```
 
 
@@ -435,27 +439,6 @@ crkey <- getOption("crossrefalmkey")
 alm_ids(doi='10.1371/journal.pone.0086859', url = crurl, key = crkey)
 ```
 
-```
-## $meta
-##   total total_pages page error
-## 1     1           1    1    NA
-## 
-## $data
-##              .id pdf html readers comments likes total
-## 1       crossref  NA   NA      NA       NA    NA     0
-## 2       mendeley  NA   NA      NA       NA    NA     0
-## 3       facebook  NA   NA      NA       NA    NA     0
-## 4            pmc  NA   NA      NA       NA    NA     0
-## 5      citeulike  NA   NA      NA       NA    NA     0
-## 6         pubmed  NA   NA      NA       NA    NA     0
-## 7      wordpress  NA   NA      NA       NA    NA     0
-## 8         reddit  NA   NA      NA       NA    NA     0
-## 9      wikipedia  NA   NA      NA       NA    NA     2
-## 10      datacite  NA   NA      NA       NA    NA     0
-## 11     pmceurope  NA   NA      NA       NA    NA     0
-## 12 pmceuropedata  NA   NA      NA       NA    NA     0
-```
-
 eLife
 
 
@@ -472,19 +455,19 @@ alm_ids(doi='10.7554/eLife.00471', url = elifeurl, key = elifekey)
 ## 
 ## $data
 ##               .id pdf html shares groups comments likes citations total
-## 1             pmc 337  884     NA     NA       NA    NA        NA  1221
-## 2        crossref  NA   NA     NA     NA       NA    NA       139   139
-## 3          scopus  NA   NA     NA     NA       NA    NA       138   138
+## 1             pmc 485 1109     NA     NA       NA    NA        NA  1594
+## 2        crossref  NA   NA     NA     NA       NA    NA       154   154
+## 3          scopus  NA   NA     NA     NA       NA    NA       149   149
 ## 4        facebook  NA   NA      3     NA        0     0        NA     3
 ## 5        mendeley  NA   NA    454      0       NA    NA        NA   454
 ## 6  twitter_search  NA   NA     NA     NA        0    NA        NA     0
 ## 7       citeulike  NA   NA      1     NA       NA    NA        NA     1
-## 8          pubmed  NA   NA     NA     NA       NA    NA        80    80
+## 8          pubmed  NA   NA     NA     NA       NA    NA        96    96
 ## 9       wordpress  NA   NA     NA     NA       NA    NA         0     0
 ## 10         reddit  NA   NA     NA     NA        0     0        NA     0
-## 11      wikipedia  NA   NA     NA     NA       NA    NA         0     0
+## 11      wikipedia  NA   NA     NA     NA       NA    NA         1     1
 ## 12       datacite  NA   NA     NA     NA       NA    NA         0     0
-## 13      pmceurope  NA   NA     NA     NA       NA    NA       135   135
+## 13      pmceurope  NA   NA     NA     NA       NA    NA       144   144
 ## 14  pmceuropedata  NA   NA     NA     NA       NA    NA         1     1
 ## 15  scienceseeker  NA   NA     NA     NA       NA    NA         0     0
 ## 16         nature  NA   NA     NA     NA       NA    NA         0     0
@@ -515,23 +498,23 @@ alm_ids(doi='10.3897/zookeys.88.807', url = psurl, key = pskey)
 ## $data
 ##               .id pdf html readers comments likes total
 ## 1        facebook  NA   NA      NA       NA    NA     0
-## 2      copernicus   0    0      NA       NA    NA     0
-## 3       wikipedia  NA   NA      NA       NA    NA   136
-## 4          nature  NA   NA      NA       NA    NA     0
-## 5       citeulike  NA   NA       1       NA    NA     1
-## 6        crossref  NA   NA      NA       NA    NA    81
-## 7        datacite  NA   NA      NA       NA    NA     0
-## 8   pmceuropedata  NA   NA      NA       NA    NA     0
-## 9          pubmed  NA   NA      NA       NA    NA    51
-## 10          f1000  NA   NA      NA       NA    NA     0
-## 11         scopus  NA   NA      NA       NA    NA   176
-## 12       figshare  NA   NA      NA       NA    NA     0
-## 13        counter  NA   NA      NA       NA    NA     0
-## 14       mendeley  NA   NA     123       NA    NA   123
-## 15         reddit  NA   NA      NA        0     0     0
-## 16 twitter_search  NA   NA      NA        0    NA     0
-## 17      wordpress  NA   NA      NA       NA    NA     0
-## 18      pmceurope  NA   NA      NA       NA    NA    52
+## 2       citeulike  NA   NA       1       NA    NA     1
+## 3        mendeley  NA   NA     123       NA    NA   123
+## 4       wikipedia  NA   NA      NA       NA    NA   136
+## 5        datacite  NA   NA      NA       NA    NA     0
+## 6      copernicus   0    0      NA       NA    NA     0
+## 7          nature  NA   NA      NA       NA    NA     0
+## 8           f1000  NA   NA      NA       NA    NA     0
+## 9   pmceuropedata  NA   NA      NA       NA    NA     0
+## 10       figshare  NA   NA      NA       NA    NA     0
+## 11        counter  NA   NA      NA       NA    NA     0
+## 12       crossref  NA   NA      NA       NA    NA    81
+## 13         reddit  NA   NA      NA        0     0     0
+## 14 twitter_search  NA   NA      NA        0    NA     0
+## 15      wordpress  NA   NA      NA       NA    NA     0
+## 16         scopus  NA   NA      NA       NA    NA   176
+## 17      pmceurope  NA   NA      NA       NA    NA    52
+## 18         pubmed  NA   NA      NA       NA    NA    51
 ```
 
 ## Meta
@@ -540,4 +523,4 @@ alm_ids(doi='10.3897/zookeys.88.807', url = psurl, key = pskey)
 * License: MIT
 * Get citation information for `alm` in R doing `citation(package = 'alm')`
 
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![rofooter](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)

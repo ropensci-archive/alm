@@ -174,7 +174,7 @@ plot_density(input = alm, source = c("counter_total", "crossref_total",
 
 Crossref
 
-```{r}
+```{r eval=FALSE}
 crurl <- "http://alm.labs.crossref.org/api/v5/articles"
 crkey <- getOption("crossrefalmkey")
 alm_ids(doi='10.1371/journal.pone.0086859', url = crurl, key = crkey)
@@ -202,4 +202,4 @@ alm_ids(doi='10.3897/zookeys.88.807', url = psurl, key = pskey)
 * License: MIT
 * Get citation information for `alm` in R doing `citation(package = 'alm')`
 
-[![](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![rofooter](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
