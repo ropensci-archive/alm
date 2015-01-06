@@ -3,7 +3,9 @@
 #' @import httr jsonlite
 #' @export
 #'
-#' @param source (character) Source to limtit alert search to.
+#' @param source_id (character) Source to limtit alert search to.
+#' @param publisher_id (character) Metrics for articles by a given publisher, using the Crossref
+#' \code{member_id}.
 #' @param ids (character) Article identifiers
 #' @param class_name (character) Which error to get
 #' @param level (character) Alert level to limit search to. One of ERROR, WARN, INFO, 
@@ -40,21 +42,26 @@
 #' # paging
 #' alm_alerts(per_page=2)
 #'
-#' out <- alm_alerts(level = "error")
-#' head(out$data)
+#' # by source_id
+#' alm_alerts(source_id = "wos")
+#' 
+#' # by publisher_id
+#' alm_alerts(publisher_id = 340)
 #'
 #' # Using different ALM apps, e.g, labs.crowdometer.org
 #' alm_alerts(url='http://labs.crowdometer.org/api/v4/alerts')
 #' }
 
-alm_alerts <- function(source=NULL, ids=NULL, class_name=NULL, level=NULL, q=NULL,
+alm_alerts <- function(source_id=NULL, publisher_id=NULL, ids=NULL, class_name=NULL, level=NULL, q=NULL,
   unresolved=FALSE, per_page=50, page=1, user=NULL, pwd=NULL, url='http://alm.plos.org/api/v4/alerts', ...)
 {
+  if(length(source_id) > 1) stop("You can only supply one source_id")
+  if(length(publisher_id) > 1) stop("You can only supply one publisher_id")
+  
   user <- getuserinfo(user, pwd)
-  args <- alm_compact(list(q=q,
-    source=if(!is.null(source)) paste(source, collapse=",") else NULL,
+  args <- alm_compact(list(q=q, source_id=source_id, publisher_id=publisher_id, 
     class_name=class_name, level=if(!is.null(level)) toupper(level) else NULL,
-    unresolved=if(unresolved) 1 else NULL, ids=ids, rows=per_page, page=page))
+    unresolved=if(unresolved) 1 else NULL, ids=ids, per_page=per_page, page=page))
   furtherargs <- list(...)
   tt <- GET(url,
             query=args,
