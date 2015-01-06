@@ -132,6 +132,13 @@ dois <- c('10.1371/journal.pmed.0020124','10.1371/journal.pbio.1001041',
            '10.1371/journal.pbio.0040020')
 res <- alm_events(doi = dois, source_id='f1000')
 res[[3]]
+
+# by source_id only
+alm_events(source_id = "crossref")
+alm_events(source_id = "reddit")
+
+# by publisher_id only
+alm_events(publisher_id = 340)
 }
 }
 \references{

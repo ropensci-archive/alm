@@ -112,6 +112,13 @@
 #'            '10.1371/journal.pbio.0040020')
 #' res <- alm_events(doi = dois, source_id='f1000')
 #' res[[3]]
+#' 
+#' # by source_id only
+#' alm_events(source_id = "crossref")
+#' alm_events(source_id = "reddit")
+#' 
+#' # by publisher_id only
+#' alm_events(publisher_id = 340)
 #' }
 #'
 #' @examples \dontest{
@@ -127,7 +134,6 @@
 #' # With CrossRef citation data - no events data for citations though...
 #' alme(doi='10.1021/cr400135x', url = url, key = key)
 #' alm_events(doi='10.1021/cr400135x', url = url, key = key)
-#' # With
 #'
 #' # Public Knowledge Project article data
 #' # You need to get an API key first, and pass in a different URL
@@ -141,43 +147,49 @@
 #' }
 
 alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
-  source_id = NULL, publisher_id = NULL, compact = TRUE, key = NULL, url='http://alm.plos.org/api/v5/articles', ...)
+  source_id = NULL, publisher_id = NULL, compact = TRUE, key = NULL, 
+  url='http://alm.plos.org/api/v5/articles', ...)
 {
-	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))
-	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid")
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid, source_id=source_id, publisher_id=publisher_id))
+	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid, source_id, or publisher_id")
 	key <- getkey(key)
 	if(length(source_id) > 1) stop("You can only supply one source_id")
 	if(length(publisher_id) > 1) stop("You can only supply one publisher_id")
 
 	parse_events <- function() {
 	  args <- almcompact(list(api_key = key, info = 'detail', source_id = source_id, 
-                            publisher_id=publisher_id, type = names(id)))
-		if(length(id[[1]])==0){stop("Please provide a DOI")} else
-			if(length(id[[1]])==1){
-				if(names(id) == "doi") id <- gsub("/", "%2F", id)
-				ttt <- alm_GET(url, c(args, ids = id[[1]]), ...)
-				events <- lapply(ttt$data, function(x) x$sources)
-			} else
-				if(length(id[[1]])>1){
-					if(length(id[[1]])>50){
-						slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
-						idsplit <- slice(id[[1]], 50)
-						repeatit <- function(y) {
-							id2 <- if(names(id) == "doi") paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",") else paste(id[[1]], collapse=",")
-              alm_GET(url, c(args, ids = id2), ...)
-						}
-						temp <- lapply(idsplit, repeatit)
-						ttt <- do.call(c, lapply(temp, "[[", "data"))
-						events <- unname(lapply(ttt, function(x) x$sources))
-					} else {
-						id2 <- concat_ids(id)
-						ttt <- alm_GET(x = url, y = c(args, ids = id2), ...)
-						events <- lapply(ttt$data, function(x) x$sources)
-					}
-				}
-
+                            publisher_id=publisher_id, type = idtype(names(id))))
+		if(length(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))) == 0){
+      if(length(id) == 0) stop("Please provide a DOI")
+      ttt <- alm_GET(url, args, ...)
+      events <- lapply(ttt$data, function(x) x$sources)
+		} else {
+		  if(length(id[[1]])==1){
+		    if(names(id) == "doi") id <- gsub("/", "%2F", id)
+		    ttt <- alm_GET(url, c(args, ids = id[[1]]), ...)
+		    events <- lapply(ttt$data, function(x) x$sources)
+		  } else
+		    if(length(id[[1]])>1){
+		      if(length(id[[1]])>50){
+		        slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
+		        idsplit <- slice(id[[1]], 50)
+		        repeatit <- function(y) {
+		          id2 <- if(names(id) == "doi") paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",") else paste(id[[1]], collapse=",")
+		          alm_GET(url, c(args, ids = id2), ...)
+		        }
+		        temp <- lapply(idsplit, repeatit)
+		        ttt <- do.call(c, lapply(temp, "[[", "data"))
+		        events <- unname(lapply(ttt, function(x) x$sources))
+		      } else {
+		        id2 <- concat_ids(id)
+		        ttt <- alm_GET(x = url, y = c(args, ids = id2), ...)
+		        events <- lapply(ttt$data, function(x) x$sources)
+		      }
+		    }
+		}
+		
 		# get juse the events data
-# 		events <- lapply(ttt$data, function(x) x$sources)
+    # events <- lapply(ttt$data, function(x) x$sources)
 
 		# Function to extract and parse events data for each source
 		getevents <- function(x, label=NULL){
@@ -534,8 +546,8 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 
 		# Actually get the events data
 		tmpout <- lapply(events, getevents, label=source_id)
-		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid)))
-		names(tmpout) <- if(!byid == 'doi') { id[[1]] } else {
+		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid, source_id=source_id, publisher_id=publisher_id)))
+		names(tmpout) <- if(!byid == 'doi') { rep(id[[1]], length(tmpout)) } else {
 		  if(length(id[[1]])>50) vapply(ttt, "[[", character(1), "doi") else vapply(ttt$data, "[[", character(1), "doi")
 		}
     tmpout
@@ -566,4 +578,8 @@ parse_csl <- function(z){
              url=z$url,
              type=z$type,
              stringsAsFactors = FALSE)
+}
+
+idtype <- function(x){
+  if( names(id) %in% c("doi", "pmid", "pmcid", "mendeley_uuid") ) names(id) else NULL
 }
