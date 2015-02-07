@@ -307,18 +307,18 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 				} else if(y$name == "mendeley"){
 					if(length(y$events)==0){paste(sorry)} else
 					{
-						parsemendeley <- function(mm){
-							readers <- data.frame(name="readers", value=mm$readers, stringsAsFactors = FALSE)
-							disc <- if(length(mm$discipline) > 1){
-                ldply(mm$discipline, function(x) data.frame(x, stringsAsFactors = FALSE))[,-1]
-							} else { data.frame(mm$discipline, stringsAsFactors = FALSE)[,-1] }
-							country <- ldply(mm$country, function(x) data.frame(x, stringsAsFactors = FALSE))
-							status <- ldply(mm$status, function(x) data.frame(x, stringsAsFactors = FALSE))
-							dfs <- list(readers = readers, discipline = disc, country = country, status = status)
-							ldply(dfs)
-						}
-						df <- parsemendeley(y$events)
-					  list(events_url=y$events_url, events=df, csl=y$events_csl)
+# 						parsemendeley <- function(mm){
+# 							readers <- data.frame(name="readers", value=mm$readers, stringsAsFactors = FALSE)
+# 							disc <- if(length(mm$discipline) > 1){
+#                 ldply(mm$discipline, function(x) data.frame(x, stringsAsFactors = FALSE))[,-1]
+# 							} else { data.frame(mm$discipline, stringsAsFactors = FALSE)[,-1] }
+# 							country <- ldply(mm$country, function(x) data.frame(x, stringsAsFactors = FALSE))
+# 							status <- ldply(mm$status, function(x) data.frame(x, stringsAsFactors = FALSE))
+# 							dfs <- list(readers = readers, discipline = disc, country = country, status = status)
+# 							ldply(dfs)
+# 						}
+						# df <- parsemendeley(y$events)
+					  list(events_url=y$events_url, events=y$events, csl=y$events_csl)
 					}
 				} else if(y$name == "twitter"){
 					if(length(y$events)==0){paste(sorry)} else
