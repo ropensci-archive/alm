@@ -15,7 +15,8 @@
 #'    \code{member_id}.
 #' @param compact (logical) Whether to make output compact or not. If TRUE (default), remove 
 #'    empty sources. 
-#' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
+#' @param key (character) Your API key, either enter, or loads from .Rprofile. Only required for 
+#'    PKP source, not the others.
 #' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param ... optional additional curl options (debugging tools mostly)
 #' @details You can only supply one of the parmeters doi, pmid, pmcid, and mendeley.
@@ -152,7 +153,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NU
 {
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid, source_id=source_id, publisher_id=publisher_id))
 	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid, source_id, or publisher_id")
-	key <- getkey(key)
+	# key <- getkey(key)
 	if(length(source_id) > 1) stop("You can only supply one source_id")
 	if(length(publisher_id) > 1) stop("You can only supply one publisher_id")
 

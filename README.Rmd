@@ -175,7 +175,7 @@ plot_density(input = alm, source = c("counter_total", "crossref_total",
 Crossref
 
 ```{r eval=FALSE}
-crurl <- "http://alm.labs.crossref.org/api/v5/articles"
+crurl <- "http://det.labs.crossref.org/api/v5/articles"
 crkey <- getOption("crossrefalmkey")
 alm_ids(doi='10.1371/journal.pone.0086859', url = crurl, key = crkey)
 ```

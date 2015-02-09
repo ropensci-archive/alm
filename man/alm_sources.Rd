@@ -16,7 +16,8 @@ You can get multiple sources via a for loop or lapply-type call.}
 Not specifying anything (the default) returns data.frame of totals across
   data providers. (character)}
 
-\item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
+\item{key}{(character) Your API key, either enter, or loads from .Rprofile. Only required for
+PKP source, not the others.}
 
 \item{total_details}{If FALSE (the default) the standard totals data.frame is
 returned; if TRUE, the totals data is in a wide format with more details

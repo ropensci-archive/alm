@@ -16,7 +16,7 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
   source_id = NULL, publisher_id = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL, sleep = 0,
 	url = 'http://alm.plos.org/api/v5/articles', ...)
 {
-	key <- getkey(key)
+	# key <- getkey(key)
   info <- match.arg(info, c("summary","totals","detail"))
   if(!is.null(doi)) doi <- doi[!grepl("image", doi)] # remove any DOIs of images
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid, source_id=source_id, publisher_id=publisher_id))

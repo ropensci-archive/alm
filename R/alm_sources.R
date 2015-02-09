@@ -10,7 +10,8 @@
 #' @param info One of totals, summary, or detail (default totals + sum_metrics data in a list).
 #'   	Not specifying anything (the default) returns data.frame of totals across
 #' 		data providers. (character)
-#' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
+#' @param key (character) Your API key, either enter, or loads from .Rprofile. Only required for 
+#'    PKP source, not the others.
 #' @param total_details If FALSE (the default) the standard totals data.frame is
 #'    returned; if TRUE, the totals data is in a wide format with more details
 #'    about the paper, including publication date, title, etc. If you set this
@@ -41,7 +42,7 @@
 alm_sources <- function(source_id = 'crossref', info = "totals", key = NULL, total_details = FALSE,
   sum_metrics = NULL, limit=50, page=1, url = 'http://alm.plos.org/api/v5/articles', ...)
 {
-  key <- getkey(key)
+  # key <- getkey(key)
   info <- match.arg(info, c("summary","totals","detail"))
   source_id <- match.arg(source_id, c("bloglines","citeulike","connotea","crossref","nature",
                           "postgenomic","pubmed","scopus","plos","researchblogging",

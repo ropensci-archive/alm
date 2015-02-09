@@ -7,7 +7,8 @@
 alm_status(key = NULL, url = "http://alm.plos.org/api/v5/status", ...)
 }
 \arguments{
-\item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
+\item{key}{(character) Your API key, either enter, or loads from .Rprofile. Only required for
+PKP source, not the others.}
 
 \item{url}{API endpoint, defaults to http://alm.plos.org/api/v5/status (character)}
 

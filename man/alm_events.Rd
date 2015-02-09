@@ -26,7 +26,8 @@ You can get multiple sources via a for loop or lapply-type call.}
 \item{compact}{(logical) Whether to make output compact or not. If TRUE (default), remove
 empty sources.}
 
-\item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
+\item{key}{(character) Your API key, either enter, or loads from .Rprofile. Only required for
+PKP source, not the others.}
 
 \item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
 

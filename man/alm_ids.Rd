@@ -31,7 +31,8 @@ You can get multiple sources via a for loop or lapply-type call.}
 \item{publisher_id}{(character) Metrics for articles by a given publisher, using the Crossref
 \code{member_id}.}
 
-\item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
+\item{key}{(character) Your API key, either enter, or loads from .Rprofile. Only required for
+PKP source, not the others.}
 
 \item{total_details}{If FALSE (the default) the standard totals data.frame is
 returned; if TRUE, the totals data is in a wide format with more details
