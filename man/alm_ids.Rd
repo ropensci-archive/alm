@@ -4,10 +4,10 @@
 \alias{alm_ids}
 \title{Retrieve PLoS article-level metrics (ALM).}
 \usage{
-alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
+alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url=NULL,
   info = "totals", source_id = NULL, publisher_id = NULL, key = NULL,
   total_details = FALSE, sum_metrics = NULL, sleep = 0,
-  url = "http://alm.plos.org/api/v5/articles", ...)
+  api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}
@@ -16,7 +16,11 @@ alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 
 \item{pmcid}{PubMed Central object identifier (numeric)}
 
-\item{mendeley_uuid}{Mendeley object identifier (character)}
+\item{wos}{Web of Science identifier (character)}
+
+\item{scp}{Scopus identifier (character)}
+
+\item{url}{Canonical URL (character)}
 
 \item{info}{One of totals, summary, or detail (default totals + sum_metrics data in a list).
      Not specifying anything (the default) returns data.frame of totals across
@@ -47,7 +51,7 @@ articles published since May 2014.}
 \item{sleep}{Set a sleep time (in seconds). Only used for large calls where you may be in danger
 of upsetting the server gods, can you say 504 error?}
 
-\item{url}{API endpoint, defaults to http://alm.plos.org/api/v5/articles (character)}
+\item{api_url}{API endpoint, defaults to http://alm.plos.org/api/v5/articles (character)}
 
 \item{...}{optional additional curl options (debugging tools mostly)}
 }
@@ -59,14 +63,14 @@ This is the main function to search the PLoS ALM (article-level metrics) API.
 See details for more information.
 }
 \details{
-You can only supply one of the parmeters doi, pmid, pmcid, and mendeley; and you
+You can only supply one of the parmeters doi, pmid, pmcid, wos, scp or url; and you
 must supply one of them. Query for as many articles at a time as you like. Though queries
 are broken up in to smaller bits of 50 identifiers at a time. If you supply days, months and/or
 year parameters, days takes precedence over months and year.
 }
 \examples{
 \dontrun{
-# The default call with either doi, pmid, pmcid, or mendeley without specifying
+# The default call with either doi, pmid, pmcid, wos, scp or url without specifying
 # an argument for info
 alm_ids(doi="10.1371/journal.pone.0029797")
 
@@ -84,8 +88,14 @@ alm_ids(pmid=22590526)
 # A single PubMed Central ID (pmcid)
 alm_ids(pmcid=212692, info='summary')
 
-# A single Mendeley UUID (mendeley)
-alm_ids(mendeley_uuid="1d7e7f09-c59b-364b-8c39-a7686f0e9fa0")
+# A single Web of Science ID (wos)
+alm_ids(wos="000268452400005")
+
+# A single Scopus ID (scp)
+alm_ids(scp="68049122102")
+
+# A single canonical URL (url)
+alm_ids(url="http://www.plosmedicine.org/article/info:doi/10.1371/journal.pmed.1000097")
 
 # Provide more than one DOI
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
