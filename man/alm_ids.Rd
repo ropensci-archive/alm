@@ -65,7 +65,7 @@ See details for more information.
 \details{
 You can only supply one of the parmeters doi, pmid, pmcid, wos, scp or url; and you
 must supply one of them. Query for as many articles at a time as you like. Though queries
-are broken up in to smaller bits of 50 identifiers at a time. If you supply days, months and/or
+are broken up in to smaller bits of 25 identifiers at a time. If you supply days, months and/or
 year parameters, days takes precedence over months and year.
 }
 \examples{
