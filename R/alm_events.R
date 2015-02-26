@@ -173,9 +173,9 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 		    events <- lapply(ttt$data, function(x) x$sources)
 		  } else
 		    if(length(id[[1]])>1){
-		      if(length(id[[1]])>20){
+		      if(length(id[[1]])>15){
 		        slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
-		        idsplit <- slice(id[[1]], 20)
+		        idsplit <- slice(id[[1]], 15)
 		        repeatit <- function(y) {
 		          id2 <- if(names(id) == "doi") paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",") else paste(id[[1]], collapse=",")
 		          alm_GET(api_url, c(args, ids = id2), ...)
@@ -551,7 +551,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 		tmpout <- lapply(events, getevents, label=source_id)
 		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id)))
 		names(tmpout) <- if(!byid == 'doi') { rep(id[[1]], length(tmpout)) } else {
-		  if(length(id[[1]])>20) vapply(ttt, "[[", character(1), "doi") else vapply(ttt$data, "[[", character(1), "doi")
+		  if(length(id[[1]])>15) vapply(ttt, "[[", character(1), "doi") else vapply(ttt$data, "[[", character(1), "doi")
 		}
     tmpout
 	}

@@ -47,7 +47,7 @@ Events are the details of the metrics that are counted related to PLoS papers.
 You can only supply one of the parmeters doi, pmid, pmcid, and mendeley.
 
 		Query for as many articles at a time as you like. Though queries are broken
-		up in to smaller bits of 30 identifiers at a time.
+		up in to smaller bits of 15 identifiers at a time.
 
 		If you supply both the days and months parameters, days takes precedence,
 		and months is ignored.
