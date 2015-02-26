@@ -45,7 +45,7 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
 						repeatit <- function(y) {
 							if(names(id) == "doi"){
 								id2 <- paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",")
-              } else if(names(id) == "url"){
+              } else if(names(id) == "url"){
                 id2 <- paste(sapply(y, function(x) URLencode(x, reserved = TRUE)), collapse=",")
 							} else
 							{
