@@ -53,7 +53,7 @@
 #' # Provide more than one pmid
 #' pmids <- c(19300479, 19390606, 19343216)
 #' out <- alm_ids(pmid=pmids)
-#' out[[3]] # get data for the third pmid
+#' out$data[[3]] # get data for the third pmid
 #'
 #' # Getting data for a specific source_id
 #' alm_ids(doi='10.1371/journal.pone.0035869', source_id='mendeley')

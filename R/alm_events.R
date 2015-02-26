@@ -155,7 +155,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 {
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id))
 	# id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url))
-	if(length(id[ !names(id) %in% c("source_id","publisher_id") ]) > 1) {
+	if(length(delsp(id)) > 1) {
 	  stop("Only supply one of: doi, pmid, pmcid, wos, scp, url")
 	}
 	if(length(source_id) > 1) stop("You can only supply one source_id")
@@ -170,7 +170,7 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
       events <- lapply(ttt$data, function(x) x$sources)
 		} else {
 		  if(length(delsp(id)[[1]]) == 1){
-		    if(names(delsp(id)) == "doi") passid <- gsub("/", "%2F", delsp(id))
+		    passid <- if(names(delsp(id)) == "doi") gsub("/", "%2F", delsp(id)) else delsp(id)
 		    ttt <- alm_GET(api_url, c(args, ids = passid[[1]]), ...)
 		    events <- lapply(ttt$data, function(x) x$sources)
 		  } else
