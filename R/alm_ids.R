@@ -39,12 +39,14 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
 			} else
 			{
 				if(length(id[[1]])>1){
-					if(length(id[[1]])>50){
+          if(length(id[[1]])>25){
 						slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
-						idsplit <- slice(id[[1]], 50)
+						idsplit <- slice(id[[1]], 25)
 						repeatit <- function(y) {
 							if(names(id) == "doi"){
 								id2 <- paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",")
+              } else if(names(id) == "url"){
+                id2 <- paste(sapply(y, function(x) URLencode(x, reserved = TRUE)), collapse=",")
 							} else
 							{
 								id2 <- paste(id[[1]], collapse=",")

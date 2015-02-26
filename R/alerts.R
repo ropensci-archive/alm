@@ -8,7 +8,7 @@
 #' \code{member_id}.
 #' @param ids (character) Article identifiers
 #' @param class_name (character) Which error to get
-#' @param level (character) Alert level to limit search to. One of ERROR, WARN, INFO, 
+#' @param level (character) Alert level to limit search to. One of ERROR, WARN, INFO,
 #' or FATAL. Default: all.
 #' @param q (character) Query terms
 #' @param unresolved (logical) Whether to give back unresolved alerts only.
@@ -16,12 +16,12 @@
 #' @param page (integer) Number from 1 to number of pages
 #' @param user (character) Username
 #' @param pwd (character) Password
-#' @param url URL to use.
+#' @param api_url URL to use.
 #' @param ... Further args passed to httr::GET
 #'
 #' @details
 #' This function uses the alm.plos.org API by default. You can change which ALM app you use by
-#' specifying the url in the url parameter. It will likely be the same as the default
+#' specifying the url in the api_url parameter. It will likely be the same as the default
 #' http://alm.plos.org/api/v4/alerts, but just the alm.plos.org part will be different.
 #'
 #' ALM installations on the most current version (3.4.7) can be used in this function, as of
@@ -44,26 +44,26 @@
 #'
 #' # by source_id
 #' alm_alerts(source_id = "wos")
-#' 
+#'
 #' # by publisher_id
 #' alm_alerts(publisher_id = 340)
 #'
 #' # Using different ALM apps, e.g, labs.crowdometer.org
-#' alm_alerts(url='http://labs.crowdometer.org/api/v4/alerts')
+#' alm_alerts(api_url='http://labs.crowdometer.org/api/v4/alerts')
 #' }
 
 alm_alerts <- function(source_id=NULL, publisher_id=NULL, ids=NULL, class_name=NULL, level=NULL, q=NULL,
-  unresolved=FALSE, per_page=50, page=1, user=NULL, pwd=NULL, url='http://alm.plos.org/api/v4/alerts', ...)
+  unresolved=FALSE, per_page=50, page=1, user=NULL, pwd=NULL, api_url='http://alm.plos.org/api/v4/alerts', ...)
 {
   if(length(source_id) > 1) stop("You can only supply one source_id")
   if(length(publisher_id) > 1) stop("You can only supply one publisher_id")
-  
+
   user <- getuserinfo(user, pwd)
-  args <- alm_compact(list(q=q, source_id=source_id, publisher_id=publisher_id, 
+  args <- alm_compact(list(q=q, source_id=source_id, publisher_id=publisher_id,
     class_name=class_name, level=if(!is.null(level)) toupper(level) else NULL,
     unresolved=if(unresolved) 1 else NULL, ids=ids, per_page=per_page, page=page))
   furtherargs <- list(...)
-  tt <- GET(url,
+  tt <- GET(api_url,
             query=args,
             config=c(authenticate(user[1], user[2]), furtherargs[['config']]))
   stop_for_status(tt)
