@@ -6,8 +6,8 @@ Description: An R interface to the open source article level metrics platform
     created by PLOS, so you can drop in a different base URL to the functions 
     in this package to get to not only PLOS data, but data for Crossref, 
     and more as the open source PLOS software is used.
-Version: 0.3.2.99
-Date: 2015-01-06
+Version: 0.3.3.99
+Date: 2015-02-26
 License: MIT + file LICENSE
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "myrmecocystus@gmail.com"),
