@@ -8,21 +8,12 @@ alm_plot(dat)
 }
 \arguments{
 \item{dat}{Output from \code{alm_ids} (character)}
-
-\item{type}{One of totalmetrics or history}
-
-\item{removezero}{Remove data sources with all zeros prior to plotting.}
 }
 \value{
 A ggplot2 bar plot for `totalmetrics` or line plot for `history`.
 }
 \description{
 Plot results of a call to the alm function.
-}
-\details{
-You have to specify info='detail' in your call to \code{alm_ids} so that
-		you get history and summary data so that either or both can be plotted
-		in this function.
 }
 \examples{
 \dontrun{
