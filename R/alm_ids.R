@@ -39,22 +39,14 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
 			} else
 			{
 				if(length(id[[1]])>1){
-          if(names(id) == "url"){
-            slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
-            idsplit <- slice(id[[1]], 5)
-            repeatit <- function(y) {
-              id2 <- paste(id[[1]], collapse=",")
-              tt <- alm_GET(api_url, c(args, ids = id2), sleep=sleep, ...)
-            }
-            temp <- lapply(idsplit, repeatit)
-            justdat <- do.call(c, unname(lapply(temp, "[[", "data")))
-            tt <- c(temp[[1]][ !names(temp[[1]]) == "data" ], data=list(justdat))
-          } else if(length(id[[1]])>50){
+          if(length(id[[1]])>25){
 						slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
-						idsplit <- slice(id[[1]], 50)
+						idsplit <- slice(id[[1]], 25)
 						repeatit <- function(y) {
 							if(names(id) == "doi"){
 								id2 <- paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",")
+              } else if(names(id) == "url"){
+                id2 <- paste(sapply(y, function(x) URLencode(x, reserved = TRUE)), collapse=",")
 							} else
 							{
 								id2 <- paste(id[[1]], collapse=",")
