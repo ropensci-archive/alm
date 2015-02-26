@@ -4,8 +4,8 @@
 \alias{alm_title}
 \title{Get title of article by inputting the doi for the article.}
 \usage{
-alm_title(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
-  key = NULL, url = "http://alm.plos.org/api/v5/articles", ...)
+alm_title(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL,
+  key = NULL, api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}
@@ -14,11 +14,15 @@ alm_title(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 
 \item{pmcid}{PubMed Central object identifier (numeric)}
 
-\item{mendeley_uuid}{Mendeley object identifier (character)}
+\item{wos}{Web of Science identifier (character)}
+
+\item{scp}{Scopus identifier (character)}
+
+\item{url}{Canonical URL (character)}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
-\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
+\item{api_url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
 
 \item{...}{optional additional curl options (debugging tools mostly)}
 }

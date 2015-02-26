@@ -6,9 +6,11 @@
 #' @param doi Digital object identifier for an article in PLoS Journals (character)
 #' @param pmid PubMed object identifier (numeric)
 #' @param pmcid PubMed Central object identifier (numeric)
-#' @param mendeley_uuid Mendeley object identifier (character)
+#' @param wos Web of Science identifier (character)
+#' @param scp Scopus identifier (character)
+#' @param url Canonical URL (character)
 #' @param key your PLoS API key, either enter, or loads from .Rprofile (character)
-#' @param url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
+#' @param api_url API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)
 #' @param ... optional additional curl options (debugging tools mostly)
 #' @return Title of article, in xml format.
 #' @references See a tutorial/vignette for alm at
@@ -20,11 +22,11 @@
 #' alm_title(doi=dois)
 #' }
 
-alm_title <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, 
-  key = NULL, url = 'http://alm.plos.org/api/v5/articles', ...)
+alm_title <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL,
+  key = NULL, api_url = 'http://alm.plos.org/api/v5/articles', ...)
 {
   .Deprecated(msg = "This function will be deprecated soon")
-  temp <- alm_ids(doi = doi, pmid = pmid, pmcid = pmcid, mendeley_uuid = mendeley_uuid, url = url, 
+  temp <- alm_ids(doi = doi, pmid = pmid, pmcid = pmcid, wos = wos, scp = scp, url = url, api_url = api_url,
                   info = "summary", key = key, ...)
-  if(length(doi) == 1) temp$data$info$title else lapply(temp$data, function(x) x$info$title)  
+  if(length(doi) == 1) temp$data$info$title else lapply(temp$data, function(x) x$info$title)
 }

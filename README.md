@@ -87,7 +87,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 ## $meta
 ##   total total_pages page error
 ## 1     1           1    1    NA
-## 
+##
 ## $data
 ##                       .id  pdf  html readers comments likes  total
 ## 1               citeulike   NA    NA       1       NA    NA      1
@@ -132,7 +132,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ## $meta
 ##   total total_pages page error
 ## 1     1           1    1    NA
-## 
+##
 ## $data
 ## $data$info
 ##                                 id
@@ -147,11 +147,11 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ## 1 22253785 3256195 84855712734 000301355700052 2015-01-06T19:10:32Z
 ##       issued
 ## 1 2012-01-11
-## 
+##
 ## $data$signposts
 ##                            doi viewed saved discussed cited
 ## 1 10.1371/journal.pone.0029797  34592    81       244     9
-## 
+##
 ## $data$totals
 ##                       .id  pdf  html readers comments likes  total
 ## 1               citeulike   NA    NA       1       NA    NA      1
@@ -182,7 +182,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ## 26 articlecoveragecurated   NA    NA      NA        0    NA      0
 ## 27          plos_comments   NA    NA      NA       11    NA     16
 ## 28                  orcid   NA    NA       0       NA    NA      0
-## 
+##
 ## $data$sum_metrics
 ##                .id year month day total X[[1L]]
 ## 1        citeulike 2012     1  12     1      NA
@@ -214,7 +214,7 @@ lapply(out$data, head)
 ## 4    pubmed  NA   NA      NA       NA    NA     5
 ## 5    scopus  NA   NA      NA       NA    NA    12
 ## 6   counter 393 1976      NA       NA    NA  2389
-## 
+##
 ## $`10.1371/journal.pone.0039395`
 ##         .id pdf html readers comments likes total
 ## 1 citeulike  NA   NA       0       NA    NA     0
@@ -223,7 +223,7 @@ lapply(out$data, head)
 ## 4    pubmed  NA   NA      NA       NA    NA     1
 ## 5    scopus  NA   NA      NA       NA    NA     3
 ## 6   counter 233 1336      NA       NA    NA  1596
-## 
+##
 ## $`10.1371/journal.pone.0029797`
 ##         .id  pdf  html readers comments likes total
 ## 1 citeulike   NA    NA       1       NA    NA     1
@@ -232,7 +232,7 @@ lapply(out$data, head)
 ## 4    pubmed   NA    NA      NA       NA    NA     2
 ## 5    scopus   NA    NA      NA       NA    NA     7
 ## 6   counter 2512 30600      NA       NA    NA 33228
-## 
+##
 ## $`10.1371/journal.pone.0001543`
 ##         .id pdf html readers comments likes total
 ## 1 citeulike  NA   NA       0       NA    NA     0
@@ -267,11 +267,11 @@ names(out)  # names of sources
 ```
 
 ```
-##  [1] "citeulike"        "crossref"         "nature"          
-##  [4] "pubmed"           "scopus"           "counter"         
-##  [7] "researchblogging" "pmc"              "facebook"        
-## [10] "mendeley"         "twitter"          "wikipedia"       
-## [13] "relativemetric"   "figshare"         "pmceuropedata"   
+##  [1] "citeulike"        "crossref"         "nature"
+##  [4] "pubmed"           "scopus"           "counter"
+##  [7] "researchblogging" "pmc"              "facebook"
+## [10] "mendeley"         "twitter"          "wikipedia"
+## [13] "relativemetric"   "figshare"         "pmceuropedata"
 ## [16] "plos_comments"    "orcid"
 ```
 
@@ -284,7 +284,7 @@ out[["pmc"]]  # get the results for PubMed Central
 ```
 ## $events_url
 ## [1] "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3256195"
-## 
+##
 ## $events
 ##    scanned.page.browse month cited.by abstract full.text unique.ip pdf
 ## 1                    0     1        0        1        51        42   8
@@ -354,7 +354,7 @@ out[["pmc"]]  # get the results for PubMed Central
 ## 31 2014      0               0         0
 ## 32 2014      0               0         0
 ## 33 2014      0               0         0
-## 
+##
 ## $csl
 ## list()
 ```
@@ -367,7 +367,7 @@ dat <- alm_signposts(doi = "10.1371/journal.pone.0029797")
 plot_signposts(dat)
 ```
 
-![plot of chunk unnamed-chunk-11](inst/assets/img/unnamed-chunk-11-1.png) 
+![plot of chunk unnamed-chunk-11](inst/assets/img/unnamed-chunk-11-1.png)
 
 Or plot many identifiers get a faceted bar chart, note the tick labels have just the last part of the DOI in this case to help you identify each DOI - printing the entire DOI would make lables overlap one another.
 
@@ -378,7 +378,7 @@ dat <- alm_signposts(doi = dois)
 plot_signposts(input = dat)
 ```
 
-![plot of chunk unnamed-chunk-12](inst/assets/img/unnamed-chunk-12.png) 
+![plot of chunk unnamed-chunk-12](inst/assets/img/unnamed-chunk-12.png)
 
 Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
 
@@ -413,7 +413,7 @@ The default plot
 plot_density(alm)
 ```
 
-![plot of chunk unnamed-chunk-15](inst/assets/img/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-15](inst/assets/img/unnamed-chunk-15-1.png)
 
 
 Plot many sources in different panels in the same plot, and pass in colors just for fun
@@ -426,7 +426,7 @@ plot_density(input = alm, source = c("counter_total", "crossref_total",
     "#B2C9E4"))
 ```
 
-![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png)
 
 ### Work with data from non-PLOS publishers
 
@@ -436,7 +436,7 @@ Crossref
 ```r
 crurl <- "http://alm.labs.crossref.org/api/v5/articles"
 crkey <- getOption("crossrefalmkey")
-alm_ids(doi='10.1371/journal.pone.0086859', url = crurl, key = crkey)
+alm_ids(doi='10.1371/journal.pone.0086859', api_url = crurl, key = crkey)
 ```
 
 eLife
@@ -445,14 +445,14 @@ eLife
 ```r
 elifeurl <- "http://alm.svr.elifesciences.org/api/v5/articles"
 elifekey <- getOption("elifealmkey")
-alm_ids(doi='10.7554/eLife.00471', url = elifeurl, key = elifekey)
+alm_ids(doi='10.7554/eLife.00471', api_url = elifeurl, key = elifekey)
 ```
 
 ```
 ## $meta
 ##   total total_pages page error
 ## 1     1           1    1    NA
-## 
+##
 ## $data
 ##               .id pdf html shares groups comments likes citations total
 ## 1             pmc 485 1109     NA     NA       NA    NA        NA  1594
@@ -487,14 +487,14 @@ Pensoft
 ```r
 psurl <- 'http://alm.pensoft.net:81/api/v5/articles'
 pskey <- getOption("pensoftalmkey")
-alm_ids(doi='10.3897/zookeys.88.807', url = psurl, key = pskey)
+alm_ids(doi='10.3897/zookeys.88.807', api_url = psurl, key = pskey)
 ```
 
 ```
 ## $meta
 ##   total total_pages page error
 ## 1     1           1    1    NA
-## 
+##
 ## $data
 ##               .id pdf html readers comments likes total
 ## 1        facebook  NA   NA      NA       NA    NA     0

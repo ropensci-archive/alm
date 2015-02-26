@@ -5,8 +5,8 @@
 \title{Retrieve PLOS article-level metrics signposts.}
 \usage{
 alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL,
-  mendeley_uuid = NULL, source_id = NULL, key = NULL,
-  url = "http://alm.plos.org/api/v5/articles", ...)
+  wos = NULL, scp = NULL, url = NULL; source_id = NULL, key = NULL,
+  api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}
@@ -15,14 +15,18 @@ alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL,
 
 \item{pmcid}{PubMed Central object identifier (numeric)}
 
-\item{mendeley_uuid}{Mendeley object identifier (character)}
+\item{wos}{Web of Science identifier (character)}
+
+\item{scp}{Scopus identifier (character)}
+
+\item{url}{Canonical URL (character)}
 
 \item{source_id}{(character) Name of source to get ALM information for. One source only.
 You can get multiple sources via a for loop or lapply-type call.}
 
 \item{key}{your PLoS API key, either enter, or loads from .Rprofile (character)}
 
-\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
+\item{api_url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
 
 \item{...}{optional additional curl options (debugging tools mostly)}
 }
@@ -44,7 +48,7 @@ info="summary", then coercing signposts data to a data.frame.
 }
 \examples{
 \dontrun{
-# The default call with either doi, pmid, pmcid, or mendeley_uuid without specifying
+# The default call with either doi, pmid, pmcid, wos, scp or irl without specifying
 # an argument for info
 alm_signposts(doi="10.1371/journal.pone.0029797")
 

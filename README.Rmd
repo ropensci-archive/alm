@@ -177,7 +177,7 @@ Crossref
 ```{r eval=FALSE}
 crurl <- "http://det.labs.crossref.org/api/v5/articles"
 crkey <- getOption("crossrefalmkey")
-alm_ids(doi='10.1371/journal.pone.0086859', url = crurl, key = crkey)
+alm_ids(doi='10.1371/journal.pone.0086859', api_url = crurl, key = crkey)
 ```
 
 eLife
@@ -185,7 +185,7 @@ eLife
 ```{r}
 elifeurl <- "http://alm.svr.elifesciences.org/api/v5/articles"
 elifekey <- getOption("elifealmkey")
-alm_ids(doi='10.7554/eLife.00471', url = elifeurl, key = elifekey)
+alm_ids(doi='10.7554/eLife.00471', api_url = elifeurl, key = elifekey)
 ```
 
 Pensoft
@@ -193,7 +193,7 @@ Pensoft
 ```{r}
 psurl <- 'http://alm.pensoft.net:81/api/v5/articles'
 pskey <- getOption("pensoftalmkey")
-alm_ids(doi='10.3897/zookeys.88.807', url = psurl, key = pskey)
+alm_ids(doi='10.3897/zookeys.88.807', api_url = psurl, key = pskey)
 ```
 
 ## Meta
