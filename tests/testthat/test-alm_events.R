@@ -20,5 +20,5 @@ test_that("almevents returns correct things when two dois passed in", {
 test_that("almevents returns correctly when one specific source requested", {
   out3 <- alm_events(source_id="reddit")
   expect_equal(length(out3), 50)
-  expect_match(names(out3)[1], "reddit")
+  expect_match(names(out3[[1]]), "reddit")
 })
