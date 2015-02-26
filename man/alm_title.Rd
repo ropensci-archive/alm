@@ -4,8 +4,9 @@
 \alias{alm_title}
 \title{Get title of article by inputting the doi for the article.}
 \usage{
-alm_title(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL,
-  key = NULL, api_url = "http://alm.plos.org/api/v5/articles", ...)
+alm_title(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL,
+  scp = NULL, url = NULL, key = NULL,
+  api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}

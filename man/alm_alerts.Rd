@@ -7,7 +7,7 @@
 alm_alerts(source_id = NULL, publisher_id = NULL, ids = NULL,
   class_name = NULL, level = NULL, q = NULL, unresolved = FALSE,
   per_page = 50, page = 1, user = NULL, pwd = NULL,
-  url = "http://alm.plos.org/api/v4/alerts", ...)
+  api_url = "http://alm.plos.org/api/v4/alerts", ...)
 }
 \arguments{
 \item{source_id}{(character) Source to limtit alert search to.}
@@ -34,7 +34,7 @@ or FATAL. Default: all.}
 
 \item{pwd}{(character) Password}
 
-\item{url}{URL to use.}
+\item{api_url}{URL to use.}
 
 \item{...}{Further args passed to httr::GET}
 }
@@ -43,7 +43,7 @@ Retrieve alerts data for article-level metrics (ALM).
 }
 \details{
 This function uses the alm.plos.org API by default. You can change which ALM app you use by
-specifying the url in the url parameter. It will likely be the same as the default
+specifying the url in the api_url parameter. It will likely be the same as the default
 http://alm.plos.org/api/v4/alerts, but just the alm.plos.org part will be different.
 
 ALM installations on the most current version (3.4.7) can be used in this function, as of
@@ -72,7 +72,7 @@ alm_alerts(source_id = "wos")
 alm_alerts(publisher_id = 340)
 
 # Using different ALM apps, e.g, labs.crowdometer.org
-alm_alerts(url='http://labs.crowdometer.org/api/v4/alerts')
+alm_alerts(api_url='http://labs.crowdometer.org/api/v4/alerts')
 }
 }
 

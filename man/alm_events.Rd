@@ -4,8 +4,9 @@
 \alias{alm_events}
 \title{Retrieve PLoS article-level metrics (ALM) events.}
 \usage{
-alm_events(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL,
-  source_id = NULL, publisher_id = NULL, compact = TRUE, key = NULL,
+alm_events(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL,
+  scp = NULL, url = NULL, source_id = NULL, publisher_id = NULL,
+  compact = TRUE, key = NULL,
   api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
@@ -47,7 +48,7 @@ Events are the details of the metrics that are counted related to PLoS papers.
 You can only supply one of the parmeters doi, pmid, pmcid, and mendeley.
 
 		Query for as many articles at a time as you like. Though queries are broken
-		up in to smaller bits of 15 identifiers at a time.
+		up in to smaller bits of 30 identifiers at a time.
 
 		If you supply both the days and months parameters, days takes precedence,
 		and months is ignored.

@@ -24,5 +24,5 @@
 #'    get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'),
 #'    or year (sum_metrics='year'). IMPORTANT: note that you can only get by day metrics for
 #'    articles published since May 2014.
-#' @param url API endpoint, defaults to http://alm.plos.org/api/v5/articles (character)
+#' @param api_url API endpoint, defaults to http://alm.plos.org/api/v5/articles (character)
 #' @param ... optional additional curl options (debugging tools mostly)

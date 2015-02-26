@@ -4,9 +4,9 @@
 \alias{alm_ids}
 \title{Retrieve PLoS article-level metrics (ALM).}
 \usage{
-alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url=NULL,
-  info = "totals", source_id = NULL, publisher_id = NULL, key = NULL,
-  total_details = FALSE, sum_metrics = NULL, sleep = 0,
+alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL,
+  url = NULL, info = "totals", source_id = NULL, publisher_id = NULL,
+  key = NULL, total_details = FALSE, sum_metrics = NULL, sleep = 0,
   api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
@@ -63,14 +63,14 @@ This is the main function to search the PLoS ALM (article-level metrics) API.
 See details for more information.
 }
 \details{
-You can only supply one of the parmeters doi, pmid, pmcid, wos, scp or url; and you
+You can only supply one of the parmeters doi, pmid, pmcid, wos, scp, or url; and you
 must supply one of them. Query for as many articles at a time as you like. Though queries
-are broken up in to smaller bits of 15 identifiers at a time. If you supply days, months and/or
+are broken up in to smaller bits of 20 identifiers at a time. If you supply days, months and/or
 year parameters, days takes precedence over months and year.
 }
 \examples{
 \dontrun{
-# The default call with either doi, pmid, pmcid, wos, scp or url without specifying
+# The default call with either doi, pmid, pmcid, wos, scp, or url without specifying
 # an argument for info
 alm_ids(doi="10.1371/journal.pone.0029797")
 
@@ -94,7 +94,7 @@ alm_ids(wos="000268452400005")
 # A single Scopus ID (scp)
 alm_ids(scp="68049122102")
 
-# A single canonical URL (url)
+# A single Canonical URL (url)
 alm_ids(url="http://www.plosmedicine.org/article/info:doi/10.1371/journal.pmed.1000097")
 
 # Provide more than one DOI

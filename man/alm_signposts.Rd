@@ -4,8 +4,8 @@
 \alias{alm_signposts}
 \title{Retrieve PLOS article-level metrics signposts.}
 \usage{
-alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL,
-  wos = NULL, scp = NULL, url = NULL; source_id = NULL, key = NULL,
+alm_signposts(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL,
+  scp = NULL, url = NULL, source_id = NULL, key = NULL,
   api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
@@ -48,7 +48,7 @@ info="summary", then coercing signposts data to a data.frame.
 }
 \examples{
 \dontrun{
-# The default call with either doi, pmid, pmcid, wos, scp or irl without specifying
+# The default call with either doi, pmid, pmcid, wos, scp, or url without specifying
 # an argument for info
 alm_signposts(doi="10.1371/journal.pone.0029797")
 

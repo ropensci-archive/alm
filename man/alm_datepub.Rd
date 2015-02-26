@@ -4,9 +4,9 @@
 \alias{alm_datepub}
 \title{Get the date when the article was published.}
 \usage{
-alm_datepub(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL,
-  get = NULL, key = NULL, api_url = "http://alm.plos.org/api/v5/articles",
-  ...)
+alm_datepub(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL,
+  scp = NULL, url = NULL, get = NULL, key = NULL,
+  api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}
