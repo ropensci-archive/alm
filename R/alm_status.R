@@ -11,7 +11,8 @@
 
 alm_status <- function(key = NULL, url = 'http://alm.plos.org/api/v5/status', ...)
 {	
-  tt <- alm_GET(url, almcompact(list(api_key = key)), ...)
-  df <- data.frame(variable=names(tt$data), value=do.call(c, unname(tt$data)), stringsAsFactors = FALSE)
-  list(error=tt$error, data=df)
+  out <- GET(url, query=almcompact(list(api_key = key)), ...)
+  stop_for_status(out)
+  tt <- content(out, as = "text")
+  jsonlite::fromJSON(tt, TRUE)$data
 }
