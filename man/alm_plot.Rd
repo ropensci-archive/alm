@@ -4,7 +4,7 @@
 \alias{alm_plot}
 \title{Plot results of a call to the alm function.}
 \usage{
-alm_plot(dat, type = NULL, removezero = TRUE)
+alm_plot(dat)
 }
 \arguments{
 \item{dat}{Output from \code{alm_ids} (character)}
@@ -26,10 +26,11 @@ You have to specify info='detail' in your call to \code{alm_ids} so that
 }
 \examples{
 \dontrun{
-out <- alm(doi='10.1371/journal.pone.0001543', info='detail')
-alm_plot(out, type='totalmetrics') # just totalmetrics data
-alm_plot(dat=out, type='history') # just historical data
-alm_plot(dat=out) # leaving type as NULL prints both plots
+out <- alm_ids(doi='10.1371/journal.pone.0001543', info='detail')
+alm_plot(out)
+# works from info=totals too
+out <- alm_ids(doi='10.1371/journal.pone.0001543', info='totals')
+alm_plot(out)
 }
 }
 \references{
