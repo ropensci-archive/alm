@@ -154,8 +154,10 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
   api_url='http://alm.plos.org/api/v5/articles', ...)
 {
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id))
-	if(length(id)>1) stop("Only supply one of: doi, pmid, pmcid, wos, scp, url, source_id, or publisher_id")
-	# key <- getkey(key)
+	# id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url))
+	if(length(id[ !names(id) %in% c("source_id","publisher_id") ]) > 1) {
+	  stop("Only supply one of: doi, pmid, pmcid, wos, scp, url")
+	}
 	if(length(source_id) > 1) stop("You can only supply one source_id")
 	if(length(publisher_id) > 1) stop("You can only supply one publisher_id")
 
@@ -167,24 +169,24 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
       ttt <- alm_GET(api_url, args, ...)
       events <- lapply(ttt$data, function(x) x$sources)
 		} else {
-		  if(length(id[[1]])==1){
-		    if(names(id) == "doi") id <- gsub("/", "%2F", id)
-		    ttt <- alm_GET(api_url, c(args, ids = id[[1]]), ...)
+		  if(length(delsp(id)[[1]]) == 1){
+		    if(names(delsp(id)) == "doi") passid <- gsub("/", "%2F", delsp(id))
+		    ttt <- alm_GET(api_url, c(args, ids = passid[[1]]), ...)
 		    events <- lapply(ttt$data, function(x) x$sources)
 		  } else
-		    if(length(id[[1]])>1){
-		      if(length(id[[1]])>15){
+		    if(length(delsp(id)[[1]]) > 1){
+		      if(length(delsp(id)[[1]]) > 15){
 		        slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
-		        idsplit <- slice(id[[1]], 15)
+		        idsplit <- slice(delsp(id)[[1]], 15)
 		        repeatit <- function(y) {
-		          id2 <- if(names(id) == "doi") paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",") else paste(id[[1]], collapse=",")
+		          id2 <- if(names(delsp(id)) == "doi") paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",") else paste(delsp(id)[[1]], collapse=",")
 		          alm_GET(api_url, c(args, ids = id2), ...)
 		        }
 		        temp <- lapply(idsplit, repeatit)
 		        ttt <- do.call(c, lapply(temp, "[[", "data"))
 		        events <- unname(lapply(ttt, function(x) x$sources))
 		      } else {
-		        id2 <- concat_ids(id)
+		        id2 <- concat_ids(delsp(id))
 		        ttt <- alm_GET(x = api_url, y = c(args, ids = id2), ...)
 		        events <- lapply(ttt$data, function(x) x$sources)
 		      }
@@ -537,6 +539,11 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 				  {
 				    y$events
 				  }
+				}  else if(y$name == "orcid"){
+				  if(length(y$events)==0){paste(sorry)} else
+				  {
+				    y$events
+				  }
 				}
 			}
 
@@ -549,15 +556,29 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 
 		# Actually get the events data
 		tmpout <- lapply(events, getevents, label=source_id)
-		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id)))
-		names(tmpout) <- if(!byid == 'doi') { rep(id[[1]], length(tmpout)) } else {
-		  if(length(id[[1]])>15) vapply(ttt, "[[", character(1), "doi") else vapply(ttt$data, "[[", character(1), "doi")
+		# byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id)))
+		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url)))
+		if(length(byid) == 0) byid <- ""
+		nmz <- if(byid == "") { 
+		  NULL
+		} else if(!byid == 'doi') {
+		  id[[1]]
+		} else {
+		  if(length(id[[1]]) > 15) {
+		    vapply(ttt, "[[", character(1), "doi") 
+		  } else {
+		    vapply(ttt$data, "[[", character(1), "doi")
+		  }
 		}
-    tmpout
+    setNames(tmpout, nmz)
 	}
 	safe_parse_events <- plyr::failwith(NULL, parse_events)
 	finaldata <- safe_parse_events()
-	if(length(finaldata)>1){ lapply(finaldata, compact_events) } else { compact_events(finaldata[[1]]) }
+	if(length(finaldata) > 1){
+	  lapply(finaldata, compact_events) 
+	} else { 
+	   compact_events(finaldata[[1]])
+	 }
 }
 
 compact_events <- function(x){
@@ -584,5 +605,14 @@ parse_csl <- function(z){
 }
 
 idtype <- function(x){
-  if( x %in% c("doi", "pmid", "pmcid", "wos", "scp", "url") ) x else NULL
+  x <- x[ !x %in% c("source_id","publisher_id") ]
+  if(length(x) == 0){
+    NULL 
+  } else {
+    if( x %in% c("doi", "pmid", "pmcid", "wos", "scp", "url") ) x else NULL
+  }
+}
+
+delsp <- function(x){
+  x[ !names(x) %in% c("source_id","publisher_id") ]
 }
