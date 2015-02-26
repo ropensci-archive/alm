@@ -12,16 +12,16 @@
 #' @references See a tutorial/vignette for alm at
 #' \url{http://ropensci.org/tutorials/alm_tutorial.html}
 
-alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL, info = "totals",
+alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL, info = "totals",
   source_id = NULL, publisher_id = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL, sleep = 0,
-	url = 'http://alm.plos.org/api/v5/articles', ...)
+	api_url = 'http://alm.plos.org/api/v5/articles', ...)
 {
 	# key <- getkey(key)
   info <- match.arg(info, c("summary","totals","detail"))
   if(!is.null(doi)) doi <- doi[!grepl("image", doi)] # remove any DOIs of images
-	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid, source_id=source_id, publisher_id=publisher_id))
-	if(length(id) == 0) stop("Supply one of: doi, pmid, pmcid, mendeley_uuid, source_id, or publisher_id")
-	if(length(id) > 1) stop("Only supply one of: doi, pmid, pmcid, mendeley_uuid, source_id, or publisher_id")
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id))
+	if(length(id) == 0) stop("Supply one of: doi, pmid, pmcid, wos, scp, url, source_id, or publisher_id")
+	if(length(id) > 1) stop("Only supply one of: doi, pmid, pmcid, wos, scp, url, source_id, or publisher_id")
   if(length(source_id) > 1) stop("You can only supply one source_id")
 	if(length(publisher_id) > 1) stop("You can only supply one publisher_id")
 
@@ -29,13 +29,13 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
     info2 <- switch(info, totals=NULL, detail='detail', summary='summary')
 		if(!is.null(sum_metrics)) info <- info2 <- 'detail'
 		args <- almcompact(list(api_key = key, info = info2, source_id = source_id, publisher_id = publisher_id, type = idtype(names(id))))
-		if(length(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, mendeley_uuid=mendeley_uuid))) == 0){
-		  if(length(id) == 0) stop("Please provide one of: doi, pmid, pmcid, mendeley_uuid, source_id, or publisher_id")
-		  tt <- alm_GET(url, args, ...)
+		if(length(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url))) == 0){
+		  if(length(id) == 0) stop("Please provide one of: doi, pmid, pmcid, wos, scp, url, source_id, or publisher_id")
+		  tt <- alm_GET(api_url, args, ...)
     } else {
 			if(length(id[[1]])==1){
 				if(names(id) == "doi") id <- gsub("/", "%2F", id)
-				tt <- alm_GET(x = url, y = c(args, ids = id[[1]]), ...)
+				tt <- alm_GET(x = api_url, y = c(args, ids = id[[1]]), ...)
 			} else
 			{
 				if(length(id[[1]])>1){
@@ -49,25 +49,25 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 							{
 								id2 <- paste(id[[1]], collapse=",")
 							}
-							tt <- alm_GET(url, c(args, ids = id2), sleep=sleep, ...)
+							tt <- alm_GET(api_url, c(args, ids = id2), sleep=sleep, ...)
 						}
 						temp <- lapply(idsplit, repeatit)
             justdat <- do.call(c, unname(lapply(temp, "[[", "data")))
             tt <- c(temp[[1]][ !names(temp[[1]]) == "data" ], data=list(justdat))
 					} else {
 					  id2 <- id2 <- concat_ids(id)
-						tt <- alm_GET(url, c(args, ids = id2), ...)
+						tt <- alm_GET(api_url, c(args, ids = id2), ...)
 					}
 				}
 			}
     }
-		
+
     if(info=="summary"){
 		  if(length(id[[1]]) > 1 | !is.null(source_id) | !is.null(publisher_id)){
 		    restmp <- lapply(tt$data, getsummary)
         names(restmp) <- vapply(tt$data, function(x) x$doi, character(1))
-		  } else { 
-        restmp <- getsummary(tt$data[[1]]) 
+		  } else {
+        restmp <- getsummary(tt$data[[1]])
 		  }
       list(meta=metadf(tt), data=restmp)
     } else {

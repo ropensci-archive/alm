@@ -4,9 +4,9 @@
 \alias{alm_events}
 \title{Retrieve PLoS article-level metrics (ALM) events.}
 \usage{
-alm_events(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
+alm_events(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL,
   source_id = NULL, publisher_id = NULL, compact = TRUE, key = NULL,
-  url = "http://alm.plos.org/api/v5/articles", ...)
+  api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
 \item{doi}{Digital object identifier for an article in PLoS Journals (character)}
@@ -15,7 +15,11 @@ alm_events(doi = NULL, pmid = NULL, pmcid = NULL, mendeley_uuid = NULL,
 
 \item{pmcid}{PubMed Central object identifier (numeric)}
 
-\item{mendeley_uuid}{Mendeley object identifier (character)}
+\item{wos}{Web of Science identifier (character)}
+
+\item{scp}{Scopus identifier (character)}
+
+\item{url}{Canonical URL (character)}
 
 \item{source_id}{(character) Name of source to get ALM information for. One source only.
 You can get multiple sources via a for loop or lapply-type call.}
@@ -29,7 +33,7 @@ empty sources.}
 \item{key}{(character) Your API key, either enter, or loads from .Rprofile. Only required for
 PKP source, not the others.}
 
-\item{url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
+\item{api_url}{API endpoint, defaults to http://alm.plos.org/api/v3/articles (character)}
 
 \item{...}{optional additional curl options (debugging tools mostly)}
 }
