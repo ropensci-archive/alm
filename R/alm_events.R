@@ -175,19 +175,19 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 		    events <- lapply(ttt$data, function(x) x$sources)
 		  } else
 		    if(length(delsp(id)[[1]]) > 1){
-		      if(length(delsp(id)[[1]]) > 15){
+		      if(length(delsp(id)[[1]]) > 50){
 		        slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
-		        idsplit <- slice(delsp(id)[[1]], 15)
+		        idsplit <- slice(delsp(id)[[1]], 50)
 		        repeatit <- function(y) {
 		          id2 <- if(names(delsp(id)) == "doi") paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",") else paste(delsp(id)[[1]], collapse=",")
-		          alm_GET(api_url, c(args, ids = id2), ...)
+		          alm_POST(api_url, c(args, ids = id2), ...)
 		        }
 		        temp <- lapply(idsplit, repeatit)
 		        ttt <- do.call(c, lapply(temp, "[[", "data"))
 		        events <- unname(lapply(ttt, function(x) x$sources))
 		      } else {
 		        id2 <- concat_ids(delsp(id))
-		        ttt <- alm_GET(x = api_url, y = c(args, ids = id2), ...)
+		        ttt <- alm_POST(x = api_url, y = c(args, ids = id2), ...)
 		        events <- lapply(ttt$data, function(x) x$sources)
 		      }
 		    }
@@ -559,13 +559,13 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 		# byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id)))
 		byid <- names(almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url)))
 		if(length(byid) == 0) byid <- ""
-		nmz <- if(byid == "") { 
+		nmz <- if(byid == "") {
 		  NULL
 		} else if(!byid == 'doi') {
 		  id[[1]]
 		} else {
 		  if(length(id[[1]]) > 15) {
-		    vapply(ttt, "[[", character(1), "doi") 
+		    vapply(ttt, "[[", character(1), "doi")
 		  } else {
 		    vapply(ttt$data, "[[", character(1), "doi")
 		  }
@@ -575,8 +575,8 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 	safe_parse_events <- plyr::failwith(NULL, parse_events)
 	finaldata <- safe_parse_events()
 	if(length(finaldata) > 1){
-	  lapply(finaldata, compact_events) 
-	} else { 
+	  lapply(finaldata, compact_events)
+	} else {
 	   compact_events(finaldata[[1]])
 	 }
 }
@@ -607,7 +607,7 @@ parse_csl <- function(z){
 idtype <- function(x){
   x <- x[ !x %in% c("source_id","publisher_id") ]
   if(length(x) == 0){
-    NULL 
+    NULL
   } else {
     if( x %in% c("doi", "pmid", "pmcid", "wos", "scp", "url") ) x else NULL
   }
