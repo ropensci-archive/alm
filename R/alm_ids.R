@@ -64,7 +64,7 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
     if(info=="summary"){
 		  if(length(id[[1]]) > 1 | !is.null(source_id) | !is.null(publisher_id)){
 		    restmp <- lapply(tt$data, getsummary)
-        names(restmp) <- vapply(tt$data, function(x) x$doi, character(1))
+        names(restmp) <- vapply(tt$data, doiorid, character(1))
 		  } else {
         restmp <- getsummary(tt$data[[1]])
 		  }
@@ -72,7 +72,7 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
     } else {
 			if(length(id[[1]]) > 1 | !is.null(source_id) | !is.null(publisher_id)){
         restmp <- lapply(tt$data, getdata, y=info, z=total_details, w=sum_metrics)
-        names(restmp) <- vapply(tt$data, function(x) x$doi, character(1))
+        names(restmp) <- vapply(tt$data, doiorid, character(1))
 			} else {
         checktt <- tryCatch(tt$data[[1]], error=function(e) e)
         restmp <- if(is(checktt, "simpleError")) list() else getdata(x=tt$data[[1]], y=info, z=total_details, w=sum_metrics)
@@ -83,6 +83,14 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
 
 	safe_getalm <- plyr::failwith(NULL, getalm)
 	safe_getalm()
+}
+
+doiorid <- function(x) {
+  if(is.null(x$doi)) {
+    x$id
+  } else {
+    x$doi
+  }
 }
 
 concat_ids <- function(x){
