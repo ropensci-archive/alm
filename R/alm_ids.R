@@ -15,7 +15,7 @@
 alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL, info = "totals",
   source_id = NULL, publisher_id = NULL, key = NULL, total_details = FALSE, sum_metrics = NULL, sleep = 0,
 	api_url = 'http://alm.plos.org/api/v5/articles', ...){
-  
+
   info <- match.arg(info, c("summary","totals","detail"))
   if(!is.null(doi)) doi <- doi[!grepl("image", doi)] # remove any DOIs of images
 	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id))
@@ -37,9 +37,9 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
 				tt <- alm_GET(x = api_url, y = c(args, ids = passid[[1]]), ...)
 			} else {
 				if(length(delsp(id)[[1]]) > 1){
-          if(length(delsp(id)[[1]]) > 25){
+          if(length(delsp(id)[[1]]) > 50){
 						slice <- function(x, n) split(x, as.integer((seq_along(x) - 1) / n))
-						idsplit <- slice(delsp(id)[[1]], 25)
+						idsplit <- slice(delsp(id)[[1]], 50)
 						repeatit <- function(y) {
 							if(names(delsp(id)) == "doi"){
 								id2 <- paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",")
@@ -48,14 +48,14 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
 							} else {
 								id2 <- paste(delsp(id)[[1]], collapse=",")
 							}
-							tt <- alm_GET(api_url, c(args, ids = id2), sleep=sleep, ...)
+							tt <- alm_POST(api_url, c(args, ids = id2), sleep=sleep, ...)
 						}
 						temp <- lapply(idsplit, repeatit)
             justdat <- do.call(c, unname(lapply(temp, "[[", "data")))
             tt <- c(temp[[1]][ !names(temp[[1]]) == "data" ], data=list(justdat))
 					} else {
 					  id2 <- id2 <- concat_ids(delsp(id))
-						tt <- alm_GET(api_url, c(args, ids = id2), ...)
+						tt <- alm_POST(api_url, c(args, ids = id2), ...)
 					}
 				}
 			}
