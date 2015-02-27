@@ -116,7 +116,7 @@ alm_GET <- function(x, y, sleep=0, ...){
 
 alm_POST <- function(x, y, sleep=0, ...){
   Sys.sleep(time = sleep)
-  out <- POST(x, body=y, add_headers(X-HTTP-Method-Override = "GET"), ...)
+  out <- POST(x, body=y, add_headers("X-HTTP-Method-Override" = "GET"), ...)
   stop_for_status(out)
   tt <- content(out, as = "text")
   jsonlite::fromJSON(tt, FALSE)
