@@ -62,7 +62,7 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
     if(info=="summary"){
 		  if(length(id[[1]]) > 1 | !is.null(source_id) | !is.null(publisher_id)){
 		    restmp <- lapply(tt$data, getsummary)
-        names(restmp) <- vapply(tt$data, doiorid, character(1))
+        names(restmp) <- vapply(tt$data, x$id, character(1))
 		  } else {
         restmp <- getsummary(tt$data[[1]])
 		  }
@@ -70,7 +70,7 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
     } else {
 			if(length(id[[1]]) > 1 | !is.null(source_id) | !is.null(publisher_id)){
         restmp <- lapply(tt$data, getdata, y=info, z=total_details, w=sum_metrics)
-        names(restmp) <- vapply(tt$data, doiorid, character(1))
+        names(restmp) <- vapply(tt$data, x$id, character(1))
 			} else {
         checktt <- tryCatch(tt$data[[1]], error=function(e) e)
         restmp <- if(is(checktt, "simpleError")) list() else getdata(x=tt$data[[1]], y=info, z=total_details, w=sum_metrics)
@@ -81,14 +81,6 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
 
 	safe_getalm <- plyr::failwith(NULL, getalm)
 	safe_getalm()
-}
-
-doiorid <- function(x) {
-  if(is.null(x$doi)) {
-    x$id
-  } else {
-    x$doi
-  }
 }
 
 concat_ids <- function(x){
@@ -138,7 +130,7 @@ get_totals <- function(x, total_details=FALSE){
     temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
     names(temp) <- str_replace_all(names(temp), "\\.", "_")
     cbind(data.frame(
-      doi=x$doi,
+      id=x$id,
       title=x$title),
       temp, date_modified=x$update_date)
   } else { ldply(totals2, function(x) as.data.frame(x)) }
@@ -154,7 +146,7 @@ get_details <- function(x){
 }
 
 get_signpost <- function(x){
-  tmp <- x[ names(x) %in% c('doi','viewed','saved','discussed','cited') ]
+  tmp <- x[ names(x) %in% c('id','viewed','saved','discussed','cited') ]
   tmp[vapply(tmp, is.null, logical(1))] <- NA
   data.frame(tmp, stringsAsFactors = FALSE)
 }
