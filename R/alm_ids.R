@@ -43,8 +43,6 @@ alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NUL
 						repeatit <- function(y) {
 							if(names(delsp(id)) == "doi"){
 								id2 <- paste(sapply(y, function(x) gsub("/", "%2F", x)), collapse=",")
-              } else if(names(delsp(id)) == "url"){
-                id2 <- paste(sapply(y, function(x) URLencode(x, reserved = TRUE)), collapse=",")
 							} else {
 								id2 <- paste(delsp(id)[[1]], collapse=",")
 							}
@@ -140,7 +138,7 @@ get_totals <- function(x, total_details=FALSE){
     temp <- data.frame(t(unlist(totals2, use.names=TRUE)))
     names(temp) <- str_replace_all(names(temp), "\\.", "_")
     cbind(data.frame(
-      doi=x$doi,
+      id=x$id,
       title=x$title),
       temp, date_modified=x$update_date)
   } else { ldply(totals2, function(x) as.data.frame(x)) }
@@ -156,7 +154,7 @@ get_details <- function(x){
 }
 
 get_signpost <- function(x){
-  tmp <- x[ names(x) %in% c('doi','viewed','saved','discussed','cited') ]
+  tmp <- x[ names(x) %in% c('id','viewed','saved','discussed','cited') ]
   tmp[vapply(tmp, is.null, logical(1))] <- NA
   data.frame(tmp, stringsAsFactors = FALSE)
 }
