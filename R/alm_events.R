@@ -81,9 +81,6 @@
 #' names(out)
 #' out['19390606']
 #'
-#' # Specify a specific source
-#' alm_events(doi="10.1371/journal.pone.0035869", source_id="crossref")
-#'
 #' # Specify two specific sources
 #' ## You have to do so through lapply, or similar approach
 #' lapply(c("crossref","twitter"),
@@ -122,6 +119,11 @@
 #'
 #' # by publisher_id only
 #' alm_events(publisher_id = 340)
+#' 
+#' # search the software lagotto sever
+#' urls <- c("https://github.com/najoshi/sickle","https://github.com/lh3/wgsim",
+#'    "https://github.com/jstjohn/SeqPrep")
+#' dat <- alm_events(url = urls, api_url = "http://software.lagotto.io/api/v5/articles")
 #' }
 #'
 #' @examples \dontest{
@@ -565,9 +567,9 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 		  id[[1]]
 		} else {
 		  if(length(id[[1]]) > 15) {
-		    vapply(ttt, "[[", character(1), "doi")
+		    vapply(ttt, "[[", character(1), "id")
 		  } else {
-		    vapply(ttt$data, "[[", character(1), "doi")
+		    vapply(ttt$data, "[[", character(1), "id")
 		  }
 		}
     setNames(tmpout, nmz)
