@@ -11,7 +11,7 @@ test_that("alm_signposts returns the correct class", {
   expect_that(dat2, is_a("data.frame"))
   expect_that(dat1$viewed, is_a("integer"))
   expect_that(dat2$cited, is_a("integer"))
-  expect_that(dat2$doi, is_a("character"))
+  expect_that(dat2$id, is_a("character"))
 })
 
 test_that("alm_signposts returns the correct dimensions", {

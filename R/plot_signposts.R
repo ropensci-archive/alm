@@ -16,29 +16,27 @@
 #' @examples \dontrun{
 #' # Plot data from a single identifier gives a bar chart
 #' dat <- alm_signposts(doi="10.1371/journal.pone.0029797")
-#' plot_signposts(input=dat)
+#' plot_signposts(dat)
 #'
 #' # Plot data from many identifiers gives a line chart
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 #'    '10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 #' dat <- alm_signposts(doi=dois)
-#' plot_signposts(input=dat)
+#' plot_signposts(dat)
+#' 
+#' # software lagotto instance
+#' urls <- c("https://github.com/najoshi/sickle","https://github.com/lh3/wgsim",
+#'    "https://github.com/jstjohn/SeqPrep")
+#' dat <- alm_signposts(url = urls, api_url = "http://software.lagotto.io/api/v5/articles")
+#' plot_signposts(dat)
+#' 
+#' # scopus ids
+#' ids <- c(68049122102, 14044251458, 48349097292, 28444460441)
+#' dat <- alm_signposts(scp = ids)
+#' plot_signposts(dat)
 #' }
 
 plot_signposts <- function(input){
-  
-  stripdois <- function(x){
-    temp <- strsplit(as.character(x$doi), "\\.")
-    if(all(sapply(temp, function(x) paste0(x[1:3],collapse="")) %in% sapply(temp, function(x) paste0(x[1:3],collapse=""))[[1]])){
-      doi_parts <- sapply(strsplit(as.character(x$doi), "\\."), "[[", 4)
-      x <- x[,-1]
-      x$doi <- doi_parts
-      x
-    } else { 
-      x 
-    }
-  }
-
   if(!is.data.frame(input))
     stop("object passed to input must be a data.frame")
 
@@ -51,10 +49,20 @@ plot_signposts <- function(input){
   } else {
     input <- stripdois(input)
     df <- melt(input)
-    ggplot(df, aes(doi, value)) +
+    ggplot(df, aes(id, value)) +
       theme_grey(base_size=16) +
       geom_bar(stat="identity") +
       facet_wrap(~variable, scales="free") +
       labs(x="",y="")
+  }
+}
+
+stripdois <- function(x){
+  if(strsplit(x$id[1], '/')[[1]][1] == "url"){
+    x$id <- sapply(strsplit(as.character(x$id), "/"), "[[", 6)
+    x
+  } else {
+    x$id <- sapply(strsplit(as.character(x$id), "\\."), "[[", 4)
+    x
   }
 }
