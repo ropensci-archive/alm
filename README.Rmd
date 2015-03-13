@@ -1,5 +1,11 @@
 ```{r, eval=TRUE, echo=FALSE}
-knitr::opts_chunk$set(fig.path="inst/assets/img/", warning=FALSE, message=FALSE)
+knitr::opts_chunk$set(
+  fig.path = "inst/assets/img/",
+  warning = FALSE,
+  message = FALSE,
+  comment = "#>",
+  collapse = TRUE
+)
 ```
 
 <pre>
@@ -16,15 +22,22 @@ _____  |  |   _____
 
 ## What it is!?
 
-The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers, including (as of 2014-10-14):
+The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers:
 
 * PLOS (all their journals) at [http://alm.plos.org/](http://alm.plos.org/)
-* PLOS test server at [http://labs.crowdometer.org/](http://labs.crowdometer.org/)
+* PLOS test server at [http://labs.lagotto.io/](http://labs.lagotto.io/)
 * Copernicus at [http://metricus.copernicus.org/](http://metricus.copernicus.org/)
 * Public Knowledge Project (PKP) at [http://pkp-alm.lib.sfu.ca/](http://pkp-alm.lib.sfu.ca/)
 * Crossref at [http://det.labs.crossref.org/](http://det.labs.crossref.org/)
-* eLife at [http://alm.svr.elifesciences.org/](http://alm.svr.elifesciences.org/)
+* eLife at [http://lagotto.svr.elifesciences.org/](http://lagotto.svr.elifesciences.org/)
 * Pensoft at [http://alm.pensoft.net:81/](http://alm.pensoft.net:81/)
+* Making Dat Count at [http://dlm.plos.org](http://dlm.plos.org)
+
+A good place to look for the status of various installations of Lagotto is this status page: http://articlemetrics.github.io/status/ (which also includes what version of Lagotto each is running)
+
+## Help with Lagotto
+
+Lagotto has a nice support site at [http://discuss.lagotto.io/](http://discuss.lagotto.io/) for any questions about it.
 
 ## What is an article level metric?
 
@@ -32,25 +45,26 @@ Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://al
 
 ## Are there other altmetrics data providers?
 
-Yes indeedy.
+Yes indeedy, but see notes
 
-+ [ImpactStory](http://impactstory.org/)
-+ [Altmetric.com](http://altmetric.com/)
-+ [PlumAnalytics](http://www.plumanalytics.com/)
++ [ImpactStory](http://impactstory.org/) - No open data (except for your own data)
++ [Altmetric.com](http://altmetric.com/) - Some open data
++ [PlumAnalytics](http://www.plumanalytics.com/) - No open data
 
 ## Authentication
 
-You will need a different API key for each of the publishers listed above.
+You only need an API key for the publishers PKP and Pensoft. You can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter, or save in your `.Rprofile` file.
 
-For each API key, go to the links above for each respective publisher.
+## URLs
 
-Put each API key in your .Rprofile file using, for example, `options(PlosApiKey = "YOUalmAPIKEY")`, and the functions within this package will be able to use your API key without you having to enter it every time you run a search. Alternatively, you can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter.
+The default URL is set for the PLOS data sources: http://alm.plos.org/api/v5/articles
+You can change this URL. For example, if you want to get data from the Crossref instance, set the `api_url` parameter to http://alm.labs.crossref.org/api/v5/articles
 
-`alm` defaults to using the entry in your options variables `PlosApiKey`, so to use a different publisher's data, pass in the key __AND__ the url for the service.
+## Other languages
 
-## Quick start
+If R is not your thing, there are Lagotto clients in development for [Ruby](https://github.com/articlemetrics/lagotto-rb) and [Python](https://github.com/articlemetrics/pyalm).
 
-### Install
+## Install
 
 You can get this package from CRAN by:
 
@@ -63,8 +77,7 @@ Or the development version by installing with `install_github()`
 
 ```{r eval=FALSE}
 install.packages("devtools")
-library('devtools')
-install_github("ropensci/alm")
+devtools::install_github("ropensci/alm")
 ```
 
 Load the package
@@ -75,20 +88,20 @@ library('alm')
 
 The first function we'll look at is `alm_ids()`, named with `ids` since we search for data by one of four different choices of identifier.
 
-### Get altmetrics data for a single paper
+## Get altmetrics data for a single paper
 
 ```{r}
 alm_ids(doi = "10.1371/journal.pone.0029797")
 ```
 
-### Details for a single DOI
+## Details for a single DOI
 
 
 ```{r}
 alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 ```
 
-### Search on many identifiers
+## Search on many identifiers
 
 ```{r cache=TRUE}
 dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", "10.1371/journal.pone.0039395")
@@ -96,14 +109,14 @@ out <- alm_ids(doi = dois)
 lapply(out$data, head)
 ```
 
-### Output an-easy-to-combine-with-other-results data.frame
+## Output an-easy-to-combine-with-other-results data.frame
 
 ```{r}
 res <- alm_ids(doi = "10.1371/journal.pone.0035869", total_details = TRUE)
 res$data[, 3:10]
 ```
 
-### Get detailed data for altmetrics using `almevents`
+## Get detailed data for altmetrics using `almevents`
 
 ```{r}
 out <- alm_events(doi = "10.1371/journal.pone.0029797")
@@ -115,7 +128,7 @@ out <- out[!out %in% c("sorry, no events content yet", "parser not written yet")
 out[["pmc"]]  # get the results for PubMed Central
 ```
 
-### Retrieve and plot PLOS article-level metrics signposts.
+## Retrieve and plot PLOS article-level metrics signposts.
 
 ```{r fig.height=4}
 dat <- alm_signposts(doi = "10.1371/journal.pone.0029797")
@@ -132,7 +145,7 @@ plot_signposts(input = dat)
 
 Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
 
-#### Density and histogram plots from PLOS Article Level Metrics data
+### Density and histogram plots from PLOS Article Level Metrics data
 
 Note: Do you the key below in the `searchplos` call in this example, but if you plan to use rplos more, get your own API key [here](http://api.plos.org/).
 
@@ -165,12 +178,12 @@ Plot many sources in different panels in the same plot, and pass in colors just 
 
 
 ```{r}
-plot_density(input = alm, source = c("counter_total", "crossref_total",
-    "twitter_total", "wos_total"), color = c("#83DFB4", "#EFA5A5", "#CFD470",
-    "#B2C9E4"))
+plot_density(alm,
+             source = c("counter_total", "crossref_total", "twitter_total"),
+             color = c("#83DFB4", "#EFA5A5", "#CFD470"))
 ```
 
-### Work with data from non-PLOS publishers
+## Work with data from non-PLOS publishers
 
 Crossref
 
@@ -196,10 +209,17 @@ pskey <- getOption("pensoftalmkey")
 alm_ids(doi='10.3897/zookeys.88.807', api_url = psurl, key = pskey)
 ```
 
+Making Data Count - Dataset altmetrics
+
+```{r}
+dlmurl <- 'http://dlm.plos.org/api/v5/articles'
+alm_ids('10.5061/dryad.7fj1k', api_url = dlmurl)
+```
+
 ## Meta
 
 * Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
 * License: MIT
 * Get citation information for `alm` in R doing `citation(package = 'alm')`
 
-[![rofooter](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![ropensci_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
