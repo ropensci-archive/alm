@@ -27,35 +27,35 @@
 #'      'publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]',
 #'      '-article_type:correction'),
 #'    limit=50)
-#' dois <- dois$id[!grepl("annotation", dois$id)]
+#' dois <- dois$data$id[!grepl("annotation", dois$data$id)]
 #' alm <- alm_ids(doi=dois, total_details=TRUE)
 #' alm <- ldply(alm$data, data.frame)
-#' plot_density(input=alm)
+#' plot_density(alm)
 #' plot_density(alm, color="#DCA121")
 #' plot_density(alm, title="Scopus citations from 2010")
 #' plot_density(alm, title="Scopus citations from 2010", description="Probablity of
 #'    X number of citations for a paper")
 #' plot_density(alm, description="Probablity of X number of citations for a paper")
-#' plot_density(input=alm, source="crossref_total")
-#' plot_density(input=alm, source="twitter_total")
-#' plot_density(input=alm, source="counter_total")
-#' plot_density(input=alm, source=c("counter_total","facebook_likes"))
-#' plot_density(input=alm, source=c("counter_total","facebook_likes"))
-#' plot_density(input=alm, source=c("counter_total","facebook_likes", "twitter_total"))
-#' plot_density(input=alm, source=c("counter_total","crossref_total","twitter_total"),
+#' plot_density(alm, source="crossref_total")
+#' plot_density(alm, source="twitter_total")
+#' plot_density(alm, source="counter_total")
+#' plot_density(alm, source=c("counter_total","facebook_likes"))
+#' plot_density(alm, source=c("counter_total","facebook_likes"))
+#' plot_density(alm, source=c("counter_total","facebook_likes", "twitter_total"))
+#' plot_density(alm, source=c("counter_total","crossref_total","twitter_total"),
 #'    color=c("#DBAC6A", "#E09B33", "#A06D34"))
-#' plot_density(input=alm, source=c("counter_total","crossref_total",
-#'    "twitter_total","wos_total"))
-#' plot_density(input=alm, source=c("counter_total","crossref_total"),
+#' plot_density(alm, source=c("counter_total","crossref_total",
+#'    "twitter_total"))
+#' plot_density(alm, source=c("counter_total","crossref_total"),
 #'    title="Counter and Crossref")
-#' plot_density(input=alm, source=c("counter_total","crossref_total",
-#'    "twitter_total","wos_total"), color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4"))
+#' plot_density(alm, source=c("counter_total","crossref_total",
+#'    "twitter_total"), color=c("#83DFB4","#EFA5A5","#CFD470"))
 #' }
 
 
 plot_density <- function(input, source="scopus_total", color="#1447f2", title = "",
-  description = "", plot_type="density")
-{
+                         description = "", plot_type="density") {
+
   plos_color <- "#1447f2"
   input$date_modified <- as.Date(input$date_modified)
   plot_type <- match.arg(plot_type, choices=c("histogram","density"))

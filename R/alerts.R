@@ -37,6 +37,7 @@
 #' alm_alerts(ids="10.1371/journal.pone.0029797")
 #'
 #' # curl debugging
+#' library("httr")
 #' alm_alerts(level='Error', config=verbose())
 #'
 #' # paging
@@ -47,9 +48,6 @@
 #'
 #' # by publisher_id
 #' alm_alerts(publisher_id = 340)
-#'
-#' # Using different ALM apps, e.g, labs.crowdometer.org
-#' alm_alerts(api_url='http://labs.crowdometer.org/api/v4/alerts')
 #' }
 
 alm_alerts <- function(source_id=NULL, publisher_id=NULL, ids=NULL, class_name=NULL, level=NULL, q=NULL,

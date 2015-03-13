@@ -60,7 +60,7 @@
 #' alm_ids(doi='10.1371/journal.pone.0035869', source_id='twitter')
 #' alm_ids(doi='10.1371/journal.pone.0035869', source_id='counter', info='detail')
 #' ## fails if more than one source_id given
-#' alm_ids(doi='10.1371/journal.pone.0035869', source_id=c('twitter','facebook'))
+#' # alm_ids(doi='10.1371/journal.pone.0035869', source_id=c('twitter','facebook'))
 #'
 #' # Get detailed totals output
 #' alm_ids(doi='10.1371/journal.pone.0035869', total_details=TRUE)
@@ -83,31 +83,24 @@
 #' alm_ids(doi="10.1371/journal.pone.0029797", config=verbose())
 #' dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117',
 #'  	'10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
-#' alm_ids(doi=dois, config=verbose())
-#' }
+#' alm_ids(doi=dois, config=progress())
+#' 
+#' # Data from other sources
+#' ## Crossref article data
+#' ### Pass in a different URL - no key needed
+#' api_url <- "http://det.labs.crossref.org/api/v5/articles"
+#' alm_ids(doi='10.1371/journal.pone.0086859', api_url = api_url)
+#' alm_ids(doi='10.11646/zootaxa.3618.1.1', api_url = api_url)
+#' alm_ids(doi='10.1016/j.jep.2013.06.007', api_url = api_url)
+#' alm_ids(doi='10.1111/j.1756-1051.2012.00099.x', api_url = api_url)
 #'
-#' @examples \dontest{
-#' # Crossref article data
-#' # You need to get an API key first, and pass in a different URL
-#' api_url <- "http://alm.labs.crossref.org/api/v5/articles"
-#' key <- getOption("crossrefalmkey")
-#' alm_ids(doi='10.1371/journal.pone.0086859', api_url = api_url, key = key)
-#' alm_ids(doi='10.11646/zootaxa.3618.1.1', api_url = api_url, key = key)
-#' alm_ids(doi='10.1016/j.jep.2013.06.007', api_url = api_url, key = key)
-#' alm_ids(doi='10.1111/j.1756-1051.2012.00099.x', api_url = api_url, key = key)
-#'
-#' # Public Knowledge Project article data
-#' # You need to get an API key first, and pass in a different URL
+#' ## Public Knowledge Project article data
+#' ### pass in a different url - an API key needed
 #' api_url <- 'http://pkp-alm.lib.sfu.ca/api/v5/articles'
 #' alm_ids(doi='10.3402/gha.v7.23554', api_url = api_url, key = getOption("pkpalmkey"))
 #'
-#' # Copernicus publishers article data
-#' # You need to get an API key first, and pass in a different URL
-#' api_url <- 'http://metricus.copernicus.org/api/v3/articles'
-#' alm_ids(doi='10.5194/acpd-14-8287-2014', api_url = api_url, key = getOption("copernicusalmkey"))
-#'
-#' # eLife publishers article data
-#' # You need to get an API key first, and pass in a different URL
-#' api_url <- 'http://alm.svr.elifesciences.org/api/v5/articles'
-#' alm_ids(doi='10.7554/eLife.00471', api_url = api_url, key = getOption("elifealmkey"))
+#' ## eLife 
+#' ### pass in a different url - no key needed
+#' api_url <- 'http://lagotto.svr.elifesciences.org/api/v5/articles'
+#' alm_ids(doi='10.7554/eLife.00471', api_url = api_url)
 #' }

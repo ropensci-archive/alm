@@ -60,6 +60,7 @@ alm_alerts(level='Error')
 alm_alerts(ids="10.1371/journal.pone.0029797")
 
 # curl debugging
+library("httr")
 alm_alerts(level='Error', config=verbose())
 
 # paging
@@ -70,9 +71,6 @@ alm_alerts(source_id = "wos")
 
 # by publisher_id
 alm_alerts(publisher_id = 340)
-
-# Using different ALM apps, e.g, labs.crowdometer.org
-alm_alerts(api_url='http://labs.crowdometer.org/api/v4/alerts')
 }
 }
 
