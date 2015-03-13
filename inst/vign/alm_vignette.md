@@ -8,41 +8,51 @@
 alm tutorial
 ============
 
-## What are article level metrics?
+The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers:
 
-Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the Journal Impact Factor.
+* PLOS (all their journals) at [http://alm.plos.org/](http://alm.plos.org/)
+* PLOS test server at [http://labs.lagotto.io/](http://labs.lagotto.io/)
+* Copernicus (seems to be down for now)
+* Public Knowledge Project (PKP) at [http://pkp-alm.lib.sfu.ca/](http://pkp-alm.lib.sfu.ca/)
+* Crossref at [http://det.labs.crossref.org/](http://det.labs.crossref.org/)
+* eLife at [http://lagotto.svr.elifesciences.org/](http://lagotto.svr.elifesciences.org/)
+* Pensoft at [http://alm.pensoft.net:81/](http://alm.pensoft.net:81/)
+* Making Dat Count at [http://dlm.plos.org](http://dlm.plos.org)
+
+A good place to look for the status of various installations of Lagotto is this status page: http://articlemetrics.github.io/status/ (which also includes what version of Lagotto each is running)
+
+## Help with Lagotto
+
+Lagotto has a nice support site at [http://discuss.lagotto.io/](http://discuss.lagotto.io/) for any questions about it.
+
+## What is an article level metric?
+
+Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the [Journal Impact Factor](http://www.wikiwand.com/en/Impact_factor).
 
 ## Are there other altmetrics data providers?
 
-Yes indeedy.
+Yes indeedy, but see notes
 
-+ [ImpactStory](http://impactstory.it/)
-+ [Altmetric.com](http://altmetric.com/)
-+ [PlumAnalytics](http://www.plumanalytics.com/)
++ [ImpactStory](http://impactstory.org/) - No open data (except for your own data)
++ [Altmetric.com](http://altmetric.com/) - Some open data
++ [PlumAnalytics](http://www.plumanalytics.com/) - No open data
 
 ## Authentication
 
-You are required to use an API key to access any Lagoota ALM API.
+You only need an API key for the publishers PKP and Pensoft. You can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter, or save in your `.Rprofile` file.
 
-Get your API key for each service at:
+## URLs
 
-* [PLOS](http://alm.plos.org/)
-* [Crossref](http://det.labs.crossref.org/)
-* [eLife](http://lagotto.svr.elifesciences.org/)
-* [PKP](http://pkp-alm.lib.sfu.ca/)
-* [Pensoft](http://alm.pensoft.net:81/)
+The default URL is set for the PLOS data sources: http://alm.plos.org/api/v5/articles
+You can change this URL. For example, if you want to get data from the Crossref instance, set the `api_url` parameter to http://alm.labs.crossref.org/api/v5/articles
 
-Put your API key in your `.Rprofile` file using exactly this:
-options(PlosApiKey = "YOUalmAPIKEY"),
-and the functions within this package will be able to use your API key without you having to enter it every time you run a search.
+## Other languages
 
-Or just pss in your key using the `key` parameter in function calls. Or keep your key as a system variable, named `ALM_KEY`.
+If R is not your thing, there are Lagotto clients in development for [Ruby](https://github.com/articlemetrics/lagotto-rb) and [Python](https://github.com/articlemetrics/pyalm).
 
-Of course you need a different key for each Lagotta instance (e.g., what works for PLOS does not work for Crossref). So just pass in your key with the `key` parameter. You can still store your keys in options, but just pass them on in the function call.
+## Help 
 
-## Help
-
-If you are having trouble with this R package, contact [the maintainer, Scott](mailto:myrmecocystus@gmail.com). If you are having trouble with the API itself, there is a newish discussion forum for the Lagotto service at [http://discuss.lagotto.io/](http://discuss.lagotto.io/).
+If you are having trouble with this R package, contact [the maintainer, Scott](mailto:myrmecocystus@gmail.com). If you are having trouble with the API itself, there is a newish discussion forum for the Lagotto service at [http://discuss.lagotto.io/](http://discuss.lagotto.io/). 
 
 ## Install and load
 
@@ -65,7 +75,7 @@ Load `alm`
 
 
 ```r
-library(alm)
+library("alm")
 ```
 
 ## Get data
@@ -79,7 +89,7 @@ alm_ids(doi="10.1371/journal.pone.0029797")
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#>
+#> 
 #> $data
 #>                       .id  pdf  html readers comments likes  total
 #> 1               citeulike   NA    NA       1       NA    NA      1
@@ -221,7 +231,7 @@ alm_ids(pmid=22590526)
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#>
+#> 
 #> $data
 #>                       .id  pdf  html readers comments likes total
 #> 1               citeulike   NA    NA       5       NA    NA     5
@@ -264,7 +274,7 @@ alm_ids(pmcid=212692)
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#>
+#> 
 #> $data
 #>                       .id  pdf  html readers comments likes   total
 #> 1               citeulike   NA    NA       8       NA    NA       8
@@ -315,7 +325,7 @@ lapply(out$data, head)
 #> 4    pubmed  NA   NA      NA       NA    NA     5
 #> 5    scopus  NA   NA      NA       NA    NA    12
 #> 6   counter 402 2055      NA       NA    NA  2482
-#>
+#> 
 #> $`10.1371/journal.pone.0039395`
 #>         .id pdf html readers comments likes total
 #> 1 citeulike  NA   NA       0       NA    NA     0
@@ -324,7 +334,7 @@ lapply(out$data, head)
 #> 4    pubmed  NA   NA      NA       NA    NA     1
 #> 5    scopus  NA   NA      NA       NA    NA     3
 #> 6   counter 240 1373      NA       NA    NA  1642
-#>
+#> 
 #> $`10.1371/journal.pone.0029797`
 #>         .id  pdf  html readers comments likes total
 #> 1 citeulike   NA    NA       1       NA    NA     1
@@ -333,7 +343,7 @@ lapply(out$data, head)
 #> 4    pubmed   NA    NA      NA       NA    NA     2
 #> 5    scopus   NA    NA      NA       NA    NA     8
 #> 6   counter 2524 30801      NA       NA    NA 33443
-#>
+#> 
 #> $`10.1371/journal.pone.0001543`
 #>         .id pdf html readers comments likes total
 #> 1 citeulike  NA   NA       0       NA    NA     0
@@ -357,7 +367,7 @@ alm_ids(doi='10.1371/journal.pone.0036240', sum_metrics='year')
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#>
+#> 
 #> $data
 #>               .id year total pdf  html
 #> 1       citeulike 2012     5  NA    NA
@@ -406,11 +416,11 @@ names(out)
 ```
 
 ```
-#>  [1] "citeulike"        "crossref"         "nature"
-#>  [4] "pubmed"           "scopus"           "counter"
-#>  [7] "researchblogging" "pmc"              "facebook"
-#> [10] "mendeley"         "twitter"          "wikipedia"
-#> [13] "relativemetric"   "figshare"         "pmceuropedata"
+#>  [1] "citeulike"        "crossref"         "nature"          
+#>  [4] "pubmed"           "scopus"           "counter"         
+#>  [7] "researchblogging" "pmc"              "facebook"        
+#> [10] "mendeley"         "twitter"          "wikipedia"       
+#> [13] "relativemetric"   "figshare"         "pmceuropedata"   
 #> [16] "plos_comments"
 ```
 
@@ -426,7 +436,7 @@ out[["pmc"]]
 ```
 #> $events_url
 #> [1] "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3256195"
-#>
+#> 
 #> $events
 #>    scanned.page.browse month cited.by abstract full.text unique.ip pdf
 #> 1                    0     1        0        1        51        42   8
@@ -496,7 +506,7 @@ out[["pmc"]]
 #> 31 2014      0               0         0
 #> 32 2014      0               0         0
 #> 33 2014      0               0         0
-#>
+#> 
 #> $csl
 #> list()
 ```
@@ -543,18 +553,20 @@ dat <- alm_signposts(doi="10.1371/journal.pone.0029797")
 plot_signposts(input=dat)
 ```
 
-![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png)
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png) 
 
 Or plot many identifiers gives a line chart
 
 
 ```r
+library("ggplot2")
 dois <- c('10.1371/journal.pone.0001543','10.1371/journal.pone.0040117','10.1371/journal.pone.0029797','10.1371/journal.pone.0039395')
 dat <- alm_signposts(doi=dois)
-plot_signposts(input=dat) + theme_grey(base_size = 12)
+plot_signposts(input=dat) + 
+  theme_grey(base_size = 12)
 ```
 
-![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png)
+![plot of chunk unnamed-chunk-17](figure/unnamed-chunk-17-1.png) 
 
 Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
 
@@ -592,7 +604,7 @@ The default plot
 plot_density(alm)
 ```
 
-![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png)
+![plot of chunk unnamed-chunk-21](figure/unnamed-chunk-21-1.png) 
 
 You can change the color of the density plot
 
@@ -601,7 +613,7 @@ You can change the color of the density plot
 plot_density(alm, color="#EFA5A5")
 ```
 
-![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png)
+![plot of chunk unnamed-chunk-22](figure/unnamed-chunk-22-1.png) 
 
 Pass in a title or description subtending the title
 
@@ -610,7 +622,7 @@ Pass in a title or description subtending the title
 plot_density(alm, title="Scopus citations from 2010")
 ```
 
-![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23-1.png)
+![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23-1.png) 
 
 Plot a particular source
 
@@ -619,16 +631,19 @@ Plot a particular source
 plot_density(alm, source="crossref_total")
 ```
 
-![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png) 
 
 Plot many sources in different panels in the same plot, and pass in colors just for fun
 
 
 ```r
-plot_density(input=alm, source=c("counter_html","crossref_total","pubmed_total","scopus_total"), color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4")) + theme_grey(base_size = 12)
+plot_density(input=alm, 
+             source=c("counter_html","crossref_total","pubmed_total","scopus_total"),
+             color=c("#83DFB4","#EFA5A5","#CFD470","#B2C9E4")) + 
+  theme_grey(base_size = 12)
 ```
 
-![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png)
+![plot of chunk unnamed-chunk-25](figure/unnamed-chunk-25-1.png) 
 
 ```
 #> NULL
@@ -636,20 +651,20 @@ plot_density(input=alm, source=c("counter_html","crossref_total","pubmed_total",
 
 ## CrossRef article level metrics
 
-Remember to get your api key from CrossRef, pass it in in the key parameter. Notice that we are passing the base url for the Crossref API, whereas the default is for the PLOS url [http://alm.plos.org/api/v3/articles](http://alm.plos.org/api/v3/articles).
+Notice that we are passing the base url for the Crossref API, whereas the default is for the PLOS url [http://alm.plos.org/api/v5/articles](http://alm.plos.org/api/v5/articles).
 
 
 ```r
-api_url <- "http://alm.labs.crossref.org/api/v5/articles"
+url <- "http://det.labs.crossref.org/api/v5/articles"
 dois <- c("10.1371/journal.pone.0086859", "10.1038/nature12990", "10.5860/choice.51-3037")
-alm_ids(doi=dois, api_url = api_url, key=getOption("crossrefalmkey"))
+alm_ids(doi=dois, api_url = url)
 ```
 
 ```
 #> $meta
 #>   total total_pages page error
 #> 1     3           1    1    NA
-#>
+#> 
 #> $data
 #> $data$`10.1038/nature12990`
 #>              .id pdf html readers comments likes total
@@ -665,7 +680,7 @@ alm_ids(doi=dois, api_url = api_url, key=getOption("crossrefalmkey"))
 #> 10      datacite  NA   NA      NA       NA    NA     0
 #> 11     pmceurope  NA   NA      NA       NA    NA     0
 #> 12 pmceuropedata  NA   NA      NA       NA    NA     0
-#>
+#> 
 #> $data$`10.1371/journal.pone.0086859`
 #>              .id pdf html readers comments likes total
 #> 1       crossref  NA   NA      NA       NA    NA     0
@@ -680,7 +695,7 @@ alm_ids(doi=dois, api_url = api_url, key=getOption("crossrefalmkey"))
 #> 10      datacite  NA   NA      NA       NA    NA     0
 #> 11     pmceurope  NA   NA      NA       NA    NA     0
 #> 12 pmceuropedata  NA   NA      NA       NA    NA     0
-#>
+#> 
 #> $data$`10.5860/choice.51-3037`
 #>              .id pdf html readers comments likes total
 #> 1       crossref  NA   NA      NA       NA    NA     0
