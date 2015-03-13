@@ -10,17 +10,18 @@ alm_ids(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL,
   api_url = "http://alm.plos.org/api/v5/articles", ...)
 }
 \arguments{
-\item{doi}{Digital object identifier for an article in PLoS Journals (character)}
+\item{doi}{(character) Digital object identifier for an article in PLoS Journals}
 
-\item{pmid}{PubMed object identifier (numeric)}
+\item{pmid}{(numeric) PubMed object identifier}
 
-\item{pmcid}{PubMed Central object identifier (numeric)}
+\item{pmcid}{(numeric) PubMed Central object identifier}
 
-\item{wos}{Web of Science identifier (character)}
+\item{wos}{(character) Web of Science identifier}
 
-\item{scp}{Scopus identifier (character)}
+\item{scp}{(character) Scopus identifier}
 
-\item{url}{Canonical URL (character)}
+\item{url}{(character) Canonical URL. This is a URL for an object, not the URL for the
+Lagotto instance (see api_url)}
 
 \item{info}{One of totals, summary, or detail (default totals + sum_metrics data in a list).
      Not specifying anything (the default) returns data.frame of totals across
@@ -38,12 +39,12 @@ You can get multiple sources via a for loop or lapply-type call.}
 \item{key}{(character) Your API key, either enter, or loads from .Rprofile. Only required for
 PKP source, not the others.}
 
-\item{total_details}{If FALSE (the default) the standard totals data.frame is
+\item{total_details}{(logical) If FALSE (the default) the standard totals data.frame is
 returned; if TRUE, the totals data is in a wide format with more details
 about the paper, including publication date, title, etc. If you set this
 to TRUE, the output should no longer with with \code{\link{alm_plot}}.}
 
-\item{sum_metrics}{Just like the output you get from setting info='totals', you can
+\item{sum_metrics}{(character) Just like the output you get from setting info='totals', you can
 get summary metrics by day (sum_metrics='day'), month (sum_metrics='month'),
 or year (sum_metrics='year'). IMPORTANT: note that you can only get by day metrics for
 articles published since May 2014.}
@@ -51,9 +52,9 @@ articles published since May 2014.}
 \item{sleep}{Set a sleep time (in seconds). Only used for large calls where you may be in danger
 of upsetting the server gods, can you say 504 error?}
 
-\item{api_url}{API endpoint, defaults to http://alm.plos.org/api/v5/articles (character)}
+\item{api_url}{(character) API endpoint, defaults to http://alm.plos.org/api/v5/articles}
 
-\item{...}{optional additional curl options (debugging tools mostly)}
+\item{...}{Curl options (debugging tools mostly) passed on to \code{\link[httr]{GET}}}
 }
 \value{
 PLoS altmetrics as data.frame's.
