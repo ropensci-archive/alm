@@ -4,18 +4,20 @@
 \name{alm-package}
 \alias{alm}
 \alias{alm-package}
-\title{R client for the open source article level metrics ALM application.}
+\title{R client for the open source article level metrics Lagotto application.}
 \description{
-R client for the open source article level metrics ALM application.
+R client for the open source article level metrics Lagotto application.
 }
 \details{
-An R interface to the open source article level metrics API
-created by the Public Library of Science (PLOS). A number of publishers are
-using the open source app created by PLOS, so you can drop in a different
-base URL to the functions in this package to get to not only PLOS data, but
-data for Crossref, and more as the open source PLOS software is used.
+An R interface to the RESTful API from the open source article level metrics
+software Lagotto, created by the Public Library of Science (PLOS). A number of
+publishers are using Lagotto, so you can drop in a different base URL to the
+functions in this package to get to not only PLOS data, but
+data for Crossref, and more.
 
-You need API keys for each of the endpoints you use.
+Authenication was required, but has now been removed going foward in Lagotto.
+You only need API keys for a few of the data providers that are running old
+versions of Lagotto, and that will change as they upgrade their Lagotto sofware.
 }
 \author{
 Scott Chamberlain \email{myrmecocystus@gmail.com}
