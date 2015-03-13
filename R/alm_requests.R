@@ -1,18 +1,19 @@
-#' Retrieve API requests data.
+#' Retrieve API requests data
 #'
 #' @export
-#' @param key API key
-#' @param url URL for the api requests endpoint
+#' @param key API key. Required.
+#' @param url URL for the api requests endpoint. Required.
 #' @param ... Curl args to \code{\link[httr]{GET}}
-#' @examples \donttest{
+#' @details This function requires authentication via an API key.
+#' @examples \dontrun{
 #' out <- alm_requests()
 #' out$meta
 #' dat <- out$data
 #' head( dat )
 #' dat[ dat$db_duration > 100, ] 
 #' }
-alm_requests <- function(key = NULL, url = 'http://alm.plos.org/api/v5/api_requests', ...)
-{
+alm_requests <- function(key, url = 'http://alm.plos.org/api/v5/api_requests', ...) {
+  
   res <- GET(url, query=list(api_key=getkey(key)), ...)
   stop_for_status(res)
   out <- jsonlite::fromJSON(content(res, "text"), FALSE)

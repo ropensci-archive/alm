@@ -2,23 +2,25 @@
 % Please edit documentation in R/alm_requests.R
 \name{alm_requests}
 \alias{alm_requests}
-\title{Retrieve API requests data.}
+\title{Retrieve API requests data}
 \usage{
-alm_requests(key = NULL, url = "http://alm.plos.org/api/v5/api_requests",
-  ...)
+alm_requests(key, url = "http://alm.plos.org/api/v5/api_requests", ...)
 }
 \arguments{
-\item{key}{API key}
+\item{key}{API key. Required.}
 
-\item{url}{URL for the api requests endpoint}
+\item{url}{URL for the api requests endpoint. Required.}
 
 \item{...}{Curl args to \code{\link[httr]{GET}}}
 }
 \description{
-Retrieve API requests data.
+Retrieve API requests data
+}
+\details{
+This function requires authentication via an API key.
 }
 \examples{
-\donttest{
+\dontrun{
 out <- alm_requests()
 out$meta
 dat <- out$data

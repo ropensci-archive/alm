@@ -1,3 +1,35 @@
+alm 0.4.0
+===============
+
+NEW FEATURES
+
+* API keys no longer needed for the most part, though some data providers that use Lagotto 
+run older versions of Lagotto that require API keys. (#43)
+* New function `alm_requests()` to get metadata on the API requests sent to a Lagotto instance. 
+Note that this function requires authentication, and a certain level of access. (#37)
+* Some functions gained new parameters: `wos` for a Web of Science identifier, and `scp` for 
+a Scopus identifier
+* `alm_ids()` and `alm_events()` now use `POST` requests by default to allow larger data 
+requests.
+
+MINOR IMPROVEMENTS
+
+* Throughout functions, `source` parameter has changed to `source_id`, and `publisher` to  
+`publisher_id` (#40)
+* Throughout functions, `url` parameter has changed to `api_url`. The parameter `url` is now
+the URL for an object, e.g., a GitHub repository.
+* Throughout functions, `rows` parameter changed to `per_page`
+* The parameter `mendeley_uuid` removed.
+* `alm_plot()` changed so that it only has one type of output.
+* `type` parameter dropped from the `plot_signposts()` function so that we don't have to import
+the `rCharts` package, which is not on CRAN.
+* Various improvements to the vignette
+
+BUG FIXES
+
+* Fixed Mendeley event parser in `alm_events()` (#45)
+* `rCharts` removed from package (#42)
+
 alm 0.3.1
 ===============
 
