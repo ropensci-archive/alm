@@ -19,7 +19,7 @@ The `alm` package is a set of functions to access article level metrics via a RE
 
 * PLOS (all their journals) at [http://alm.plos.org/](http://alm.plos.org/)
 * PLOS test server at [http://labs.lagotto.io/](http://labs.lagotto.io/)
-* Copernicus at [http://metricus.copernicus.org/](http://metricus.copernicus.org/)
+* Copernicus (seems to be down for now)
 * Public Knowledge Project (PKP) at [http://pkp-alm.lib.sfu.ca/](http://pkp-alm.lib.sfu.ca/)
 * Crossref at [http://det.labs.crossref.org/](http://det.labs.crossref.org/)
 * eLife at [http://lagotto.svr.elifesciences.org/](http://lagotto.svr.elifesciences.org/)
