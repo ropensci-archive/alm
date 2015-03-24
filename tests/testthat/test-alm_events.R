@@ -6,7 +6,7 @@ out <- out[!out %in% c("sorry, no events content yet","parser not written yet")]
 
 test_that("almevents returns the correct class", {
 	expect_that(out, is_a("list"))
-	expect_that(out[["pmc"]], is_a("list"))
+	expect_that(out[["facebook"]], is_a("list"))
 })
 
 test_that("almevents returns correct things when two dois passed in", {
