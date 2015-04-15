@@ -98,7 +98,7 @@ alm_capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
 #' @param x A list
 #' @export
 #' @keywords internal
-almcompact <- function (x) Filter(Negate(is.null), x)
+almcompact <- function(x) Filter(Negate(is.null), x)
 
 #' List the possible alert classes
 #' @export
@@ -108,7 +108,7 @@ alert_classes_strings <- c('Net::HTTPUnauthorized','Net::HTTPRequestTimeOut','De
 
 alm_GET <- function(x, y, sleep=0, ...){
   Sys.sleep(time = sleep)
-  out <- GET(x, query=y, ...)
+  out <- GET(x, query=y, add_headers(), ...)
   stop_for_status(out)
   tt <- content(out, as = "text")
   jsonlite::fromJSON(tt, FALSE)
