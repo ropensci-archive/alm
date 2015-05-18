@@ -337,11 +337,14 @@ alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = 
 					  list(events_url=y$events_url, events=temp, csl=csl)
 					}
 				} else if(y$name == "wikipedia"){
-					if(length(y$events)==0){paste(sorry)} else
-					{
-					  df <- ldply(y$events)
-					  names(df) <- c("language","values")
-					  list(events_url=y$events_url, events=df, csl=y$events_csl)
+					if(length(y$events)==0){paste(sorry)} else {
+					  df <- ldply(y$events, function(w) {
+					    data.frame(w$event, stringsAsFactors = FALSE)
+					  })
+					  csldf <- ldply(y$events, function(w) {
+					    parse_csl(w$event_csl)
+					  })
+					  list(events_url = y$events_url, events = df, csl = csldf)
 					}
 				} else if(y$name == "bloglines"){
 					if(length(y$events)==0){paste(sorry)} else
@@ -597,12 +600,12 @@ try_date_parts <- function(w){
 parse_csl <- function(z){
   z[sapply(z, is.null)] <- NA
   aut <- paste(sapply(z$author, function(zz) paste(zz, collapse = " ")), collapse = "; ")
-  data.frame(authors=aut,
-             title=z$title,
-             container_title=z$`container-title`,
-             issued=try_date_parts(z$issued),
-             url=z$url,
-             type=z$type,
+  data.frame(csl_authors = aut,
+             csl_title = z$title,
+             csl_container_title = z$`container-title`,
+             csl_issued = try_date_parts(z$issued),
+             csl_url = z$url,
+             csl_type = z$type,
              stringsAsFactors = FALSE)
 }
 
