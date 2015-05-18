@@ -82,15 +82,15 @@ getkey <- function(x = NULL) {
 #' @keywords internal
 alm_capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
 	cap <- function(s) paste(toupper(substring(s,1,1)),
-		{s <- substring(s,2); if(strict) tolower(s) else s}, sep = "", collapse = " " )
-	if(!onlyfirst){
+		{s <- substring(s,2); if (strict) tolower(s) else s}, sep = "", collapse = " " )
+	if (!onlyfirst) {
 		sapply(strsplit(s, split = " "), cap, USE.NAMES = !is.null(names(s)))
 	} else
 		{
 			sapply(s, function(x)
 				paste(toupper(substring(x,1,1)),
 							tolower(substring(x,2)),
-							sep="", collapse=" "), USE.NAMES=F)
+							sep = "", collapse = " "), USE.NAMES = FALSE)
 		}
 }
 
@@ -100,24 +100,43 @@ alm_capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
 #' @keywords internal
 almcompact <- function(x) Filter(Negate(is.null), x)
 
-#' List the possible alert classes
-#' @export
-alert_classes <- function() alert_classes_strings
-
-alert_classes_strings <- c('Net::HTTPUnauthorized','Net::HTTPRequestTimeOut','Delayed::WorkerTimeout','DelayedJobError','Net::HTTPConflict','Net::HTTPServiceUnavailable','Faraday::ResourceNotFound','ActiveRecord::RecordInvalid','TooManyErrorsBySourceError','SourceInactiveError','TooManyWorkersError','EventCountDecreasingError','EventCountIncreasingTooFastError','ApiResponseTooSlowError','HtmlRatioTooHighError','ArticleNotUpdatedError','SourceNotUpdatedError','CitationMilestoneAlert')
-
 alm_GET <- function(x, y, sleep=0, ...){
   Sys.sleep(time = sleep)
-  out <- GET(x, query=y, add_headers(), ...)
+  out <- GET(x, query = y, head_ver(), head_auth(), ...)
   stop_for_status(out)
   tt <- content(out, as = "text")
   jsonlite::fromJSON(tt, FALSE)
+}
+
+head_ver <- function(z = "6") {
+  add_headers("Accept" = paste0("application/json; version=", z))
+}
+
+head_auth <- function(key = NULL) {
+  if (is.null(key)) {
+    NULL
+  } else {
+    add_headers("Authorization" = paste0("Token token=", key))
+  }
 }
 
 alm_POST <- function(x, y, sleep=0, ...){
   Sys.sleep(time = sleep)
-  out <- POST(x, body=y, add_headers("X-HTTP-Method-Override" = "GET"), ...)
+  out <- POST(x, body = y, add_headers("X-HTTP-Method-Override" = "GET"), ...)
   stop_for_status(out)
   tt <- content(out, as = "text")
   jsonlite::fromJSON(tt, FALSE)
 }
+
+#' List the possible alert classes
+#' @export
+alert_classes <- function() alert_classes_strings
+
+alert_classes_strings <- c('Net::HTTPUnauthorized','Net::HTTPRequestTimeOut',
+                           'Delayed::WorkerTimeout','DelayedJobError','Net::HTTPConflict',
+                           'Net::HTTPServiceUnavailable','Faraday::ResourceNotFound',
+                           'ActiveRecord::RecordInvalid','TooManyErrorsBySourceError',
+                           'SourceInactiveError','TooManyWorkersError','EventCountDecreasingError',
+                           'EventCountIncreasingTooFastError','ApiResponseTooSlowError',
+                           'HtmlRatioTooHighError','ArticleNotUpdatedError',
+                           'SourceNotUpdatedError','CitationMilestoneAlert')
