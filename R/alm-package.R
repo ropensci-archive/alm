@@ -10,6 +10,8 @@
 #' You only need API keys for a few of the data providers that are running old 
 #' versions of Lagotto, and that will change as they upgrade their Lagotto sofware.
 #'
+#' @importFrom methods is
+#' @importFrom stats setNames na.omit
 #' @name alm-package
 #' @aliases alm
 #' @docType package

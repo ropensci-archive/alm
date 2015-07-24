@@ -1,13 +1,12 @@
 Package: alm
-Title: R Client for the Lagotto Altmetrics Platform
+Title: Client for the 'Lagotto' 'Altmetrics' Platform
 Description: An R interface to the open source article level metrics platform
     <https://github.com/articlemetrics/lagotto/> created by the Public Library
-    of Science (PLOS). A number of publishers are using the open source app 
-    created by PLOS, so you can drop in a different base URL to the functions 
-    in this package to get to not only PLOS data, but data for Crossref, 
-    and more as the open source PLOS software is used.
-Version: 0.4.0.99
-Date: 2015-03-13
+    of Science ('PLOS'). A number of publishers are using the open source 'app' 
+    created by 'PLOS', so you can drop in a different base URL to the functions 
+    in this package to get to not only 'PLOS' data, but data for 'Crossref', 
+    and more as the open source 'PLOS' software is used.
+Version: 0.4.1.9000
 License: MIT + file LICENSE
 Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
     email = "myrmecocystus@gmail.com"),
@@ -23,6 +22,8 @@ LazyData: true
 VignetteBuilder: knitr
 Roxygen: list(wrap = FALSE)
 Imports:
+    methods,
+    stats,
     ggplot2,
     plyr,
     stringr,
