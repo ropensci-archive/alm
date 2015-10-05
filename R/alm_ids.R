@@ -15,7 +15,7 @@
 alm_ids <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, 
   url = NULL, info = "totals", source_id = NULL, publisher_id = NULL, key = NULL, 
   total_details = FALSE, sum_metrics = NULL, sleep = 0,
-	api_url = 'http://labs.lagotto.io/api/works', ...){
+	api_url = 'http://alm.plos.org/api/works', ...){
 
   info <- match.arg(info, c("summary","totals","detail"))
   if (!is.null(doi)) doi <- doi[!grepl("image", doi)] # remove any DOIs of images

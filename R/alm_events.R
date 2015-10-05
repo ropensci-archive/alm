@@ -153,15 +153,15 @@
 
 alm_events <- function(doi = NULL, pmid = NULL, pmcid = NULL, wos = NULL, scp = NULL, url = NULL,
   source_id = NULL, publisher_id = NULL, compact = TRUE, key = NULL,
-  api_url='http://alm.plos.org/api/v5/articles', ...)
-{
-	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, source_id=source_id, publisher_id=publisher_id))
-	# id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url))
-	if(length(delsp(id)) > 1) {
+  api_url='http://alm.plos.org/api/v5/articles', ...) {
+  
+	id <- almcompact(list(doi=doi, pmid=pmid, pmcid=pmcid, wos=wos, scp=scp, url=url, 
+	                      source_id=source_id, publisher_id=publisher_id))
+	if (length(delsp(id)) > 1) {
 	  stop("Only supply one of: doi, pmid, pmcid, wos, scp, url")
 	}
-	if(length(source_id) > 1) stop("You can only supply one source_id")
-	if(length(publisher_id) > 1) stop("You can only supply one publisher_id")
+	if (length(source_id) > 1) stop("You can only supply one source_id")
+	if (length(publisher_id) > 1) stop("You can only supply one publisher_id")
 
 	parse_events <- function() {
 	  args <- almcompact(list(api_key = key, info = 'detail', source_id = source_id,
