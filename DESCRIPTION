@@ -19,20 +19,14 @@ Authors@R: c(person("Scott", "Chamberlain", role = c("aut", "cre"),
 URL: https://github.com/ropensci/alm
 BugReports: http://www.github.com/ropensci/alm/issues
 LazyData: true
-VignetteBuilder: knitr
-Roxygen: list(wrap = FALSE)
 Imports:
     methods,
     stats,
-    ggplot2,
     plyr,
     stringr,
     reshape,
-    reshape2,
     httr,
-    grid,
-    jsonlite,
-    lubridate
+    jsonlite
 Suggests:
     testthat,
     roxygen2,

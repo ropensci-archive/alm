@@ -108,6 +108,13 @@ alm_GET <- function(x, y, sleep=0, ...){
   jsonlite::fromJSON(tt, FALSE)
 }
 
+almGET <- function(x, y = list(), key = NULL, ...){
+  out <- GET(x, query = y, head_ver(), head_auth(key), ...)
+  stop_for_status(out)
+  tt <- content(out, as = "text")
+  jsonlite::fromJSON(tt)
+}
+
 head_ver <- function(z = "6") {
   add_headers("Accept" = paste0("application/json; version=", z))
 }
@@ -147,4 +154,39 @@ pluck <- function(x, name, type) {
   } else {
     vapply(x, "[[", name, FUN.VALUE = type)
   }
+}
+
+idtype <- function(x){
+  x <- x[ !x %in% c("source_id","publisher_id") ]
+  if(length(x) == 0){
+    NULL
+  } else {
+    if( x %in% c("doi", "pmid", "pmcid", "wos", "scp", "url") ) x else NULL
+  }
+}
+
+delsp <- function(x){
+  x[ !names(x) %in% c("source_id","publisher_id") ]
+}
+
+doiorid <- function(x) {
+  if (is.null(x$doi)) {
+    x$id
+  } else {
+    x$doi
+  }
+}
+
+concat_ids <- function(x){
+  if (names(x) == "doi") {
+    paste(sapply(x, function(y) gsub("/", "%2F", y)), collapse = ",")
+  } else { 
+    paste(x[[1]], collapse = ",") 
+  }
+}
+
+metadf <- function(x){
+  tmp <- x[!names(x) == 'data']
+  tmp[vapply(tmp, is.null, logical(1))] <- NA
+  data.frame(tmp, stringsAsFactors = FALSE)
 }

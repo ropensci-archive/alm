@@ -12,23 +12,14 @@
 #'
 #' @importFrom methods is
 #' @importFrom stats setNames na.omit
+#' @importFrom stringr str_replace_all str_split
+#' @importFrom reshape sort_df
+#' @importFrom plyr rbind.fill
+#' @importFrom httr GET POST content stop_for_status add_headers
 #' @name alm-package
 #' @aliases alm
 #' @docType package
 #' @title R client for the open source article level metrics Lagotto application.
 #' @author Scott Chamberlain \email{myrmecocystus@@gmail.com}
 #' @keywords package
-NULL
-
-#' Defunct functions in alm
-#'
-#' \itemize{
-#'  \item \code{\link{alm_pubmedid}}: Function removed, you can get this info using alm_ids
-#'  \item \code{\link{alm_pubmedcentid}}: Function removed, you can get this info using alm_ids
-#'  \item \code{\link{almupdated}}: Function removed, you can get this info using alm_ids
-#'  \item \code{\link{almdateupdated}}: Function removed, you can get this info using alm_ids
-#'  \item \code{\link{alm_totals}}: Function removed, you can get this info using alm_ids
-#' }
-#'
-#' @name alm-defunct
 NULL
