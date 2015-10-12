@@ -13,6 +13,8 @@ _____  |  |   _____
 [![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/master)](https://ci.appveyor.com/project/sckott/alm/branch/master)
 [![Coverage Status](https://coveralls.io/repos/ropensci/alm/badge.svg)](https://coveralls.io/r/ropensci/alm)
 
+__UPDATE__: Check out the [v6 branch](https://github.com/ropensci/alm/tree/v6) for a version of this package to work with the newest Lagotto API.
+
 ## What it is!?
 
 The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers:
