@@ -12,7 +12,7 @@ _____  |  |   _____
 [![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=master)](https://travis-ci.org/ropensci/alm?branch=master)
 [![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/master)](https://ci.appveyor.com/project/sckott/alm/branch/master)
 [![Coverage Status](https://coveralls.io/repos/ropensci/alm/badge.svg)](https://coveralls.io/r/ropensci/alm)
-[![Research software impact](http://depsy.org/api/package/cran/taxize/badge.svg)](http://depsy.org/package/r/taxize)
+[![Research software impact](http://depsy.org/api/package/cran/alm/badge.svg)](http://depsy.org/package/r/alm)
 
 __UPDATE__: Check out the [v6 branch](https://github.com/ropensci/alm/tree/v6) for a version of this package to work with the newest Lagotto API.
 
