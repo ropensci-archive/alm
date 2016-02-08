@@ -187,5 +187,6 @@ alm_works('10.5061/dryad.79dq1/1', api_url = dlmurl)
 * Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
 * License: MIT
 * Get citation information for `alm` in R doing `citation(package = 'alm')`
+* Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 [![ropensci_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
