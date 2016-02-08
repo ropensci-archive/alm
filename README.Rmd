@@ -1,4 +1,29 @@
-```{r, eval=TRUE, echo=FALSE}
+```{r echo=FALSE}
+library("knitr")
+hook_output <- knitr::knit_hooks$get("output")
+knitr::knit_hooks$set(output = function(x, options) {
+   lines <- options$output.lines
+   if (is.null(lines)) {
+     return(hook_output(x, options))  # pass to default hook
+   }
+   x <- unlist(strsplit(x, "\n"))
+   more <- "..."
+   if (length(lines)==1) {        # first n lines
+     if (length(x) > lines) {
+       # truncate the output, but add ....
+       x <- c(head(x, lines), more)
+     }
+   } else {
+     x <- c(if (abs(lines[1])>1) more else NULL,
+            x[lines],
+            if (length(x)>lines[abs(length(lines))]) more else NULL
+           )
+   }
+   # paste these lines together
+   x <- paste(c(x, ""), collapse = "\n")
+   hook_output(x, options)
+ })
+
 knitr::opts_chunk$set(
   fig.path = "inst/assets/img/",
   warning = FALSE,
@@ -84,130 +109,43 @@ The first function we'll look at is `alm_ids()`, named with `ids` since we searc
 
 ## Get altmetrics data for a single paper
 
-```{r}
-alm_ids(doi = "10.1371/journal.pone.0029797")
-```
-
-## Details for a single DOI
-
-
-```{r}
-alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
+```{r output.lines=1:15}
+alm_works("10.1371/journal.pone.0029797")
 ```
 
 ## Search on many identifiers
 
 ```{r cache=TRUE}
 dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", "10.1371/journal.pone.0039395")
-out <- alm_ids(doi = dois)
-lapply(out$data, head)
-```
-
-## Output an-easy-to-combine-with-other-results data.frame
-
-```{r}
-res <- alm_ids(doi = "10.1371/journal.pone.0035869", total_details = TRUE)
-res$data[, 3:10]
+lapply(dois, function(z) alm_works(z)$work$publisher_id)
 ```
 
 ## Get detailed data for altmetrics using `almevents`
 
-```{r}
+```{r eval=FALSE}
 out <- alm_events(doi = "10.1371/journal.pone.0029797")
 names(out)  # names of sources
 ```
 
-```{r}
+```{r eval=FALSE}
 out <- out[!out %in% c("sorry, no events content yet", "parser not written yet")]  # remove those with no data
 out[["pmc"]]  # get the results for PubMed Central
-```
-
-## Retrieve and plot PLOS article-level metrics signposts.
-
-```{r fig.height=4}
-dat <- alm_signposts(doi = "10.1371/journal.pone.0029797")
-plot_signposts(dat)
-```
-
-Or plot many identifiers get a faceted bar chart, note the tick labels have just the last part of the DOI in this case to help you identify each DOI - printing the entire DOI would make lables overlap one another.
-
-```{r fig.width=8, cache=TRUE}
-dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.1371/journal.pone.0029797", "10.1371/journal.pone.0039395")
-dat <- alm_signposts(doi = dois)
-plot_signposts(input = dat)
-```
-
-Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
-
-### Density and histogram plots from PLOS Article Level Metrics data
-
-Note: Do you the key below in the `searchplos` call in this example, but if you plan to use rplos more, get your own API key [here](http://api.plos.org/).
-
-```{r, cache=TRUE}
-library('rplos')
-library('plyr')
-dois <- searchplos(q = "science", fl = "id", fq = list("-article_type:correction", "cross_published_journal_key:PLoSONE", "doc_type:full", "publication_date:[2010-01-01T00:00:00Z TO 2010-12-31T23:59:59Z]"), limit = 50)
-dois <- dois$data$id
-```
-
-
-Collect altmetrics data and combine to a `data.frame` with `ldply`
-
-
-```{r cache=TRUE}
-alm <- alm_ids(doi = dois, total_details = TRUE)
-alm <- ldply(alm$data)
-```
-
-
-The default plot
-
-
-```{r fig.height=4}
-plot_density(alm)
-```
-
-
-Plot many sources in different panels in the same plot, and pass in colors just for fun
-
-
-```{r}
-plot_density(alm,
-             source = c("counter_total", "crossref_total", "twitter_total"),
-             color = c("#83DFB4", "#EFA5A5", "#CFD470"))
 ```
 
 ## Work with data from non-PLOS publishers
 
 Crossref
 
-```{r eval=FALSE}
-crurl <- "http://det.labs.crossref.org/api/v5/articles"
-crkey <- getOption("crossrefalmkey")
-alm_ids(doi='10.1371/journal.pone.0086859', api_url = crurl, key = crkey)
+```{r output.lines=1:15}
+crurl <- "http://det.crossref.org"
+alm_works('10.15468/DL.O8YDNB', api_url = crurl)
 ```
 
-eLife
+Datacite labs
 
-```{r}
-elifeurl <- "http://alm.svr.elifesciences.org/api/v5/articles"
-elifekey <- getOption("elifealmkey")
-alm_ids(doi='10.7554/eLife.00471', api_url = elifeurl, key = elifekey)
-```
-
-Pensoft
-
-```{r}
-psurl <- 'http://alm.pensoft.net:81/api/v5/articles'
-pskey <- getOption("pensoftalmkey")
-alm_ids(doi='10.3897/zookeys.88.807', api_url = psurl, key = pskey)
-```
-
-Making Data Count - Dataset altmetrics
-
-```{r}
-dlmurl <- 'http://dlm.plos.org/api/v5/articles'
-alm_ids('10.5061/dryad.7fj1k', api_url = dlmurl)
+```{r output.lines=1:15}
+dlmurl <- 'https://dlm.labs.datacite.org'
+alm_works('10.5061/dryad.79dq1/1', api_url = dlmurl)
 ```
 
 ## Meta
