@@ -7,7 +7,7 @@
 #' @examples \dontrun{
 #' api_requests(getOption("almv4_pwd"))
 #' }
-api_requests <- function(key, api_url = 'http://alm.plos.org', ...) {
+api_requests <- function(key, api_url = 'https://eventdata.datacite.org', ...) {
   stop("doesn't work yet", call. = FALSE)
   # almGET(file.path(api_url, "api/api_requests"), key = key, ...)
 }

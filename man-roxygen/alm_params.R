@@ -26,4 +26,3 @@
 #'    or year (sum_metrics='year'). IMPORTANT: note that you can only get by day metrics for
 #'    articles published since May 2014.
 #' @param api_url (character) API endpoint, defaults to http://alm.plos.org/api/v5/articles
-#' @param ... Curl options (debugging tools mostly) passed on to \code{\link[httr]{GET}}

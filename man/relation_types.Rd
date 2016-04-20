@@ -4,14 +4,14 @@
 \alias{relation_types}
 \title{Relation types}
 \usage{
-relation_types(x = NULL, api_url = "http://alm.plos.org", ...)
+relation_types(x = NULL, api_url = "https://eventdata.datacite.org", ...)
 }
 \arguments{
 \item{x}{(character) A relation type name. Optional.}
 
 \item{api_url}{(character) API endpoint, defaults to http://alm.plos.org/api/v5/articles}
 
-\item{...}{Curl options (debugging tools mostly) passed on to \code{\link[httr]{GET}}}
+\item{...}{Curl options passed on to \code{\link[httr]{GET}}}
 }
 \description{
 Relation types

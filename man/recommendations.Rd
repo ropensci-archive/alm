@@ -4,21 +4,21 @@
 \alias{recommendations}
 \title{Recommendations}
 \usage{
-recommendations(doi, api_url = "http://alm.plos.org", ...)
+recommendations(doi, api_url = "https://eventdata.datacite.org", ...)
 }
 \arguments{
 \item{doi}{(character) A doi. Required.}
 
 \item{api_url}{(character) API endpoint, defaults to http://alm.plos.org/api/v5/articles}
 
-\item{...}{Curl options (debugging tools mostly) passed on to \code{\link[httr]{GET}}}
+\item{...}{Curl options passed on to \code{\link[httr]{GET}}}
 }
 \description{
 Recommendations
 }
 \examples{
 \dontrun{
-res <- recommendations("10.1371/journal.pmed.1001361")
+res <- recommendations("http://doi.org/10.1038/NGEO2696")
 res$meta
 res$recommendations
 }

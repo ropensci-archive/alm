@@ -2,14 +2,18 @@
 #' 
 #' @param id (character) A group id. Optional.
 #' @param api_url (character) API endpoint, defaults to http://alm.plos.org/api/v5/articles
-#' @param ... Curl options (debugging tools mostly) passed on to \code{\link[httr]{GET}}
+#' @template curl
 #' @examples \dontrun{
 #' groups()
-#' groups('cited')
-#' groups('viewed')
+#' group('contributions')
+#' group('works')
 #' }
-groups <- function(id = NULL, api_url = 'http://alm.plos.org', ...) {
-  api_url <- file.path(api_url, "api/groups")
-  if (!is.null(id)) api_url <- file.path(api_url, id)
-  almGET(api_url, ...)
+groups <- function(api_url = 'https://eventdata.datacite.org', ...) {
+  alm_GET(file.path(api_url, "api/groups"), list(), ...)
+}
+
+#' @export
+#' @rdname groups
+group <- function(id, api_url = 'https://eventdata.datacite.org', ...) {
+  alm_GET(file.path(api_url, "api/groups", id), list(), ...)
 }

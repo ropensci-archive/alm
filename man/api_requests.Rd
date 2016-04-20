@@ -4,7 +4,7 @@
 \alias{api_requests}
 \title{API requests}
 \usage{
-api_requests(key, api_url = "http://alm.plos.org", ...)
+api_requests(key, api_url = "https://eventdata.datacite.org", ...)
 }
 \arguments{
 \item{key}{(character) An API key. Required.}

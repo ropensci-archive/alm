@@ -100,22 +100,21 @@ alm_capwords <- function(s, strict = FALSE, onlyfirst = FALSE) {
 #' @keywords internal
 almcompact <- function(x) Filter(Negate(is.null), x)
 
-alm_GET <- function(x, y, sleep=0, ...){
-  Sys.sleep(time = sleep)
+alm_GET <- function(x, y, ...){
   out <- GET(x, query = y, head_ver(), head_auth(), ...)
   stop_for_status(out)
-  tt <- content(out, as = "text")
+  tt <- content(out, as = "text", encoding = "UTF-8")
   jsonlite::fromJSON(tt, FALSE)
 }
 
 almGET <- function(x, y = list(), key = NULL, ...){
   out <- GET(x, query = y, head_ver(), head_auth(key), ...)
   stop_for_status(out)
-  tt <- content(out, as = "text")
+  tt <- content(out, as = "text", encoding = "UTF-8")
   jsonlite::fromJSON(tt)
 }
 
-head_ver <- function(z = "6") {
+head_ver <- function(z = "7") {
   add_headers("Accept" = paste0("application/json; version=", z))
 }
 
