@@ -12,6 +12,8 @@ _____  |  |   _____
 [![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=v6)](https://travis-ci.org/ropensci/alm?branch=v6)
 [![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/v6)](https://ci.appveyor.com/project/sckott/alm/branch/v6)
 [![codecov.io](https://codecov.io/github/ropensci/alm/coverage.svg?branch=v6)](https://codecov.io/github/ropensci/alm?branch=v6)
+[![Research software impact](http://depsy.org/api/package/cran/alm/badge.svg)](http://depsy.org/package/r/alm)
+
 
 ## What it is!?
 
@@ -84,18 +86,18 @@ alm_works("10.1371/journal.pone.0029797")
 #> $meta
 #> $meta$status
 #> [1] "ok"
-#> 
+#>
 #> $meta$`message-type`
 #> [1] "work"
-#> 
+#>
 #> $meta$`message-version`
 #> [1] "6.0.0"
-#> 
-#> 
+#>
+#>
 #> $work
 #> $work$id
 #> [1] "http://doi.org/10.1371/journal.pone.0029797"
-#> 
+#>
 ...
 ```
 
@@ -107,13 +109,13 @@ dois <- c("10.1371/journal.pone.0001543", "10.1371/journal.pone.0040117", "10.13
 lapply(dois, function(z) alm_works(z)$work$publisher_id)
 #> [[1]]
 #> [1] 340
-#> 
+#>
 #> [[2]]
 #> [1] 340
-#> 
+#>
 #> [[3]]
 #> [1] 340
-#> 
+#>
 #> [[4]]
 #> [1] 340
 ```
@@ -143,18 +145,18 @@ alm_works('10.15468/DL.O8YDNB', api_url = crurl)
 #> $meta
 #> $meta$status
 #> [1] "ok"
-#> 
+#>
 #> $meta$`message-type`
 #> [1] "work"
-#> 
+#>
 #> $meta$`message-version`
 #> [1] "6.0.0"
-#> 
-#> 
+#>
+#>
 #> $work
 #> $work$id
 #> [1] "http://doi.org/10.15468/DL.O8YDNB"
-#> 
+#>
 ...
 ```
 
@@ -167,18 +169,18 @@ alm_works('10.5061/dryad.79dq1/1', api_url = dlmurl)
 #> $meta
 #> $meta$status
 #> [1] "ok"
-#> 
+#>
 #> $meta$`message-type`
 #> [1] "work"
-#> 
+#>
 #> $meta$`message-version`
 #> [1] "6.0.0"
-#> 
-#> 
+#>
+#>
 #> $work
 #> $work$id
 #> [1] "http://doi.org/10.5061/dryad.79dq1/1"
-#> 
+#>
 ...
 ```
 
