@@ -5,7 +5,7 @@ Description: An R interface to the open source article level metrics platform
     using Lagotto, so you can drop in a different base URL to the functions
     in this package to get to data for 'Crossref', 'PLOS', and many other
     publishers.
-Version: 0.4.5.9000
+Version: 0.4.7.9000
 License: MIT + file LICENSE
 Authors@R: c(
     person("Scott", "Chamberlain", role = c("aut", "cre"), email = "myrmecocystus@gmail.com"),
@@ -27,5 +27,6 @@ Imports:
 Suggests:
     testthat,
     rplos,
-    knitr
+    knitr,
+    covr
 RoxygenNote: 5.0.1

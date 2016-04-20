@@ -18,9 +18,15 @@ deposit(id, api_url = "https://eventdata.datacite.org", ...)
 
 \item{source_token}{(character) Filter by source_token. optional}
 
+\item{page}{(numeric) Page number. optional}
+
+\item{per_page}{(numeric) Results per page, defaults to 1000. optional}
+
 \item{api_url}{(character) API endpoint, defaults to http://alm.plos.org/api/v5/articles}
 
 \item{...}{Curl options passed on to \code{\link[httr]{GET}}}
+
+\item{id}{(character) A deposit id, required.}
 }
 \description{
 Deposits

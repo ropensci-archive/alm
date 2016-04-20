@@ -27,7 +27,7 @@ source_ <- function(id, api_url = 'https://eventdata.datacite.org', ...) {
 
 #' @export
 #' @rdname sources
-sources_months <- function(x, api_url = 'https://eventdata.datacite.org', ...) {
-  api_url <- file.path(api_url, "api/sources", x, "months")
+sources_months <- function(id, api_url = 'https://eventdata.datacite.org', ...) {
+  api_url <- file.path(api_url, "api/sources", id, "months")
   almGET(api_url, ...)
 }

@@ -21,7 +21,7 @@ contributors <- function(page = NULL, per_page = NULL, api_url = 'https://eventd
 }
 
 #' @export
-#' @rdname docs
+#' @rdname contributors
 contributor <- function(id, api_url = 'https://eventdata.datacite.org', ...) {
   alm_GET(file.path(api_url, "api/contributors", id), list(), ...)
 }

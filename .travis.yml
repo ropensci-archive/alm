@@ -1,16 +1,14 @@
 language: r
-
-r_github_packages:
- - jimhester/robustr
- - jimhester/covr
+sudo: false
+cache: packages
 
 after_success:
-  - Rscript -e 'library(covr); coveralls()'
+  - Rscript -e 'library(covr); covr::codecov()'
 
 notifications:
   email:
-    on_success: change
-    on_failure: change
+    on_success: never
+    on_failure: never
   slack:
     secure: lnO7OWkimtwP3AZImeDuoo8WH39ZNXDX5mCNsVonSZlXgHCTuf4mXK+6RAA1x6EJFmypG3qbWD+6YQuUcLMji4oSN4p3sVSC2Z2Rdz0Ef+4UspFij8oKcYainI2qwG89FYn0CC8ITrh+kxtLbTLF6VYwb5jlZ8DRsAk8LVWxm+g=
 

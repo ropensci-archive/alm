@@ -10,7 +10,7 @@ sources(api_url = "https://eventdata.datacite.org", ...)
 
 source_(id, api_url = "https://eventdata.datacite.org", ...)
 
-sources_months(x, api_url = "https://eventdata.datacite.org", ...)
+sources_months(id, api_url = "https://eventdata.datacite.org", ...)
 }
 \arguments{
 \item{api_url}{(character) API endpoint, defaults to http://alm.plos.org/api/v5/articles}

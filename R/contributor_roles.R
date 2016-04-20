@@ -16,7 +16,7 @@ contributor_roles <- function(api_url = 'https://eventdata.datacite.org', ...) {
 }
 
 #' @export
-#' @rdname docs
+#' @rdname contributor_roles
 contributor_role <- function(id, api_url = 'https://eventdata.datacite.org', ...) {
   alm_GET(file.path(api_url, "api/contributor_roles", id), list(), ...)
 }

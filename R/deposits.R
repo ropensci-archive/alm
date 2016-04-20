@@ -1,9 +1,12 @@
 #' Deposits
 #' 
 #' @export
+#' @param id (character) A deposit id, required.
 #' @param message_type (character) Filter by message_type. optional
 #' @param state (character) "Filter by DOI prefix" or maybe "Filter by state" optional
 #' @param source_token (character) Filter by source_token. optional
+#' @param page (numeric) Page number. optional
+#' @param per_page (numeric) Results per page, defaults to 1000. optional
 #' @param api_url (character) API endpoint, defaults to http://alm.plos.org/api/v5/articles
 #' @template curl
 #' @examples \dontrun{
