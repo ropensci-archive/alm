@@ -14,7 +14,7 @@ _____  |  |   _____
 [![Coverage Status](https://coveralls.io/repos/ropensci/alm/badge.svg)](https://coveralls.io/r/ropensci/alm)
 [![Research software impact](http://depsy.org/api/package/cran/alm/badge.svg)](http://depsy.org/package/r/alm)
 
-__UPDATE__: Check out the [v6 branch](https://github.com/ropensci/alm/tree/v6) for a version of this package to work with the newest Lagotto API.
+__UPDATE__: Package is Archived on CRAN
 
 ## What it is!?
 
@@ -95,7 +95,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#> 
+#>
 #> $data
 #>                       .id  pdf  html readers comments likes  total
 #> 1               citeulike   NA    NA       1       NA    NA      1
@@ -136,7 +136,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#> 
+#>
 #> $data
 #> $data$info
 #>                                 id
@@ -151,11 +151,11 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 #> 1 22253785 3256195 84855712734 000301355700052 2015-03-13T09:10:19Z
 #>       issued
 #> 1 2012-01-11
-#> 
+#>
 #> $data$signposts
 #>                                 id viewed saved discussed cited
 #> 1 doi/10.1371/journal.pone.0029797  35315    87       244     9
-#> 
+#>
 #> $data$totals
 #>                       .id  pdf  html readers comments likes  total
 #> 1               citeulike   NA    NA       1       NA    NA      1
@@ -185,7 +185,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
 #> 25 articlecoveragecurated   NA    NA      NA        0    NA      0
 #> 26          plos_comments   NA    NA      NA       11    NA     16
 #> 27                  orcid   NA    NA       0       NA    NA      0
-#> 
+#>
 #> $data$sum_metrics
 #>                .id year month day total X[[1L]]
 #> 1        citeulike 2012     1  12     1      NA
@@ -214,7 +214,7 @@ lapply(out$data, head)
 #> 4    pubmed  NA   NA      NA       NA    NA     6
 #> 5    scopus  NA   NA      NA       NA    NA    14
 #> 6   counter 439 2312      NA       NA    NA  2780
-#> 
+#>
 #> $`10.1371/journal.pone.0039395`
 #>         .id pdf html readers comments likes total
 #> 1 citeulike  NA   NA       0       NA    NA     0
@@ -223,7 +223,7 @@ lapply(out$data, head)
 #> 4    pubmed  NA   NA      NA       NA    NA     1
 #> 5    scopus  NA   NA      NA       NA    NA     4
 #> 6   counter 384 1678      NA       NA    NA  2095
-#> 
+#>
 #> $`10.1371/journal.pone.0029797`
 #>         .id  pdf  html readers comments likes total
 #> 1 citeulike   NA    NA       1       NA    NA     1
@@ -232,7 +232,7 @@ lapply(out$data, head)
 #> 4    pubmed   NA    NA      NA       NA    NA     2
 #> 5    scopus   NA    NA      NA       NA    NA     9
 #> 6   counter 2583 31976      NA       NA    NA 34683
-#> 
+#>
 #> $`10.1371/journal.pone.0001543`
 #>         .id pdf html readers comments likes total
 #> 1 citeulike  NA   NA       0       NA    NA     0
@@ -261,11 +261,11 @@ res$data[, 3:10]
 ```r
 out <- alm_events(doi = "10.1371/journal.pone.0029797")
 names(out)  # names of sources
-#>  [1] "citeulike"        "crossref"         "nature"          
-#>  [4] "pubmed"           "scopus"           "counter"         
-#>  [7] "researchblogging" "pmc"              "facebook"        
-#> [10] "mendeley"         "twitter"          "wikipedia"       
-#> [13] "relativemetric"   "figshare"         "pmceuropedata"   
+#>  [1] "citeulike"        "crossref"         "nature"
+#>  [4] "pubmed"           "scopus"           "counter"
+#>  [7] "researchblogging" "pmc"              "facebook"
+#> [10] "mendeley"         "twitter"          "wikipedia"
+#> [13] "relativemetric"   "figshare"         "pmceuropedata"
 #> [16] "plos_comments"
 ```
 
@@ -275,7 +275,7 @@ out <- out[!out %in% c("sorry, no events content yet", "parser not written yet")
 out[["pmc"]]  # get the results for PubMed Central
 #> $events_url
 #> [1] "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3256195"
-#> 
+#>
 #> $events
 #>    scanned.page.browse month cited.by abstract full.text unique.ip pdf
 #> 1                    0     1        0        1        51        42   8
@@ -347,7 +347,7 @@ out[["pmc"]]  # get the results for PubMed Central
 #> 32 2014      0               0         0
 #> 33 2014      0               0         0
 #> 34 2014      2               0         0
-#> 
+#>
 #> $csl
 #> list()
 ```
@@ -360,7 +360,7 @@ dat <- alm_signposts(doi = "10.1371/journal.pone.0029797")
 plot_signposts(dat)
 ```
 
-![plot of chunk unnamed-chunk-11](inst/assets/img/unnamed-chunk-11-1.png) 
+![plot of chunk unnamed-chunk-11](inst/assets/img/unnamed-chunk-11-1.png)
 
 Or plot many identifiers get a faceted bar chart, note the tick labels have just the last part of the DOI in this case to help you identify each DOI - printing the entire DOI would make lables overlap one another.
 
@@ -371,7 +371,7 @@ dat <- alm_signposts(doi = dois)
 plot_signposts(input = dat)
 ```
 
-![plot of chunk unnamed-chunk-12](inst/assets/img/unnamed-chunk-12-1.png) 
+![plot of chunk unnamed-chunk-12](inst/assets/img/unnamed-chunk-12-1.png)
 
 Or make an interactive chart by doing `plot_signposts(input=dat, type="multiBarChart")`. Try it out! It should open in your browser and you can interact with it.
 
@@ -406,7 +406,7 @@ The default plot
 plot_density(alm)
 ```
 
-![plot of chunk unnamed-chunk-15](inst/assets/img/unnamed-chunk-15-1.png) 
+![plot of chunk unnamed-chunk-15](inst/assets/img/unnamed-chunk-15-1.png)
 
 
 Plot many sources in different panels in the same plot, and pass in colors just for fun
@@ -419,7 +419,7 @@ plot_density(alm,
              color = c("#83DFB4", "#EFA5A5", "#CFD470"))
 ```
 
-![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png) 
+![plot of chunk unnamed-chunk-16](inst/assets/img/unnamed-chunk-16-1.png)
 
 ## Work with data from non-PLOS publishers
 
@@ -442,7 +442,7 @@ alm_ids(doi='10.7554/eLife.00471', api_url = elifeurl, key = elifekey)
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#> 
+#>
 #> $data
 #>               .id pdf html shares groups comments likes citations total
 #> 1             pmc 667 1520     NA     NA       NA    NA        NA  2187
@@ -481,7 +481,7 @@ alm_ids(doi='10.3897/zookeys.88.807', api_url = psurl, key = pskey)
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#> 
+#>
 #> $data
 #>               .id pdf html readers comments likes total
 #> 1        facebook  NA   NA      NA       NA    NA     0
@@ -513,7 +513,7 @@ alm_ids('10.5061/dryad.7fj1k', api_url = dlmurl)
 #> $meta
 #>   total total_pages page error
 #> 1     1           1    1    NA
-#> 
+#>
 #> $data
 #>                    .id pdf html readers comments likes total
 #> 1            citeulike  NA   NA       0       NA    NA     0
@@ -537,4 +537,4 @@ alm_ids('10.5061/dryad.7fj1k', api_url = dlmurl)
 * License: MIT
 * Get citation information for `alm` in R doing `citation(package = 'alm')`
 
-[![ropensci_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)

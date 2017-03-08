@@ -23,7 +23,7 @@ _____  |  |   _____
 [![Research software impact](http://depsy.org/api/package/cran/alm/badge.svg)](http://depsy.org/package/r/alm)
 
 
-__UPDATE__: Check out the [v6 branch](https://github.com/ropensci/alm/tree/v6) for a version of this package to work with the newest Lagotto API.
+__UPDATE__: Package is Archived on CRAN
 
 ## What it is!?
 
@@ -70,13 +70,6 @@ You can change this URL. For example, if you want to get data from the Crossref 
 If R is not your thing, there are Lagotto clients in development for [Ruby](https://github.com/articlemetrics/lagotto-rb) and [Python](https://github.com/articlemetrics/pyalm).
 
 ## Install
-
-You can get this package from CRAN by:
-
-```{r eval=FALSE}
-install.packages("alm")
-```
-
 
 Or the development version by installing with `install_github()`
 
@@ -227,4 +220,4 @@ alm_ids('10.5061/dryad.7fj1k', api_url = dlmurl)
 * License: MIT
 * Get citation information for `alm` in R doing `citation(package = 'alm')`
 
-[![ropensci_footer](http://ropensci.org/public_images/github_footer.png)](http://ropensci.org)
+[![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
