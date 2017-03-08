@@ -51,14 +51,14 @@ _____  |  |   _____
 
 The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers:
 
-* PLOS (all their journals) at [http://alm.plos.org/](http://alm.plos.org/)
-* PLOS test server at [http://labs.lagotto.io/](http://labs.lagotto.io/)
-* Copernicus (seems to be down for now)
-* Public Knowledge Project (PKP) at [http://pkp-alm.lib.sfu.ca/](http://pkp-alm.lib.sfu.ca/)
-* Crossref at [http://det.labs.crossref.org/](http://det.labs.crossref.org/)
-* eLife at [http://lagotto.svr.elifesciences.org/](http://lagotto.svr.elifesciences.org/)
-* Pensoft at [http://alm.pensoft.net:81/](http://alm.pensoft.net:81/)
-* Making Dat Count at [http://dlm.plos.org](http://dlm.plos.org)
+* PLOS (all their journals) at <http://alm.plos.org>
+* PLOS test server at http://labs.lagotto.io (down as of 2016-09-17)
+* Copernicus (down as of 2016-09-17)
+* Public Knowledge Project (PKP) at <http://pkp-alm.lib.sfu.ca>
+* Crossref at <http://eventdata.crossref.org>
+* eLife at http://lagotto.svr.elifesciences.org (down as of 2016-09-17)
+* Pensoft at http://alm.pensoft.net:81 (down as of 2016-09-17)
+* Making Dat Count at <https://dlm.datacite.org/>
 
 A good place to look for the status of various installations of Lagotto is this status page: http://articlemetrics.github.io/status/ (which also includes what version of Lagotto each is running)
 
@@ -74,9 +74,9 @@ Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://al
 
 Yes indeedy, but see notes
 
-+ [ImpactStory](http://impactstory.org/) - No open data (except for your own data)
-+ [Altmetric.com](http://altmetric.com/) - Some open data
-+ [PlumAnalytics](http://www.plumanalytics.com/) - No open data
++ [ImpactStory](https://impactstory.org) - No open data (except for your own data)
++ [Altmetric.com](https://www.altmetric.com) - Some open data
++ [PlumAnalytics](http://plumanalytics.com) - No open data
 
 ## Authentication
 

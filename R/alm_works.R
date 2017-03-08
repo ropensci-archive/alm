@@ -46,7 +46,7 @@ alm_works <- function(ids = NULL, q = NULL, type = NULL, source_id = NULL, publi
                           registration_agency = registration_agency, 
                           sort = sort, page = page, per_page = per_page))
   
-  alm_GET(file.path(api_url, "api/works"), args, ...)
+  alm_GET(file.path(api_url, "works"), args, ...)
   # if (length(justid) == 0) {
   #   check_if(length(id) == 0, paste0("Please provide one of: ", id_names_c))
   #   tt <- alm_GET(api_url, args, ...)

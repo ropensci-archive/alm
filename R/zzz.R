@@ -104,7 +104,7 @@ alm_GET <- function(x, y, ...){
   out <- GET(x, query = y, head_ver(), head_auth(), ...)
   stop_for_status(out)
   tt <- content(out, as = "text", encoding = "UTF-8")
-  jsonlite::fromJSON(tt, FALSE)
+  jsonlite::fromJSON(tt, TRUE, flatten = TRUE)
 }
 
 almGET <- function(x, y = list(), key = NULL, ...){

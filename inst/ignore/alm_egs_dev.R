@@ -1,8 +1,8 @@
 ## urls
-cr_url <- "http://api.eventdata.crossref.org"
+cr_url <- "http://query.api.eventdata.crossref.org"
 
 # no identifiers
-alm_works(per_page = 10)
+alm_works(rows = 10)
 ## crossref
 alm_works(api_url = cr_url, per_page = 10)
 
