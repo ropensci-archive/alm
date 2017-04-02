@@ -62,16 +62,7 @@ If R is not your thing, there are Lagotto clients in development for [Ruby](http
 
 ## Install
 
-You can get this package from CRAN by:
-
-
-```r
-install.packages("alm")
-```
-
-
-Or the development version by installing with `install_github()`
-
+Install the latest (development) version by installing with `install_github()`
 
 ```r
 install.packages("devtools")
