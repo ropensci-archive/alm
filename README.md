@@ -54,7 +54,7 @@ If R is not your thing, there are Lagotto clients in development for [Ruby](http
 
 [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/alm?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/alm)
 [![Travis-CI Build Status](https://travis-ci.org/ropensci/alm.svg?branch=master)](https://travis-ci.org/)
- [![codecov](https://codecov.io/gh/RMHogervorst/alm/branch/master/graph/badge.svg)](https://codecov.io/gh/RMHogervorst/alm)
+[![codecov](https://codecov.io/gh/ropensci/alm/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/alm)
 [![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/alm?color=blue)](https://github.com/metacran/cranlogs.app)
 
 __Installation Instructions__
