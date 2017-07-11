@@ -1,4 +1,4 @@
-
+# Alm
 
 <pre>
        .__
@@ -9,14 +9,13 @@ _____  |  |   _____
      \/           \/
 </pre>
 
-[![Build Status](https://api.travis-ci.org/ropensci/alm.png?branch=master)](https://travis-ci.org/ropensci/alm?branch=master)
-[![Build status](https://ci.appveyor.com/api/projects/status/w7mrpr5owh9deepq/branch/master)](https://ci.appveyor.com/project/sckott/alm/branch/master)
-[![Coverage Status](https://coveralls.io/repos/ropensci/alm/badge.svg)](https://coveralls.io/r/ropensci/alm)
-[![Research software impact](http://depsy.org/api/package/cran/alm/badge.svg)](http://depsy.org/package/r/alm)
+
+[![Project Status: Inactive – The project has reached a stable, usable state but is no longer being actively developed; support/maintenance will be provided as time allows.](http://www.repostatus.org/badges/latest/inactive.svg)](http://www.repostatus.org/#inactive)
+![CRAN/GitHub 0.4.0_/_0.4.1](https://img.shields.io/badge/CRAN/GitHub-0.4.0_/_0.4.1-blue.svg)
 
 __UPDATE__: Package is Archived on CRAN
 
-## What it is!?
+### What it is!?
 
 The `alm` package is a set of functions to access article level metrics via a RESTful API from the Rails app `Lagotto` created by the Public Library of Science (PLOS). `Lagotto` is being used by PLOS, and a number of other publishers:
 
@@ -31,15 +30,15 @@ The `alm` package is a set of functions to access article level metrics via a RE
 
 A good place to look for the status of various installations of Lagotto is this status page: http://articlemetrics.github.io/status/ (which also includes what version of Lagotto each is running)
 
-## Help with Lagotto
+### Help with Lagotto
 
 Lagotto has a nice support site at [http://discuss.lagotto.io/](http://discuss.lagotto.io/) for any questions about it.
 
-## What is an article level metric?
+### What is an article level metric?
 
 Glad you asked. The canonical URL for this is perhaps [altmetrics.org](http://altmetrics.org/manifesto/). Basically it is a metric that measures something about an article. This is in stark contrast to journal level metrics, like the [Journal Impact Factor](http://www.wikiwand.com/en/Impact_factor).
 
-## Are there other altmetrics data providers?
+### Are there other altmetrics data providers?
 
 Yes indeedy, but see notes
 
@@ -47,21 +46,20 @@ Yes indeedy, but see notes
 + [Altmetric.com](http://altmetric.com/) - Some open data
 + [PlumAnalytics](http://www.plumanalytics.com/) - No open data
 
-## Authentication
-
-You only need an API key for the publishers PKP and Pensoft. You can set the key in your options just for the current session by executing `options(PlosApiKey = "YOUalmAPIKEY")`, or pass in to each function call with the `key` parameter, or save in your `.Rprofile` file.
-
-## URLs
-
-The default URL is set for the PLOS data sources: http://alm.plos.org/api/v5/articles
-You can change this URL. For example, if you want to get data from the Crossref instance, set the `api_url` parameter to http://alm.labs.crossref.org/api/v5/articles
-
-## Other languages
+#### Other languages
 
 If R is not your thing, there are Lagotto clients in development for [Ruby](https://github.com/articlemetrics/lagotto-rb) and [Python](https://github.com/articlemetrics/pyalm).
 
-## Install
+## Package Status and Installation
 
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/ropensci/alm?branch=master&svg=true)](https://ci.appveyor.com/project/ropensci/alm)
+[![Travis-CI Build Status](https://travis-ci.org/ropensci/alm.svg?branch=master)](https://travis-ci.org/)
+[![codecov](https://codecov.io/gh/ropensci/alm/branch/master/graph/badge.svg)](https://codecov.io/gh/ropensci/alm)
+[![rstudio mirror downloads](http://cranlogs.r-pkg.org/badges/alm?color=blue)](https://github.com/metacran/cranlogs.app)
+
+__Installation Instructions__
+
+__Development Version__
 Install the latest (development) version by installing with `install_github()`
 
 ```r
@@ -78,7 +76,9 @@ library('alm')
 
 The first function we'll look at is `alm_ids()`, named with `ids` since we search for data by one of four different choices of identifier.
 
-## Get altmetrics data for a single paper
+## Usage
+
+### Get altmetrics data for a single paper
 
 
 ```r
@@ -118,79 +118,7 @@ alm_ids(doi = "10.1371/journal.pone.0029797")
 #> 27                  orcid   NA    NA       0       NA    NA      0
 ```
 
-## Details for a single DOI
-
-
-
-```r
-alm_ids(doi = "10.1371/journal.pone.0029797", info = "detail")
-#> $meta
-#>   total total_pages page error
-#> 1     1           1    1    NA
-#>
-#> $data
-#> $data$info
-#>                                 id
-#> 1 doi/10.1371/journal.pone.0029797
-#>                                                                             title
-#> 1 Ecological Guild Evolution and the Discovery of the World's Smallest Vertebrate
-#>   publisher_id                          doi
-#> 1          340 10.1371/journal.pone.0029797
-#>                                                          canonical_url
-#> 1 http://www.plosone.org/article/info:doi/10.1371/journal.pone.0029797
-#>       pmid   pmcid         scp             wos          update_date
-#> 1 22253785 3256195 84855712734 000301355700052 2015-03-13T09:10:19Z
-#>       issued
-#> 1 2012-01-11
-#>
-#> $data$signposts
-#>                                 id viewed saved discussed cited
-#> 1 doi/10.1371/journal.pone.0029797  35315    87       244     9
-#>
-#> $data$totals
-#>                       .id  pdf  html readers comments likes  total
-#> 1               citeulike   NA    NA       1       NA    NA      1
-#> 2                crossref   NA    NA      NA       NA    NA      8
-#> 3                  nature   NA    NA      NA       NA    NA      4
-#> 4                  pubmed   NA    NA      NA       NA    NA      2
-#> 5                  scopus   NA    NA      NA       NA    NA      9
-#> 6                 counter 2583 31976      NA       NA    NA  34683
-#> 7        researchblogging   NA    NA      NA       NA    NA      1
-#> 8                     pmc   81   551      NA       NA    NA    632
-#> 9                facebook   NA    NA     150       22    60    232
-#> 10               mendeley   NA    NA      86       NA    NA     86
-#> 11                twitter   NA    NA      NA       12    NA     12
-#> 12              wikipedia   NA    NA      NA       NA    NA     50
-#> 13          scienceseeker   NA    NA      NA       NA    NA      0
-#> 14         relativemetric   NA    NA      NA       NA    NA 243342
-#> 15                  f1000   NA    NA      NA       NA    NA      0
-#> 16               figshare    0    31      NA       NA     0     31
-#> 17              pmceurope   NA    NA      NA       NA    NA      4
-#> 18          pmceuropedata   NA    NA      NA       NA    NA     49
-#> 19            openedition   NA    NA      NA       NA    NA      0
-#> 20              wordpress   NA    NA      NA       NA    NA      0
-#> 21                 reddit   NA    NA      NA        0     0      0
-#> 22               datacite   NA    NA      NA       NA    NA      0
-#> 23             copernicus   NA    NA      NA       NA    NA      0
-#> 24        articlecoverage   NA    NA      NA        0    NA      0
-#> 25 articlecoveragecurated   NA    NA      NA        0    NA      0
-#> 26          plos_comments   NA    NA      NA       11    NA     16
-#> 27                  orcid   NA    NA       0       NA    NA      0
-#>
-#> $data$sum_metrics
-#>                .id year month day total X[[1L]]
-#> 1        citeulike 2012     1  12     1      NA
-#> 2           nature 2012     1  11     1      NA
-#> 3           nature 2012     1  12     1      NA
-#> 4           nature 2012     2   1     1      NA
-#> 5 researchblogging   NA    NA  NA    NA      NA
-#> 6    plos_comments 2012     1  11     1      NA
-#> 7    plos_comments 2012     1  12     7      NA
-#> 8    plos_comments 2012     1  13     1      NA
-#> 9    plos_comments 2012     1  14     1      NA
-```
-
-## Search on many identifiers
+#### Search on many identifiers
 
 
 ```r
@@ -234,19 +162,7 @@ lapply(out$data, head)
 #> 6   counter 472 2809      NA       NA    NA  3332
 ```
 
-## Output an-easy-to-combine-with-other-results data.frame
-
-
-```r
-res <- alm_ids(doi = "10.1371/journal.pone.0035869", total_details = TRUE)
-res$data[, 3:10]
-#>   citeulike_pdf citeulike_html citeulike_readers citeulike_comments
-#> 1            NA             NA                27                 NA
-#>   citeulike_likes citeulike_total crossref_pdf crossref_html
-#> 1              NA              27           NA            NA
-```
-
-## Get detailed data for altmetrics using `almevents`
+#### Get detailed data for altmetrics using `almevents`
 
 
 ```r
@@ -343,7 +259,7 @@ out[["pmc"]]  # get the results for PubMed Central
 #> list()
 ```
 
-## Retrieve and plot PLOS article-level metrics signposts.
+### Retrieve and plot PLOS article-level metrics signposts.
 
 
 ```r
@@ -527,5 +443,11 @@ alm_ids('10.5061/dryad.7fj1k', api_url = dlmurl)
 * Please [report any issues or bugs](https://github.com/ropensci/alm/issues).
 * License: MIT
 * Get citation information for `alm` in R doing `citation(package = 'alm')`
+
+## Code of Conduct
+
+Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md).
+By participating in this project you agree to abide by its terms.
+
 
 [![ropensci_footer](https://ropensci.org/public_images/github_footer.png)](https://ropensci.org)
