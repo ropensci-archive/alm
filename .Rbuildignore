@@ -13,3 +13,4 @@ README.Rmd
 ^\.Rproj\.user$
 cache
 cran-comments.md
++^CONDUCT.md$
